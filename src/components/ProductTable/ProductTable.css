@@ -1,0 +1,118 @@
+/* span {
+    color: green;
+    font-weight: bold;
+} */
+/* Contenedor de la tabla con scroll */
+tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color .4s ease-in-out;
+    text-align: center;
+    &:hover {
+        background-color: #e4e1e1;
+    }
+}
+
+/* Celda de imagen */
+.image-cell {
+    text-align: center;
+    padding: 10px;
+}
+
+.image-cell img {
+    width: 60px;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.image-cell img:hover {
+    transform: scale(1.1);
+}
+
+/* Celda del nombre del producto */
+.product-cell {
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    white-space: nowrap; /* Evita que se divida el nombre */
+}
+
+/* Celda de descripción */
+.description-cell {
+    max-width: 300px;
+    padding: 10px;
+    text-align: center;
+}
+
+.description-table {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Celda de precio */
+.price-cell {
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
+    text-align: center;
+}
+
+/* Celda de acciones */
+.actions-cell {
+    text-align: center;
+    padding: 10px;
+}
+
+/* Contenedor de iconos */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Botones */
+.btn {
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Botón de edición */
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de eliminación */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+
+/* @media screen and (width >= 820px) and (width <= 1000px) {
+    
+}
+
+@media screen and (width >= 1001px) and (width <= 1200px) {
+    
+}
+
+@media screen and (width > 1200px) {
+    
+} */

@@ -1,0 +1,8 @@
+h1#mainTitle {
+    margin: 4rem 0 4rem 0 !important;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+}

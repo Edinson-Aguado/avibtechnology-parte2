@@ -1,0 +1,56 @@
+a.link-whatsapp {
+    z-index: 11;
+    color: white;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    text-decoration: none;
+    
+    img {
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        transition: transform .4s ease-in-out;
+        animation: move ease-in-out infinite;
+        animation-duration: 4s;
+        animation-delay: 2s;
+        background-color: white;
+        &:hover {
+            animation: none;
+            transform: scale(1.1);
+        }
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(0); /* Posición inicial */
+    }
+    15% {
+        transform: translateX(0); /* Mover hacia la izquierda */
+    }
+    25% {
+        transform: translateX(0); /* Mover hacia la izquierda */
+    }
+    50% {
+        transform: translateX(-3px); /* Mover hacia la derecha */
+    }
+    60% {
+        transform: translateX(3px); /* Mover hacia la derecha */
+    }
+    70% {
+        transform: translateX(-3px); /* Mover hacia la izquierda */
+    }
+    80% {
+        transform: translateX(0); /* Regresar a la posición original */
+    }
+    90% {
+        transform: translateX(0); /* Regresar a la posición original */
+    }
+    100% {
+        transform: translateX(0); /* Regresar a la posición original */
+    }
+    
+    
+}

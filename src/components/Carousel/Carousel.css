@@ -1,0 +1,50 @@
+.carousel {
+    margin-top: 4rem;
+    width: 100vw;
+    position: relative;
+}
+
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.element {
+    width: 50vw;
+    flex: 0 0 auto;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Botones */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.carousel-btn.left {
+    left: 20px; /* Lado izquierdo */
+}
+
+.carousel-btn.right {
+    right: 20px; /* Lado derecho */
+}
+
+.carousel-btn:hover {
+    background-color: rgba(34, 34, 34, 0.8);
+}
+

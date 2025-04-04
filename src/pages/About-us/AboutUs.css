@@ -1,0 +1,108 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 450px;
+    margin: auto;
+    padding: 20px;
+
+    section {
+        background-color: #ffffff;
+        padding: 25px;
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            text-align: justify;
+        }
+    }
+
+    .team-members {
+
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .team-member {
+        text-align: center;
+        flex: 1 1 30%;
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #0c4b86;
+            transition: transform 0.3s ease;
+            .team-member img:hover {
+                transform: scale(1.1);
+            }
+        }
+        h3 {
+            font-size: 1.2rem;
+            color: #0c4b86;
+            margin-top: 10px;
+        }
+        p {
+            font-size: 0.9rem;
+            color: #777;
+            text-align: justify;
+        }
+    }
+    .values ul {
+        list-style: none;
+        padding: 0;
+        li {
+            font-size: 1rem;
+            color: #444;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            text-align: justify;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+    }
+    .more-info a {
+        color: #0c4b86;
+        text-decoration: none;
+        font-weight: 500;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+@media screen and (min-width: 820px) and (max-width: 1200px) {
+
+    .about-container {
+        max-width: 550px;
+    }
+    
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+    
+    .about-container {
+        max-width: 650px;
+    }
+
+}
+
+@media screen and (min-width: 1201px) {
+
+    .about-container {
+        max-width: 850px;
+    }
+
+}
