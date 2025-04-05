@@ -242,18 +242,18 @@ export default function AdminProducts() {
                         <div className="input-group">
                             <label htmlFor="country">País</label>
                             <select id="country" {...register("country", { required: true })}>
-                                <option value="arg">Argentina</option>
-                                <option value="bra">Brasil</option>
-                                <option value="ven">Venezuela</option>
-                                <option value="chi">Chile</option>
-                                <option value="col">Colombia</option>
-                                <option value="ecu">Ecuador</option>
-                                <option value="bol">Bolivia</option>
-                                <option value="per">Perú</option>
-                                <option value="par">Paraguay</option>
-                                <option value="pan">Panamá</option>
-                                <option value="can">Canadá</option>
-                                <option value="eu">Estados Unidos</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Brasil">Brasil</option>
+                                <option value="Venezuela">Venezuela</option>
+                                <option value="Chile">Chile</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Ecuador">Ecuador</option>
+                                <option value="Bolivia">Bolivia</option>
+                                <option value="Peru">Perú</option>
+                                <option value="Paraguay">Paraguay</option>
+                                <option value="Panama">Panamá</option>
+                                <option value="Canada">Canadá</option>
+                                <option value="Estados Unidos">Estados Unidos</option>
                             </select>
                         </div>
 

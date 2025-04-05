@@ -13,7 +13,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 60%;
 
         h3.title-user {
             font-size: 2rem;
@@ -88,13 +88,11 @@
                 background-color: var(--secondary-color);
                 color: #ffffff;
                 text-align: center;
+                padding: .5rem 0;
                 font-size: 14px;
-                border-bottom: 2px solid #444;
             }
-            /* Celdas de la tabla */
             td {
                 padding: 12px;
-                border-bottom: 1px solid #ddd;
                 white-space: nowrap;
             }
             
@@ -155,6 +153,10 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
+        .formulario {
+            width: 50%;
+        }
     }
 
 }
@@ -165,6 +167,10 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+
+        .formulario {
+            width: 40%;
+        }
     }
 
 }
@@ -175,6 +181,10 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+
+        .formulario {
+            width: 35%;
+        }
     }
 }
 
