@@ -48,18 +48,20 @@ export default function Order() {
                                             
                                             <div className="cantidades">
                                                 
-                                                <button onClick={() => (
-                                                    editQuantity(product.id, "-")
-                                                )} 
+                                                <button onClick={() => 
+                                                    editQuantity(product.id, "+")} 
                                                     className="quantity-btn">
-                                                    <FontAwesomeIcon icon={faMinus} />
+                                                    <FontAwesomeIcon icon={faPlus} />
                                                 </button>
 
                                                 <span className="quantity-value">{product.quantity}</span>
 
-                                                <button onClick={() => editQuantity(product.id, "+")} className="quantity-btn">
-                                                    <FontAwesomeIcon icon={faPlus} />
+                                                <button onClick={() => 
+                                                    editQuantity(product.id, "-")} 
+                                                    className="quantity-btn">
+                                                    <FontAwesomeIcon icon={faMinus} />
                                                 </button>
+
                                             </div>
 
                                         </td>
