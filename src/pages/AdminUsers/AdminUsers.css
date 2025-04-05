@@ -153,11 +153,8 @@
     .main-container-admin-users {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-
-        .formulario {
-            
-        }
+        justify-content: center;
+        align-items: center;
     }
 
 }

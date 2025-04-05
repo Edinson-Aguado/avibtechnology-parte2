@@ -80,15 +80,14 @@ export default function AdminProducts() {
                     name: data.name,
                     correo: data.correo,
                     password: data.password,
-                    rePassword: data.rePassword,
                     date: data.date,
                     country: data.country,
-                    observations: data.observations
+                    observations: data.obs
                 }
 
                 await axios.put(`${env.URL}/users/${editUser.id}`, userToUpdate);
             
-                setEditUser(null); //Seteamos nulo a estado del producto que estamos editando.
+                setEditUser(null); //Seteamos nulo a estado del usuario que estamos editando.
                 //Obtenemos los datos de los usuarios
                 await getUsers();
                 //Limpiamos le formulario
@@ -103,10 +102,9 @@ export default function AdminProducts() {
                         name: data.name,
                         correo: data.correo,
                         password: data.password,
-                        rePassword: data.rePassword,
                         date: data.date,
                         country: data.country,
-                        observations: data.observations
+                        observations: data.obs
                     }
                     setLoading(true);  // Inicia la carga (icono)
                     await axios.post(`${env.URL}/users`, newUser);
@@ -210,11 +208,11 @@ export default function AdminProducts() {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="pass">Contraseña</label>
+                            <label htmlFor="password">Contraseña</label>
                             <input
                                 type="password"
-                                id="pass"
-                                {...register("pass", { required: true, minLength: 6 })}
+                                id="password"
+                                {...register("password", { required: true, minLength: 6 })}
                             />
                             {errors.pass && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
                         </div>
@@ -242,8 +240,8 @@ export default function AdminProducts() {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="selection">País</label>
-                            <select id="selection" {...register("selection", { required: true })}>
+                            <label htmlFor="country">País</label>
+                            <select id="country" {...register("country", { required: true })}>
                                 <option value="arg">Argentina</option>
                                 <option value="bra">Brasil</option>
                                 <option value="ven">Venezuela</option>
@@ -264,8 +262,9 @@ export default function AdminProducts() {
                             <textarea
                                 id="obs"
                                 rows="5"
-                                {...register("obs")}
+                                {...register("obs", {required: true, maxLength: 20})}
                             ></textarea>
+                            {errors.obs && <span className="error">Límite de caracteres: 20.</span>}
                         </div>
 
                         <button className="btn" type="submit" disabled={!isValid}>
