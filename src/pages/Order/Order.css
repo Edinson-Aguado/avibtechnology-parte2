@@ -6,7 +6,7 @@
     justify-content: center;
     background-color: aliceblue;
     color: black;
-    padding: 15px;
+    padding: .5rem;
     border-radius: 10px;
     gap: 10px;
     position: relative;
@@ -40,12 +40,12 @@
         overflow-x: hidden;
     
         
-        thead {
-            padding: 5px 8px;
+        th {
+            padding: 5px;
         }
 
-        td, thead {
-            text-align: center;
+        td {
+            padding: 3px 5px;
         }
     
         tbody {

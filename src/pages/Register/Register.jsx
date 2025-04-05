@@ -46,7 +46,6 @@ export default function Register() {
     return (
         <>
             <OtroTitle title="REGISTRO" />
-            <hr />
 
             <main className="main-container">
                 <form className="register-form" onSubmit={handleSubmit(addUser)}>

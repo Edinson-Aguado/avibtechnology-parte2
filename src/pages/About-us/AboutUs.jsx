@@ -8,7 +8,6 @@ export default function AboutUs() {
     return (
         <>
             <OtroTitle title="Sobre nosotros"/>
-            <hr/>
             <main className="about-container">
 
                 {/* Misión y Visión */}
@@ -62,7 +61,7 @@ export default function AboutUs() {
                 {/* Contacto o Información adicional */}
                 <section className="more-info">
                     <h2>¿Quieres saber más?</h2>
-                    <p>Si está interesado en saber más sobre nosotros, no dude en contactarnos en <a href="mailto:sssavib@gmail.com">sssavib@gmail.com</a> o llámanos al (11) 27721921 (Argentina - capital).</p>
+                    <p>Si está interesado en saber más sobre nosotros, no dude en contactarnos en <a href="mailto:avibtechnology@gmail.com">avibtechnology@gmail.com</a> o llámanos al (11) 27721921 (Argentina - capital).</p>
                 </section>
                 
             </main>

@@ -4,9 +4,8 @@ import './Contact.css';
 export default function Contact() {
     return (
         <>
-            <OtroTitle title="CONTACTO"/>
+            <OtroTitle title="CONTACTAR"/>
             <h2>Formulario de contacto</h2>
-            <hr />
             <main className="main-container-contact">
                 
                 <div className="formulario-contact">
