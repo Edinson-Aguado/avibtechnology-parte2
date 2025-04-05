@@ -90,7 +90,7 @@ function OrderProvider({children}) {
         updatedCart = cart.map((prod) => {
             if (prod.id === id) {
                 if (accion === "+") {
-                    return { ...prod, quantity: prod.quantity + cantidadOrder };
+                    return { ...prod, quantity: prod.quantity + 1 };
                 } else if (accion === "-") {
                     if (prod.quantity > 1) {
                         return { ...prod, quantity: prod.quantity - 1 };
