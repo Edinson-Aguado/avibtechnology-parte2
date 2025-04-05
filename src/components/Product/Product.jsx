@@ -82,7 +82,7 @@ export default function Product({product}) {
                             title='Añadir al carrito' 
                             className='btn-agregar-carrito'
                             onClick={() => {
-                                addProduct(product);
+                                addProduct(product, 1);
                             }}
                         >
                             <FontAwesomeIcon 

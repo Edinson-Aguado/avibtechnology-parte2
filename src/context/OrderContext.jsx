@@ -53,23 +53,31 @@ function OrderProvider({children}) {
 
     }
 
-    //Agregar producto (cantidad de a 1) a la cart 
-    function addProduct(product) {
-
+    function decidirCantidad(product, dato) {
         //Verficamos si el producto ya está
         const productInCart = cart.find((prod) => prod.id === product.id);
-        
+                
         if (!productInCart) {
             //Seteamos un copia sin afectar el original. Además de que le agregamos un nuevo producto con una propiedad extra (quantity).
-            setCart([...cart, { ...product, quantity: cantidadOrder }]);
+            setCart([...cart, { ...product, quantity: 1 }]);
         } else {
             const updatedCart = cart.map((item) =>
                 item.id === product.id
-                    ? { ...item, quantity: item.quantity + cantidadOrder } // Aumenta la cantidad
+                    ? { ...item, quantity: item.quantity + dato } // Aumenta la cantidad
                     : item // Deja los otros productos igual
             );
             setCart(updatedCart); //Actualizamos el estado del carrito
         }
+    }
+    //Agregar producto (cantidad de a 1) a la cart 
+    function addProduct(product, dato) {
+
+        if (dato === null) {
+            decidirCantidad(product, cantidadOrder);// dato = 1
+        } else {
+            decidirCantidad(product, dato);// dato = 1
+        }
+        
     }
 
     //Eliminar el producto de la cart
