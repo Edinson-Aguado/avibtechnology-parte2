@@ -4,7 +4,7 @@ import './OrderSideBar.css';
 
 export default function OrderSidebar() {
 
-    const { isOpen } = useOrder() 
+    const { isOpen } = useOrder();
 
     return (
 

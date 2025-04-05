@@ -28,7 +28,7 @@ export default function App() {
 
         const response = await axios.get(`${env.URL}/products`);
         setProducts(response.data);
-
+        
         } catch (error) {
 
         console.warn(error);

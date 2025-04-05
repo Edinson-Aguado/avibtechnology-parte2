@@ -24,7 +24,7 @@ export default function Order() {
                 <table className="order-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Image</th>
                             <th>Nombre</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
@@ -34,33 +34,45 @@ export default function Order() {
                     </thead>
                     <tbody>
                         {
-                            cart.map(product => (
-                            <tr key={product.id}>
-            
-                                <td>{ product.id }</td>
-                                <td>{ product.name }</td>
-                                <td>{ product.price }</td>
-                                <td className="quantity-container">
-                                    <button onClick={() => editQuantity(product.id, "-")} className="quantity-btn">
-                                        <FontAwesomeIcon icon={faMinus} />
-                                    </button>
+                            cart.map(product => {
+                            
+                                return (
+                                    <tr key={product.id}>
+                    
+                                        <td>
+                                            <img src={product.image} alt={product.name} />
+                                        </td>
+                                        <td>{ product.name }</td>
+                                        <td>{ product.price }</td>
+                                        <td className="quantity-container">
+                                            
+                                            <div className="cantidades">
+                                                
+                                                <button onClick={() => (
+                                                    editQuantity(product.id, "-")
+                                                )} 
+                                                    className="quantity-btn">
+                                                    <FontAwesomeIcon icon={faMinus} />
+                                                </button>
 
-                                    <span className="quantity-value">{product.quantity}</span>
+                                                <span className="quantity-value">{product.quantity}</span>
 
-                                    <button onClick={() => editQuantity(product.id, "+")} className="quantity-btn">
-                                        <FontAwesomeIcon icon={faPlus} />
-                                    </button>
-                                
-                                </td>
-                                <td>{ product.quantity * product.price }</td>
-                                
-                            </tr>
-                            ))
+                                                <button onClick={() => editQuantity(product.id, "+")} className="quantity-btn">
+                                                    <FontAwesomeIcon icon={faPlus} />
+                                                </button>
+                                            </div>
+
+                                        </td>
+                                        <td>{ product.quantity * product.price }</td>
+                                        
+                                    </tr>
+                                )
+                            })
                         }
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colSpan={5}>TOTAL: $ {total}</td>
+                            <td colSpan={5}>Total: $ {total}</td>
                         </tr>
                     </tfoot>
                 </table>

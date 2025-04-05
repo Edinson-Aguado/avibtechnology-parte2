@@ -6,13 +6,7 @@ import { useOrder } from '../../context/OrderContext';
 
 export default function Product({product}) {
 
-    // const navigate = useNavigate();
-
     const {addProduct} = useOrder();
-
-    // const irAProductos = (product) => {
-    //     navigate("/pages/productDetail/ProductDetail", { state: product }); // Redirige a la página de productos
-    // };
 
     function getStatus(status) {
         if (status.toLowerCase() === "nuevo") {
@@ -28,26 +22,20 @@ export default function Product({product}) {
 
     return (
         <>
-            <article className="card" key={product.id}>
+            <article className="card" key={product?.id}>
                 <div className="card-content">
 
                     <div className="card-image">
                         <img 
-                            src={product?.image} alt="Imágen Cámara H1C" 
+                            src={product.image} alt="Imágen Cámara H1C" 
                         />
                     </div>
-                    
 
                     <div className={`card-status ${getStatus(product?.status)}`}>
                         {product?.status}
                     </div>
                     <div className="btn-product ">
 
-                        {/* <button onClick={() => {
-                            irAProductos(product);
-                        }} title='Ir a la página del producto' className='btn card-buy'>
-                            Comprar
-                        </button> */}
                         <Link 
                             className='btn card-buy'
                             title='Comprar producto'
@@ -94,7 +82,7 @@ export default function Product({product}) {
                             title='Añadir al carrito' 
                             className='btn-agregar-carrito'
                             onClick={() => {
-                                addProduct(product)
+                                addProduct(product);
                             }}
                         >
                             <FontAwesomeIcon 

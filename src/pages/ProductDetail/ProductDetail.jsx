@@ -13,7 +13,7 @@ export default function ProductDetail() {
     const {id} = useParams(); // Recibimos los datos del id.
     const [product, setProduct] = useState(null);
 
-    const {addProduct} = useOrder();
+    const {addProduct, cantidadOrder, setCantidad} = useOrder();
 
     useEffect(() => {
         getProductDetail();
@@ -65,15 +65,16 @@ export default function ProductDetail() {
                         {/* ACTIONS */}
                         <div className="add-info">
                             <form action="">
-                                <label htmlFor="cantidad">Cantidad</label>
+                                <label htmlFor="cantidadOrder">Cantidad</label>
                                 <input
                                     type="number"
-                                    id="cantidad"
-                                    name="cantidad"
+                                    id="cantidadOrder"
+                                    name="cantidadOrder"
                                     min="1"
-                                    max="99"
+                                    max="36"
                                     step="1"
-                                    defaultValue="1"
+                                    value={cantidadOrder}
+                                    onChange={(e) => setCantidad(Number(e.target.value))}
                                 />
                                 <div className="btns-buy">
                                     <button 

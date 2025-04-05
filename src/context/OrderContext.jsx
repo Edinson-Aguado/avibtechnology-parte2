@@ -12,9 +12,22 @@ function OrderProvider({children}) {
     const [count, setCount] = useState(0);
 
     const [total, setTotal] = useState(0);
+    
+    const [cantidadOrder, setCantidad] = useState(1);
 
-    const [cart, setCart] = useState([]);
+    //Buscamos desde el localStorage si hay datos, si no hay entonces retorna un array vacío...
+    //Es como un "useEffect(() => {...}, []);"
+    const [cart, setCart] = useState(() => {
+        try {
+            const storedCart = localStorage.getItem("productsInCart");
+            return storedCart ? JSON.parse(storedCart) : [];
+        } catch (e) { //Si hay un error en el localStorage o se había guardado incorrectamente, hacemos el catch:
+            console.error("Error parsing cart from localStorage", e);
+            return [];
+        }
+    });
 
+    //--------------------------------------------------------------------------//
     useEffect(() => {
         //cada vez que cambie el estado de mi carrito, hago:
         let contador = 0;
@@ -25,7 +38,11 @@ function OrderProvider({children}) {
         })
         setCount(contador);
         setTotal(total);
+        // Guardamos el carrito completo en localStorage
+        localStorage.setItem("productsInCart", JSON.stringify(cart));
     }, [cart]);
+
+    //--------------------------------------------------------------------------//
 
     //Funcion para cambiar el estado de cerrado a abierto y viceversa.
     function toggleCart() {
@@ -44,45 +61,47 @@ function OrderProvider({children}) {
         
         if (!productInCart) {
             //Seteamos un copia sin afectar el original. Además de que le agregamos un nuevo producto con una propiedad extra (quantity).
-            setCart([...cart, { ...product, quantity: 1 }]);
+            setCart([...cart, { ...product, quantity: cantidadOrder }]);
         } else {
             const updatedCart = cart.map((item) =>
                 item.id === product.id
-                    ? { ...item, quantity: item.quantity + 1 } // Aumenta la cantidad
+                    ? { ...item, quantity: item.quantity + cantidadOrder } // Aumenta la cantidad
                     : item // Deja los otros productos igual
             );
             setCart(updatedCart); //Actualizamos el estado del carrito
-        } 
-        
+        }
     }
 
     //Eliminar el producto de la cart
     function deleteProductCart(product) {
 
         const index = cart.findIndex((prod) => prod.id === product.id);
-
-        cart.splice(index, 1);
-        setCart([...cart]);
+        const copyCart = cart.splice(index, 1);
+        setCart([...copyCart]);
 
     }
 
     //Editar la cantidad de un producto en la cart
     function editQuantity(id, accion) {
 
-        const product = cart.find((prod) => prod.id === id);
+        let updatedCart;
 
-        if (accion === "+") {
-            product.quantity += 1;
-            setCart([...cart]);
-        } else {
-            if (product.quantity >= 2) {
-                product.quantity -= 1;
-                setCart([...cart]);
-            } else {
-                
-                deleteProductCart(product);
+        
+        updatedCart = cart.map((prod) => {
+            if (prod.id === id) {
+                if (accion === "+") {
+                    return { ...prod, quantity: prod.quantity + cantidadOrder };
+                } else if (accion === "-") {
+                    if (prod.quantity > 1) {
+                        return { ...prod, quantity: prod.quantity - 1 };
+                    } else {
+                        deleteProductCart(prod);
+                    }
+                }
             }
-        }
+            return prod;
+        })
+        setCart(updatedCart);
     }
 
     function cleanCart() {
@@ -101,7 +120,9 @@ function OrderProvider({children}) {
                 total,
                 deleteProductCart,
                 editQuantity,
-                cleanCart
+                cleanCart,
+                cantidadOrder,
+                setCantidad
             }}
         >
             {children}

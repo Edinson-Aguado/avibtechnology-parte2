@@ -35,6 +35,11 @@
         input, select, textarea {
             padding: 3px;
             outline: none;
+            border: 1px solid var(--secondary-color);
+            border-radius: 2px;
+        }
+        textarea {
+            resize: none;
         }
         span.error-input {
             color: red;
