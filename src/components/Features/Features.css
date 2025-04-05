@@ -13,11 +13,18 @@
         padding: 15px;
         width: 100%;
         border-radius: 10px;
+        background-color: rgb(247, 247, 246);
+        box-shadow:  2px 2px 15px #00000080;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
 
         h3 {
             text-align: center;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin: 0;
         }
 
@@ -25,10 +32,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid rgba(0, 85, 255, 0.145);
+            border-radius: 50%;
+            padding: 20px;
             .icono {
-                padding: 10px 0;
                 i {
-                    font-size: 120px;
+                    font-size: 50px;
                 }
             }
         }
@@ -61,7 +70,7 @@
             top: 50%;
             right: -48px;
             text-decoration: none;
-            background-color: #147c74;
+            background-color: #eb1414;
             color: var(--text-color);
             transition: scale .4s ease-in-out;
             font-weight: 700;
@@ -70,23 +79,29 @@
                 scale: 1.1;
             }
         }
+        &.feacture-1 {
+            /* background-color: #1a60c369; */
+            border-top: 20px solid #1a60c369;
+            /* border-left: 20px solid #1a60c369; */
+        }
+    
+        &.feacture-2 {
+            /* background-color: #10b42669; */
+            border-bottom: 20px solid #10b42669;
+        }
+    
+        &.feacture-3 {
+            /* background-color: #8f055e69; */
+            border-top: 20px solid #8f055e69;
+        }
+    
+        &.feacture-4 {
+            /* background-color: #b6da1469; */
+            border-bottom: 20px solid #b6da1469;
+        }
     }
 
-    .feacture-1 {
-        background-color: #1a60c369;
-    }
-
-    .feacture-2 {
-        background-color: #10b42669;
-    }
-
-    .feacture-3 {
-        background-color: #8f055e69;
-    }
-
-    .feacture-4 {
-        background-color: #b6da1469;
-    }
+    
 }
 
 @media screen and (min-width: 820px) and (max-width: 1000px) {
