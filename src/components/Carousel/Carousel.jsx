@@ -49,13 +49,13 @@ export default function Carousel() {
 
     // Función para mover el scroll hacia la izquierda
     const moveLeft = () => {
-        carouselContainer.scrollLeft -= window.innerWidth; // devuelve el ancho de la ventana del navegador, incluyendo barras de desplazamiento si están visibles.
+        carouselContainer.scrollLeft -= window.innerWidth/2; // devuelve la mitad del ancho de la ventana del navegador, incluyendo barras de desplazamiento si están visibles.
     };
 
     // Función para mover el scroll hacia la derecha
     const moveRight = () => {
         
-        carouselContainer.scrollLeft += window.innerWidth; // devuelve el ancho de la ventana del navegador, incluyendo barras de desplazamiento si están visibles.
+        carouselContainer.scrollLeft += window.innerWidth/2; // devuelve la mitad del ancho de la ventana del navegador, incluyendo barras de desplazamiento si están visibles.
         // if (carouselContainer.scrollLeft )
     };
 

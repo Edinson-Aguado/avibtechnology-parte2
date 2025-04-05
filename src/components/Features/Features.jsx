@@ -3,7 +3,7 @@ import './Features.css';
 export default function Features() {
     return (
         <>
-            <h2>Detalles de calidad</h2>
+            <h2>Detalles importantes</h2>
             <section className="section-feactures">
                 <div className="feacture feacture-1">
                     <h3>

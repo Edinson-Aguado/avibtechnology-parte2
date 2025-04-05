@@ -26,14 +26,20 @@ img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(16, 26, 78);
     color: white;
     border: none;
-    font-size: 2rem;
+    font-size: 1rem;
     padding: 1rem;
     cursor: pointer;
     z-index: 1;
     border-radius: 50%;
+    opacity: .4;
+    transition: opacity .4s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
 }
 
 .carousel-btn.left {
