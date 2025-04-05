@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-const URL = "https://67cb833a3395520e6af589db.mockapi.io";
+import { env } from '../../config/env.config';
 
 export default function AdminProducts({products, setProducts}) {
 
@@ -55,7 +54,7 @@ export default function AdminProducts({products, setProducts}) {
     async function getProducts() {
         try {
             setLoading(true);  // Inicia la carga
-            const response = await axios.get(`${URL}/products`);
+            const response = await axios.get(`${env.URL}/products`);
             setProducts(response.data);
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema al obtener los productos: ${error.message}`, "error");

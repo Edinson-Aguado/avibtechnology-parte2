@@ -43,12 +43,16 @@ function OrderProvider({children}) {
         const productInCart = cart.find((prod) => prod.id === product.id);
         
         if (!productInCart) {
-            product.quantity = 1; //Le agrego la propiedad quantity TEMPORAL
-            setCart([...cart, product]);
+            //Seteamos un copia sin afectar el original. Además de que le agregamos un nuevo producto con una propiedad extra (quantity).
+            setCart([...cart, { ...product, quantity: 1 }]);
         } else {
-            product.quantity = product.quantity + 1;
-            setCart([...cart]);
-        }  
+            const updatedCart = cart.map((item) =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 } // Aumenta la cantidad
+                    : item // Deja los otros productos igual
+            );
+            setCart(updatedCart); //Actualizamos el estado del carrito
+        } 
         
     }
 

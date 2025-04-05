@@ -78,7 +78,7 @@ export default function ProductDetail() {
                                 <div className="btns-buy">
                                     <button 
                                         className="add-btn" 
-                                        type="submit"
+                                        type="button"
                                         onClick={() => addProduct(product)}>
                                         Añadir al carrito
                                     </button>

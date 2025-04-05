@@ -1,0 +1,91 @@
+tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color .4s ease-in-out;
+    text-align: center;
+    &:hover {
+        background-color: #e4e1e1;
+    }
+}
+
+/* Celda del nombre del user */
+.name-cell {
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    white-space: nowrap; /* Evita que se divida el nombre */
+    text-transform: capitalize;
+}
+
+/* Celda de correo */
+.correo-cell {
+    padding: .5rem;
+    text-align: center;
+}
+
+.correo-table {
+    font-size: 14px;
+    color: #2261d5;
+    font-weight: 700;
+    text-transform: lowercase;
+}
+
+.normal-cell, .obs-cell {
+    font-size: 16px;
+    font-weight: bold;
+    color: #535353;
+    text-align: center;
+}
+
+.country-cell {
+    text-transform: capitalize;
+}
+
+/* Celda de observacion */
+.obs-cell {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* Celda de acciones */
+.actions-cell {
+    text-align: center;
+    padding: 10px;
+}
+
+/* Contenedor de iconos */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Botones */
+.btn {
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Botón de edición */
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de eliminación */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}

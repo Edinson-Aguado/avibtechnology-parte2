@@ -14,15 +14,12 @@ export default function Home({products}) {
             <main className="main-container-home">
 
                 {
-                    products.map((product) => {
+                    products.map(product => (
                         // DEVUELVE UN COMPONENTE CON LA INFORMACIÓN DE CADA PRODUCTO.
-                        return (
-                            <Product
-                                key={product.id}
-                                product={product}
-                            />
-                        )
-                    })
+                        <Product
+                            key={product.id}
+                            product={product} />
+                    ))
                 }
                 
             </main>

@@ -52,7 +52,10 @@ export default function Header() {
                             <NavLink className="nav-link" to="../../pages/About-us/AboutUs">Sobre nosotros</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/pages/Admin-products">Administrar prodcutos</NavLink>
+                            <NavLink className="nav-link" to="../../pages/Admin-products">Administrar productos</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/pages/AdminUsers/AdminUsers">Administrar usuarios</NavLink>
                         </li>
                     </ul>
                 </nav>
