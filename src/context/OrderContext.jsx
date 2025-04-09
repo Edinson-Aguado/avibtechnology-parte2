@@ -59,7 +59,7 @@ function OrderProvider({children}) {
                 
         if (!productInCart) {
             //Seteamos un copia sin afectar el original. Además de que le agregamos un nuevo producto con una propiedad extra (quantity).
-            setCart([...cart, { ...product, quantity: 1 }]);
+            setCart([...cart, { ...product, quantity: dato }]);
         } else {
             const updatedCart = cart.map((item) =>
                 item.id === product.id
@@ -69,11 +69,12 @@ function OrderProvider({children}) {
             setCart(updatedCart); //Actualizamos el estado del carrito
         }
     }
-    //Agregar producto (cantidad de a 1) a la cart 
+
+    //Agregar producto a la cart
     function addProduct(product, dato) {
 
         if (dato === null) {
-            decidirCantidad(product, cantidadOrder);// dato = 1
+            decidirCantidad(product, cantidadOrder);// hay varias cantidades
         } else {
             decidirCantidad(product, dato);// dato = 1
         }

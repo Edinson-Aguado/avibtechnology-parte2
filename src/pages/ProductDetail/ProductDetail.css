@@ -192,6 +192,12 @@ h3 {
 
 @media screen and (min-width: 820px) and (max-width:  1000px) {
 
+    .main-container-detail-product {
+        .btn-back {
+            margin-top: 80px;
+        }
+    }
+
     .part-1 {
         display: flex;
         flex-direction: row;
@@ -208,6 +214,12 @@ h3 {
 }
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
+
+    .main-container-detail-product {
+        .btn-back {
+            margin-top: 80px;
+        }
+    }
 
     .part-1 {
         display: flex;
@@ -230,6 +242,12 @@ h3 {
 }
 
 @media screen and (min-width: 1201px) {
+
+    .main-container-detail-product {
+        .btn-back {
+            margin-top: 80px;
+        }
+    }
 
     .part-1 {
         display: flex;
