@@ -25,31 +25,31 @@ a.link-whatsapp {
 
 @keyframes move {
     0% {
-        transform: translateX(0); /* Posición inicial */
+        transform: translateX(0); 
     }
     15% {
-        transform: translateX(0); /* Mover hacia la izquierda */
+        transform: translateX(0); 
     }
     25% {
-        transform: translateX(0); /* Mover hacia la izquierda */
+        transform: translateX(0); 
     }
     50% {
-        transform: translateX(-3px); /* Mover hacia la derecha */
+        transform: translateX(-3px); 
     }
     60% {
-        transform: translateX(3px); /* Mover hacia la derecha */
+        transform: translateX(3px); 
     }
     70% {
-        transform: translateX(-3px); /* Mover hacia la izquierda */
+        transform: translateX(-3px); 
     }
     80% {
-        transform: translateX(0); /* Regresar a la posición original */
+        transform: translateX(0); 
     }
     90% {
-        transform: translateX(0); /* Regresar a la posición original */
+        transform: translateX(0); 
     }
     100% {
-        transform: translateX(0); /* Regresar a la posición original */
+        transform: translateX(0); 
     }
     
     
