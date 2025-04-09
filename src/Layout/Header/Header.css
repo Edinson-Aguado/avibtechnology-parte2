@@ -141,8 +141,8 @@
             }
             .cart-count {
                 position: absolute;
-                top: -10px;
-                right: 10px;
+                top: -7px;
+                right: 7px;
                 background-color: rgb(255, 44, 44);
                 color: white;
                 font-size: 12px;
