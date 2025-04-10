@@ -95,21 +95,23 @@ function OrderProvider({children}) {
 
         let updatedCart;
 
-        
         updatedCart = cart.map((prod) => {
             if (prod.id === id) {
                 if (accion === "+") {
                     return { ...prod, quantity: prod.quantity + 1 };
                 } else if (accion === "-") {
-                    if (prod.quantity > 1) {
-                        return { ...prod, quantity: prod.quantity - 1 };
-                    } else {
-                        deleteProductCart(prod);
+                    if (prod.quantity >= 1) {
+                        if (prod.quantity === 1) {
+                            deleteProductCart(prod); 
+                            // No me funciona este apartado, cuando tenemos una unidad y cuando resto me tendría que sacar del carrito el producto.
+                        } else {
+                            return { ...prod, quantity: prod.quantity - 1 };
+                        }
                     }
                 }
             }
             return prod;
-        })
+        });
         setCart(updatedCart);
     }
 

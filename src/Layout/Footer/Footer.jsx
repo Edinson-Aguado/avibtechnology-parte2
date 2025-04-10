@@ -7,12 +7,13 @@ export default function Footer() {
             <footer className="main-footer">
                 <div className="footer-1">
                     <section className="footer-social">
-                        <h3>REDES SOCIALES</h3>
+                        <h3>Redes sociales</h3>
                         <ul>
                             <li>
                                 <a 
                                     target="_blank" 
-                                    className="facebook" 
+                                    className="facebook"
+                                    aria-label="Facebook de AVIB"
                                     href="https://www.facebook.com/profile.php?id=61569006397086"><i className="fab fa-facebook-f"></i>
                                 </a>
                             </li>
@@ -20,7 +21,8 @@ export default function Footer() {
                             <li>
                                 <a 
                                     target="_blank" 
-                                    className="whatsapp" 
+                                    className="whatsapp"
+                                    aria-label="WhatsApp de AVIB"
                                     href="https://wa.me/c/5491127721921">
                                     <i className="fa-brands fa-whatsapp"></i>
                                 </a>
@@ -29,7 +31,8 @@ export default function Footer() {
                             <li>
                                 <a 
                                     target="_blank" 
-                                    className="instagram" 
+                                    className="instagram"
+                                    aria-label="Instagram de AVIB"
                                     href="https://www.instagram.com/avibtechnology/"><i className="fab fa-instagram"></i>
                                 </a>
                             </li>
@@ -37,14 +40,14 @@ export default function Footer() {
                     </section>
                     
                     <section className="footer-brand">
-                        <h3>LOGO</h3>
+                        <h3>Logo</h3>
                         <div className="image">
                             <img loading="lazy" src={logo} alt="Logo de la empresa"/>
                         </div>
                     </section>
                     
                     <section className="footer-info">
-                        <h3>MÁS INFORMACIÓN</h3>
+                        <h3>Información</h3>
                         <div className="container">
                             <div className="footer-links">
                                 <h4>Compañia</h4>
@@ -53,16 +56,6 @@ export default function Footer() {
                                     <li><a href="#">Nuestros servicios</a></li>
                                     <li><a href="#">Políticas de privacidad</a></li>
                                     <li><a href="#">Afiliate</a></li>
-                                </ul>
-                            </div>
-                            <div className="footer-links">
-                                <h4>Tienda</h4>
-                                <ul>
-                                    <li><a href="#">Accesorios</a></li>
-                                    <li><a href="#">Cámaras</a></li>
-                                    <li><a href="#">Casas inteligentes</a></li>
-                                    <li><a href="#">Videoporteros</a></li>
-                                    <li><a href="#">Control de acceso</a></li>
                                 </ul>
                             </div>
                             <div className="footer-links">

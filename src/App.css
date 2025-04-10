@@ -1,13 +1,13 @@
-html, body, #root {
-    height: 100%;
+#root {
+    height: 100dvh;
 }
 
 .app-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
-.main-content {
+.main-content-routes {
     flex: 1; /* Este ocupa el espacio restante y empuja el footer abajo */
 }
