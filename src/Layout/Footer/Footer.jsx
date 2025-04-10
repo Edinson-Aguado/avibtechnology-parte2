@@ -48,7 +48,7 @@ export default function Footer() {
                     
                     <section className="footer-info">
                         <h3>Información</h3>
-                        <div className="container">
+                        <div className="container-info">
                             <div className="footer-links">
                                 <h4>Compañia</h4>
                                 <ul>

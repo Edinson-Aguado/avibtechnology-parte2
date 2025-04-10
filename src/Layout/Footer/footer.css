@@ -1,16 +1,17 @@
 .main-footer {
-    color: var(--text-color);
-    background-color: #020202;
+    background-color: #eaf1f7;
     margin-top: 4rem;
     font-size: 16px;
     display: flex;
     flex-direction: column;
+    border-top: 1px solid var(--secondary-color);
 
     .footer-1 {
         flex-wrap: wrap;
         gap: 2rem;
 
-        section, .footer-social {
+        
+        section {
             padding: 1rem;
             display: flex;
             flex-direction: column;
@@ -22,29 +23,33 @@
                 color: var(--secondary-color);
                 text-align: center;
             }
+        }
+
+        .footer-social {
+            border-bottom: 2px solid var(--secondary-color);
             ul  {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 30px;
                 padding: 0;
-                margin: 2rem 0;
+                margin: 1rem 0;
                 li {
                     a {
                         border-radius: 50%;
                         text-decoration: none; 
                         color: white;
-                        background-color: rgba(255, 255, 255, 0.05);
-                        padding: 0.8rem 1rem;
+                        padding: 1rem;
                         margin-bottom: 10px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: background-color .4s ease-in-out, color .4s ease-in-out;
-                        
+                        font-size: 1.5rem;
+                        display: inline-block;
+                        transition: background-color .4s ease-in-out, color .4s ease-in-out, transform .4s ease-in-out;
 
                         &.facebook {
                             background-color: #3b5998;
+                            padding: 1rem 1.4rem;
+                            font-size: 1.4rem;
+                            
 
                             &:hover {
                                 color: #3b5998;
@@ -52,6 +57,7 @@
                         }
                         &.whatsapp {
                             background-color: #25D366;
+                            color: white;
                             
                             &:hover {
                                 color: #25D366;
@@ -59,16 +65,15 @@
                         }
                         &.instagram {
                             background: radial-gradient(circle at 30% 30%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+                            color: white;
                             
                             &:hover {
                                 color: #d6249f;
                             }
                         }
                         &:hover {
-                            background-color: white;
                             color: inherit;
                             transform: scale(1.1);
-                            box-shadow: 0 0 15px var(--secondary-color);
                         }
                     }
                     &:nth-child(1) a { 
@@ -81,7 +86,7 @@
                         transition-delay: 0.3s; 
                     }
                 }
-            }  
+            } 
         }
         
         .footer-brand {
@@ -89,10 +94,10 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 0;
+            padding: 20px;
+            border-bottom: 2px solid var(--secondary-color);
 
             h3 {
-                margin: 1rem 0;
                 font-size: 1.5rem;
                 font-weight: 700;
                 color: var(--secondary-color);
@@ -109,8 +114,9 @@
         .footer-info {
             display: flex;
             flex-direction: column;
+            color: #3b5998;
 
-            .container {
+            .container-info {
                 
                 .footer-links {
                     display: flex;
@@ -123,6 +129,7 @@
                         padding: 1rem 1.2rem;
                         border-bottom: 2px solid var(--secondary-color);
                     }
+
                     ul {
                         display: flex;
                         flex-direction: column;
@@ -131,20 +138,20 @@
                         li {
                             a {
                                 display: inline-block;
-                                background-color: transparent !important;
+                                background-color: transparent;
                                 text-align: center;
                                 text-decoration: none;
                                 font-size: 14px;
                                 padding: 1rem;
                                 font-weight: 700;
-                                color: var(--text-color);
+                                color: #3b5998;
                                 border-bottom: 2px solid transparent;
                                 transition: border-bottom .4s ease, padding .4s ease;
                                 animation: borderRadiusChange 4s infinite;
 
                                 &:hover {
                                     border-bottom: 2px solid var(--secondary-color);
-                                    box-shadow: 3px 3px 50px var(--secondary-color);
+                                    box-shadow: 3px 3px 5px 1px #465c8a;
                                 }
                             }
                         }
@@ -162,68 +169,80 @@
             margin-bottom: 0;
             font-size: .9rem;
             font-weight: 700;
+            color: white;
         }
     }
 }
 
 @media screen and (min-width: 820px) and (max-width: 1000px) {
     .main-footer {
+        display: flex;
         flex-direction: column;
 
         .footer-1 {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: nowrap;
+
             .footer-social {
+                border-left: 1px solid var(--secondary-color);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px;
                 flex: 1;
-                border-bottom: 2px solid var(--secondary-color) !important;
                 
                 h3 {
                     margin: 3rem 0;
                 }
                 ul {
                     gap: 60px;
-                    li {
-                        a {
-                            scale: 1.5;
-                        }
-                    }
                 }
             }
     
             .footer-brand {
                 flex: 1;
                 padding-bottom: 2rem;
-                border-bottom: 2px solid var(--secondary-color) !important;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px;
     
                 h3 {
                     margin: 3rem 0;
                 }
                 
                 .image {
-                    height: 100px;
-                    margin: 20px;
+                    height: 200px;
+                    width: 200px;
     
                     img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
-                        box-shadow: 7px 7px 100px 20px var(--secondary-color);
                     }
                 }
             }
     
             .footer-info {
                 flex: 1;
+                border-right: 1px solid var(--secondary-color);
                 display: flex;
                 flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px;
     
                 h3 {
                     margin: 3rem 0;
                 }
     
-                .container {
+                .container-info {
                     display: flex;
                     flex-direction: row;
                     align-items: flex-start;
                     justify-content: center;
+                    flex-wrap: wrap;
                 }
             }
         }
@@ -241,7 +260,7 @@
             .footer-social {
                 flex: 1;
                 order: 2;
-                border-bottom: 2px solid var(--secondary-color) !important;
+                padding: 20px;
                 
                 h3 {
                     margin: 3rem 0;
@@ -259,23 +278,22 @@
             .footer-brand {
                 flex: 1;
                 justify-content: flex-start;
-                padding-top: 1rem;
+                padding: 20px;
                 align-items: center;
-                gap: 170px;
-                border-right: 2px solid var(--secondary-color);
+                gap: 1rem;
+                border-right: 1px solid var(--secondary-color);
     
                 h3 {
                     margin: 3rem 0;
                 }
                 
                 .image {
-                    height: 100px;
+                    height: 250px;
     
                     img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
-                        box-shadow: 7px 7px 100px 20px var(--secondary-color);
                     }
                 }
             }
@@ -284,13 +302,13 @@
                 display: flex;
                 flex-direction: column;
                 flex: 1;
-                border-right: 2px solid var(--secondary-color);
+                border-right: 1px solid var(--secondary-color);
     
                 h3 {
                     margin: 3rem 0;
                 }
     
-                .container {
+                .container-info {
                     display: flex;
                     flex-direction: row;
                     align-items: flex-start;
@@ -317,7 +335,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: start;
-                gap: 170px;
+                gap: 70px;
                 padding: 0 4rem;
                 flex: 1;
 
@@ -325,7 +343,7 @@
                     gap: 80px;
                     li {
                         a {
-                            scale: 2;
+                            scale: 1.5;
                         }
                     }
                 }
@@ -337,7 +355,7 @@
                 flex-direction: column;
                 justify-content: start;
                 align-items: center;
-                gap: 170px;
+                gap: 70px;
                 border-right: 2px solid var(--secondary-color);
 
                 h3 {
@@ -347,7 +365,6 @@
                 img {
                     scale: 2;
                     object-fit: cover;
-                    box-shadow: 7px 7px 100px 20px var(--secondary-color);
                 }
             }
             .footer-info {
@@ -361,7 +378,7 @@
                     color: var(--secondary-color);
                     padding: 10px;
                 }
-                .container {
+                .container-info {
                     display: flex;
                     flex-direction: row;
                     flex-grow: 1;
