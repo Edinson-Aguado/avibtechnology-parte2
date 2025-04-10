@@ -12,6 +12,7 @@
         position: relative; 
         padding: 15px;
         width: 100%;
+        min-height: 230px;
         border-radius: 10px;
         background-color: rgb(247, 247, 246);
         box-shadow:  2px 2px 15px #00000080;
@@ -80,23 +81,18 @@
             }
         }
         &.feacture-1 {
-            /* background-color: #1a60c369; */
             border-top: 20px solid #1a60c369;
-            /* border-left: 20px solid #1a60c369; */
         }
     
         &.feacture-2 {
-            /* background-color: #10b42669; */
             border-bottom: 20px solid #10b42669;
         }
     
         &.feacture-3 {
-            /* background-color: #8f055e69; */
             border-top: 20px solid #8f055e69;
         }
     
         &.feacture-4 {
-            /* background-color: #b6da1469; */
             border-bottom: 20px solid #b6da1469;
         }
     }
