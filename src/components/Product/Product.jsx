@@ -26,6 +26,15 @@ export default function Product({product}) {
                 <div className="card-content">
 
                     <div className="card-image">
+                        {
+                            product.discount > 0 && 
+                            (
+                                <div className={`card-desc`}>
+                                    <span>{product.discount}% OFF</span>
+                                </div>
+                            )
+                        }
+                        
                         <img 
                             src={product.image} alt="Imágen Cámara H1C" 
                         />
@@ -34,6 +43,7 @@ export default function Product({product}) {
                     <div className={`card-status ${getStatus(product?.status)}`}>
                         {product?.status}
                     </div>
+                    
                     <div className="btn-product ">
 
                         <Link 

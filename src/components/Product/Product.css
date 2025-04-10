@@ -31,6 +31,7 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        overflow: hidden;
 
         .card-status {
             position: absolute;
@@ -53,14 +54,32 @@
         }
 
         .card-image {
-            
-            position: relative;
             max-height: 250px;
             max-width: 270px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: white;
+
+            .card-desc {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(200, 17, 17);
+                color: white;
+                padding: 1rem;
+                font-weight: 700;
+                position: absolute;
+                top: 15px;
+                right: -65px;
+                transform: rotateY('45');
+                font-weight: 700;
+                transform: rotate(45deg);
+                width: 200px;
+                height: 40px;
+                text-align: center;
+                z-index: 5;
+            }
 
             img {
                 max-height: 250px;
@@ -122,8 +141,6 @@
                 }
             }
             
-            
-    
             &:hover {
                 .card-buy {
                     transform: translateY(0);
