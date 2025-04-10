@@ -351,6 +351,7 @@
                 justify-content: start;
                 gap: 70px;
                 flex: 1;
+                border-bottom: none;
 
                 ul {
                     gap: 80px;
@@ -370,6 +371,7 @@
                 align-items: center;
                 gap: 70px;
                 border-right: 2px solid var(--secondary-color);
+                border-bottom: none;
 
                 h3 {
                     padding: 10px 20px;
