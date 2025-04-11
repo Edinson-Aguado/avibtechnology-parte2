@@ -83,35 +83,23 @@ function OrderProvider({children}) {
 
     //Eliminar el producto de la cart
     function deleteProductCart(product) {
-
-        const index = cart.findIndex((prod) => prod.id === product.id);
-        const copyCart = cart.splice(index, 1);
-        setCart([...copyCart]);
-
+        const updatedCart = cart.filter((prod) => prod.id !== product.id);
+        setCart(updatedCart);
     }
 
     //Editar la cantidad de un producto en la cart
     function editQuantity(id, accion) {
-
-        let updatedCart;
-
-        updatedCart = cart.map((prod) => {
+        const updatedCart = cart.map((prod) => {
             if (prod.id === id) {
                 if (accion === "+") {
                     return { ...prod, quantity: prod.quantity + 1 };
                 } else if (accion === "-") {
-                    if (prod.quantity >= 1) {
-                        if (prod.quantity === 1) {
-                            deleteProductCart(prod); 
-                            // No me funciona este apartado, cuando tenemos una unidad y cuando resto me tendría que sacar del carrito el producto.
-                        } else {
-                            return { ...prod, quantity: prod.quantity - 1 };
-                        }
-                    }
+                    return { ...prod, quantity: prod.quantity - 1 };
                 }
             }
             return prod;
-        });
+        }).filter(prod => prod.quantity > 0); // Elimina productos con 0 cantidad
+    
         setCart(updatedCart);
     }
 
