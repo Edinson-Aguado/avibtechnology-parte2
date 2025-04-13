@@ -6,7 +6,7 @@ import { env } from "../../config/env.config";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading/Loading";
 import { useOrder } from "../../context/OrderContext";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProductDetail() {
@@ -51,14 +51,16 @@ export default function ProductDetail() {
                     {/* IMAGE */}
                     <div className="image-product">
                         <img src={product?.image} alt={product?.name} />
+
+                        {/* CATEGORY */}
+                        <div className="category">
+                            <span>{product?.category ?? 'Categoria no disponible'}</span>
+                        </div>
                     </div>
                     <div className="detail-product">
                         <div className="about-product-buy">
                             
-                            {/* CATEGORY */}
-                            <div className="category">
-                                <span>{product?.category ?? 'Categoria no disponible'}</span>
-                            </div>
+                            
                             {/* NAME */}
                             <h3>{product?.name}</h3>
                             {/* PRICE */}
@@ -83,11 +85,19 @@ export default function ProductDetail() {
                                         value={cantidadOrder}
                                         onChange={(e) => setCantidad(Number(e.target.value))}
                                     />
+                                    <input 
+                                        type="text"
+                                        id="code-promotional"
+                                        placeholder="Código promocional"
+                                    />
                                     <div className="btns-buy">
                                         <button 
                                             className="add-btn" 
                                             type="button"
                                             onClick={() => addProduct(product, null)}>
+                                                <FontAwesomeIcon 
+                                                    icon={faCartShopping} 
+                                                    className='icon-cart'/>
                                             Añadir al carrito
                                         </button>
 

@@ -2,15 +2,14 @@ import './Header.css';
 import logo from "../../assets/images/logo.png"
 import imagenPerfil from "../../assets/images/imagen-perfil.png";
 import { NavLink } from "react-router-dom";
-
 import { useOrder } from '../../context/OrderContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header() {
 
-    // const [cartCount] = useState(0);
-    const {toggleCart, count} = useOrder();
+    const {count, toggleCart} = useOrder();
+
 
     return (
         <>
@@ -43,16 +42,16 @@ export default function Header() {
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="../pages/Register/Register">Registrarse</NavLink>
+                            <NavLink className="nav-link" to="/pages/Register/Register">Registrarse</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="../pages/Contact/Contact">Contacto</NavLink>
+                            <NavLink className="nav-link" to="/pages/Contact/Contact">Contacto</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="../../pages/About-us/AboutUs">Sobre nosotros</NavLink>
+                            <NavLink className="nav-link" to="/pages/About-us/AboutUs">Sobre nosotros</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="../../pages/Admin-products">Administrar productos</NavLink>
+                            <NavLink className="nav-link" to="/pages/Admin-products">Administrar productos</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/pages/AdminUsers/AdminUsers">Administrar usuarios</NavLink>
@@ -65,7 +64,10 @@ export default function Header() {
                     <div className="cart-container">
                         
                         <div 
-                            className='user-cart' onClick={() => toggleCart()}>
+                            className='user-cart' 
+                            onClick={() => toggleCart()
+                            }>
+
                             <FontAwesomeIcon
                                 className='icon-carrito'
                                 icon={faShoppingCart}
@@ -76,6 +78,7 @@ export default function Header() {
                                 className="cart-count">
                                 {count}
                             </span>
+
                         </div>
                         
                         

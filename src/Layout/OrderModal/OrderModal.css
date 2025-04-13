@@ -1,0 +1,81 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(84, 84, 84, 0.662);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    animation: showIn .5s ease-in-out forwards;
+
+    .modal-content {
+        padding: 10px;
+        color: #eeeeee;
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        opacity: 0;
+        transform: translateY(-100px);
+        transition: opacity .4s ease-in-out, transform .5s ease-in-out;
+        animation: fadeIn .3s ease-in-out forwards;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width:  819px) {
+
+    .modal-overlay {
+        .modal-content {
+            width: 75%;
+        }
+    }
+
+}
+@media screen and (min-width: 820px) and (max-width:  1000px) {
+
+    .modal-overlay {
+        .modal-content {
+            width: 70%;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+
+    .modal-overlay {
+        .modal-content {
+            width: 75%;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1201px) {
+
+    .modal-overlay {
+        .modal-content {
+            width: 80%;
+        }
+    }
+
+}
+
+@keyframes fadeIn {
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes showIn {
+
+    to {
+        opacity: 1;
+    }
+}

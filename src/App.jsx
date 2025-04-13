@@ -13,8 +13,8 @@ import Footer from './Layout/Footer/Footer';
 import WhatsApp from './components/WhatsApp/WhatsApp';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Order from './pages/Order/Order';
-import OrderSidebar from './Layout/OrderSideBar/OrderSideBar';
 import { env } from './config/env.config';
+import OrderModal from './Layout/OrderModal/OrderModal';
 
 export default function App() {
 
@@ -46,7 +46,7 @@ export default function App() {
         <div className="app-container">
             <WhatsApp />
             <Header />
-            <OrderSidebar />
+            <OrderModal/>
 
             <main className="main-container-routes">
                 <Routes>

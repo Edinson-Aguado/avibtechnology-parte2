@@ -84,9 +84,9 @@ export default function Product({product}) {
                         </span>
                         {product?.price}
                     </div>
-                    <div className="description">
+                    {/* <div className="description">
                         {product?.description}
-                    </div>
+                    </div> */}
                     <div className="agregar-carrito">
                         <button 
                             title='Añadir al carrito' 

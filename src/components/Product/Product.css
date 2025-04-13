@@ -22,8 +22,6 @@
         }
     }
 
-    
-
     .card-content {
         overflow: hidden;
         position: relative;
@@ -86,7 +84,7 @@
                 width: 100%;
                 max-width: 250px;
                 object-fit: cover;
-                object-position: bottom;
+                object-position: center;
             }
         }
 
@@ -182,16 +180,15 @@
         }
 
         .card-price {
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.2rem;
             padding: .5rem;
-            border-radius: 10px;
+            color: white;
+            margin-bottom: -20px;
 
             .peso-signal {
-                color: white;
-                margin-right: 5px;
-            }
-            
+                margin-right: 3px;
+            }            
         }
         .description {
             border-left: 1px solid rgba(255, 255, 255, 0.388);

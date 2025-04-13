@@ -20,7 +20,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
 }
 
 body {
@@ -30,7 +30,6 @@ body {
     min-height: 100dvh;
     position: relative;
     overflow-x: hidden;
-    
 
     h2 {
         font-size: 2rem;

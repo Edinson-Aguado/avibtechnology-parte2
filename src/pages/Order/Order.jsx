@@ -10,10 +10,6 @@ export default function Order() {
 
     return (
         <>
-            <OtroTitle
-                titulo="Carrito de compras de Posteos"
-            />
-    
             <div className="order-container">
                 <button 
                     className="button-close"
@@ -26,7 +22,7 @@ export default function Order() {
                         <tr>
                             <th>Image</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
+                            <th>Valor</th>
                             <th>Cantidad</th>
                             <th>Subtotal</th>
                         </tr>
@@ -43,7 +39,7 @@ export default function Order() {
                                             <img src={product.image} alt={product.name} />
                                         </td>
                                         <td>{ product.name }</td>
-                                        <td>{ product.price }</td>
+                                        <td>{ product.price.toFixed(2) }</td>
                                         <td className="quantity-container">
                                             
                                             <div className="cantidades">

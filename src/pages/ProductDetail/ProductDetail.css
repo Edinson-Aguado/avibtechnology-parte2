@@ -1,17 +1,17 @@
 /* Contenedor principal del detalle del producto */
 .main-container-detail-product {
     margin: 2rem auto;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    max-width: 1200px;
+    max-width: 500px;
 
     .btn-back {
         background-color: #333;
-        margin-top: 40px;
+        margin-top: 20px;
         color: #ffffff;
         padding: 12px 16px;
         border: none;
@@ -57,8 +57,10 @@
     max-width: 100%;
     margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 20px;
 }
 
 .image-product img {
@@ -108,6 +110,13 @@ h3 {
     color: #11a02e;
 }
 
+.about-product {
+    text-align: justify;
+    font-weight: 600;
+    color: #200e68;
+    padding: .5rem;
+}
+
 /* Formulario de cantidad y botones */
 .add-info form {
     display: flex;
@@ -122,14 +131,30 @@ h3 {
 }
 
 .add-info input {
-    padding: 10px;
+    padding: .3rem 0;
     font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid #44444483;
+    border-radius: 8px;
     width: 100px;
     text-align: center;
+    background-color: white;
+    color: #444;
+    outline: none;
+
 }
 
+.add-info {
+    form {
+        input#code-promotional {
+            width: 100%;
+            text-align: start;
+            padding: .5rem;
+            color: #0d1e8d;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+}
 .btns-buy button {
     padding: 10px 20px;
     margin: 10px;
@@ -149,6 +174,11 @@ h3 {
 
 .btns-buy .add-btn {
     background-color: #dd4408;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 
     &:hover {
         background-color: #b13f12;
@@ -193,6 +223,7 @@ h3 {
 @media screen and (min-width: 820px) and (max-width:  1000px) {
 
     .main-container-detail-product {
+        max-width: 800px;
         .btn-back {
             margin-top: 80px;
         }
@@ -216,15 +247,16 @@ h3 {
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
 
     .main-container-detail-product {
+        max-width: 1000px;
         .btn-back {
-            margin-top: 80px;
+            margin-top: 50px;
         }
     }
 
     .part-1 {
         display: flex;
         flex-direction: row;
-        margin-top: 4rem;
+        margin-top: 0;
         gap: 10px;
 
         .image-product {
@@ -244,15 +276,16 @@ h3 {
 @media screen and (min-width: 1201px) {
 
     .main-container-detail-product {
+        max-width: 1100px;
         .btn-back {
-            margin-top: 80px;
+            margin-top: 40px;
         }
     }
 
     .part-1 {
         display: flex;
         flex-direction: row;
-        margin-top: 4rem;
+        margin-top: 0;
         gap: 10px;
 
         .image-product {

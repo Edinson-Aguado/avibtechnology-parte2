@@ -10,39 +10,6 @@ import foto9 from '../../assets/images/carousel/9.png';
 import foto10 from '../../assets/images/carousel/10.png';
 import './Carousel.css';
 
-// export default function Carousel() {
-//     return (
-//         <>
-//             <h2>ALGUNAS MUESTRAS</h2>
-//             <section className="carousel">
-//                 <div className="carousel-container">
-                    
-//                     <div className="element">
-//                         <img src={foto2} alt="Imágen de la cámara " />
-//                     </div>
-//                     <div className="element">
-//                         <img src={foto3} alt="Imágen de la cámara " />
-//                     </div>
-//                     <div className="element">
-//                         <img src={foto4} alt="Imágen de la cámara " />
-//                     </div>
-//                     <div className="element">
-//                         <img src={foto5} alt="Imágen de la cámara " />
-//                     </div>
-//                     <div className="element">
-//                         <img src={foto6} alt="Imágen de la cámara " />
-//                     </div>
-//                     <div className="element">
-//                         <img src={foto1} alt="Imágen de la cámara " />
-//                     </div>
-                    
-                    
-//                 </div>
-//             </section>
-//         </>
-//     )
-// }
-
 export default function Carousel() {
     // Se declara carouselContainer como una variable para almacenar una referencia al contenedor del carrusel, que se asignará más adelante con ref.
     let carouselContainer = null;
