@@ -13,21 +13,6 @@
     opacity: 0;
     transition: opacity .3s ease-in-out;
     animation: showIn .5s ease-in-out forwards;
-    h2 {
-        color: aliceblue;
-    }
-
-    /* .modal-content {
-        padding: 10px;
-        color: #eeeeee;
-        border-radius: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        opacity: 0;
-        transform: translateY(-100px);
-        transition: opacity .4s ease-in-out, transform .5s ease-in-out;
-        animation: fadeIn .3s ease-in-out forwards;
-    } */
 
     .modal-content {
         background-color: #fff; /* fondo blanco */
@@ -35,10 +20,10 @@
         border-radius: 20px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         width: 90%;
-        max-width: 420px; /* típico ancho de móvil */
+        max-width: 420px;
         max-height: 90vh;
         overflow-y: auto;
-        padding: 1.5rem 1rem 1.5rem 1.5rem;
+        padding: 1.5rem;
         position: relative;
         opacity: 0;
         transform: translateY(-100px);
@@ -58,10 +43,10 @@
             cursor: pointer;
             z-index: 10;
             transition: background-color 0.3s;
-        }
-        
-        .button-close:hover {
-            background-color: #ccc;
+            
+            &:hover {
+                background-color: #ccc;
+            }
         }
     }
     
@@ -72,6 +57,7 @@
     .modal-overlay {
         .modal-content {
             width: 75%;
+            max-width: 75%;
         }
     }
 
@@ -81,6 +67,7 @@
     .modal-overlay {
         .modal-content {
             width: 70%;
+            max-width: 70%;
         }
     }
 
@@ -91,6 +78,7 @@
     .modal-overlay {
         .modal-content {
             width: 75%;
+            max-width: 75%;
         }
     }
 
@@ -101,6 +89,7 @@
     .modal-overlay {
         .modal-content {
             width: 80%;
+            max-width: 80%;
         }
     }
 

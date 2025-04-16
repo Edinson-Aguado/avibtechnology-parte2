@@ -133,11 +133,15 @@ export default function Order() {
                             <FontAwesomeIcon icon={faMinus} />
                             </button>
                         </div>
+                        <div className="subtotal">
+                            <h4>Subtotal</h4>
+                            <p>$ { (product.price - (product.price * product.discount)) * product.quantity }</p>
+                        </div>
                     </div>
                 ))}
                 <div className="order-summary">
                     
-                    <p>Envíos<br /><small>Los pedidos superiores a USD 300 tienen envío GRATIS</small></p>
+                    <p>Envíos<br /><small>Los pedidos superiores a U$D 300 tienen envío GRATIS</small></p>
                     <h3>Total: ${total}</h3>
                     <div className="order-buttons">
                         <button className="buy-button">Comprar</button>
