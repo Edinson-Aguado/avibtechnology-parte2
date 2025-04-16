@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useOrder } from '../../context/OrderContext';
+import { color } from 'framer-motion';
 
 export default function Product({product}) {
 
@@ -30,7 +31,7 @@ export default function Product({product}) {
                             product.discount > 0 && 
                             (
                                 <div className={`card-desc`}>
-                                    <span>{product.discount}% OFF</span>
+                                    <span>{(product.discount*100).toFixed(0)}% OFF</span>
                                 </div>
                             )
                         }
@@ -79,14 +80,19 @@ export default function Product({product}) {
 
                     </h3>
                     <div className="card-price">
-                        <span className="peso-signal">
-                            $
-                        </span>
-                        {product?.price}
+                        
+                        {
+                            product?.discount > 0 ? (
+                                <>
+                                    <del style={{color:"#444"}}>${product.price}</del>{" "}
+                                    ${product.price - (product.price * product.discount)}
+                                </>
+                            ) : (
+                                <>{product.price}</>
+                            )
+                        }
+                        
                     </div>
-                    {/* <div className="description">
-                        {product?.description}
-                    </div> */}
                     <div className="agregar-carrito">
                         <button 
                             title='Añadir al carrito' 

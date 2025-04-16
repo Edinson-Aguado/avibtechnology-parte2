@@ -184,11 +184,7 @@
             font-size: 1.2rem;
             padding: .5rem;
             color: white;
-            margin-bottom: -20px;
-
-            .peso-signal {
-                margin-right: 3px;
-            }            
+            margin-bottom: -20px;           
         }
         .description {
             border-left: 1px solid rgba(255, 255, 255, 0.388);

@@ -113,7 +113,16 @@ export default function Order() {
                         <div className="product-info">
                             <h4>{product.name}</h4>
                             <p>{product?.description || 'Descripción'}</p>
-                            <span className="price">$ {product.price}</span>
+                            {
+                                product?.discount > 0 ? (
+                                    <>
+                                        <del style={{color:"#444"}}>${product.price}</del>{" "}
+                                        ${product.price - (product.price * product.discount)}
+                                    </>
+                                ) : (
+                                    <>{product.price}</>
+                                )
+                            }
                         </div>
                         <div className="product-quantity">
                             <button onClick={() => editQuantity(product.id, "+")}>
