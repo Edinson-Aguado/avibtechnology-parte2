@@ -1,6 +1,6 @@
 import { useOrder } from "../../context/OrderContext";
 import './Order.css';
-import { faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Order() {
@@ -105,40 +105,51 @@ export default function Order() {
                     >
                     <FontAwesomeIcon icon={faXmark}/>
                 </button>
-                {cart.map((product) => (
-                    <div className="order-item" key={product.id}>
-                        <div className="product-image" style={{ backgroundColor: "#e0f7ff" }}>
-                            <img src={product.image} alt={product.name} />
-                        </div>
-                        <div className="product-info">
-                            <h4>{product.name}</h4>
-                            <p>{product?.description || 'Descripción'}</p>
-                            {
-                                product?.discount > 0 ? (
-                                    <>
-                                        <del style={{color:"#444"}}>${product.price}</del>{" "}
-                                        ${product.price - (product.price * product.discount)}
-                                    </>
-                                ) : (
-                                    <>{product.price}</>
-                                )
-                            }
-                        </div>
-                        <div className="product-quantity">
-                            <button onClick={() => editQuantity(product.id, "+")}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            </button>
-                            <span>{product.quantity}</span>
-                            <button onClick={() => editQuantity(product.id, "-")}>
-                            <FontAwesomeIcon icon={faMinus} />
-                            </button>
-                        </div>
-                        <div className="subtotal">
-                            <h4>Subtotal</h4>
-                            <p>$ { (product.price - (product.price * product.discount)) * product.quantity }</p>
-                        </div>
+                
+
+                {cart.length === 0 ? (
+                    <div className="empty-cart">
+                        <FontAwesomeIcon icon={faCartShopping} size="4x" />
+                        <p>Tu carrito está vacío...</p>
                     </div>
-                ))}
+                ) : (
+                    cart.map((product) => (
+                
+                        <div className="order-item" key={product.id}>
+                            <div className="product-image" style={{ backgroundColor: "#e0f7ff" }}>
+                                <img src={product.image} alt={product.name} />
+                            </div>
+                            <div className="product-info">
+                                <h4>{product.name}</h4>
+                                <p>{product?.description || 'Descripción'}</p>
+                                {
+                                    product?.discount > 0 ? (
+                                        <>
+                                            <del style={{color:"#444"}}>${product.price}</del>{" "}
+                                            ${product.price - (product.price * product.discount)}
+                                        </>
+                                    ) : (
+                                        <>{product.price}</>
+                                    )
+                                }
+                            </div>
+                            <div className="product-quantity">
+                                <button onClick={() => editQuantity(product.id, "+")}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                </button>
+                                <span>{product.quantity}</span>
+                                <button onClick={() => editQuantity(product.id, "-")}>
+                                <FontAwesomeIcon icon={faMinus} />
+                                </button>
+                            </div>
+                            <div className="subtotal">
+                                <h4>Subtotal</h4>
+                                <p>$ { (product.price - (product.price * product.discount)) * product.quantity }</p>
+                            </div>
+                        </div>
+                    ))
+                )}
+                
                 <div className="order-summary">
                     
                     <p>Envíos<br /><small>Los pedidos superiores a U$D 300 tienen envío GRATIS</small></p>
