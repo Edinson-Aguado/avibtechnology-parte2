@@ -1,153 +1,139 @@
-.order-container {
+.order-items {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: aliceblue;
-    color: black;
-    padding: .7em;
-    border-radius: 10px;
-    gap: 10px;
-    position: relative;
-    max-width: 100%;
+    gap: 1rem;
+    width: 100%;
+    max-height: 70dvh;
+}
 
-    .button-close {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        text-align: center;
-        padding: .2rem .4rem;
-        border: none;
-        background-color: rgb(219, 0, 0);
-        color: white;
-        font-weight: bold;
-        outline: none;
-        font-size: 1rem;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color .4s ease-in-out;
-
-        &:hover {
-            background-color: rgb(185, 30, 30);
-        }
-    }
-
-    .order-table {
-        border-collapse: collapse;
-        margin: 0 auto;
-        overflow-x: hidden;
-        width: 100%;
-    
-        th {
-            padding: 5px 1px;
-            max-width: 80px;
-            &:hover {
-                background-color: transparent !important;
-            }
-        }
-
-        td {
-            padding: 3px 5px;
-        }
-    
-        tbody {
-    
-            tr {
-                td.quantity-container {
-                    .cantidades {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        height: 100%;
-                        .quantity-btn {
-                            background-color: #007bff;
-                            color: white;
-                            border: none;
-                            padding: 1px 3px;
-                            border-radius: 3px;
-                            outline: none;
-                            font-size: .7rem;
-                            cursor: pointer;
-                            transition: background-color 0.3s ease;
-    
-                            &:hover {
-                                background-color: #0056b3;
-                            }
-                        }
-                        span {
-                            font-size: .9rem;
-                            font-weight: bold;
-                        }
-                    }
-                    
-                }
-                &:hover {
-                    background-color: #1ca6c93d;
-                }
-                td {
-                    img {
-                        max-width: 50px;
-                        object-fit: cover;
-                    }
-                }
-            }
-        }
-    
-        tfoot {
-            tr {
-                background-color: #fcfcfcf1;
-                color: rgb(34, 174, 41);
-                width: 100%;
-                
-                
-                td {
-                    font-weight: bold;
-                    padding: .5rem 0;
-                    font-size: 1rem;
-                    text-align: right;
-                    padding: .7rem;
-                }
-            }
-        }
-    }
-
-    .order-buttons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 1.3rem;
-        
-        .button {
-            text-align: center;
-            padding: .5rem;
-            border: none;
-            color: white;
-            font-weight: 700;
-            outline: none;
-            font-size: .7rem;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: background-color .4s ease-in-out;
-            &:hover {
-                &.btn-finish {
-                    background-color: rgb(16, 129, 16);
-                }
-                &.btn-clean {
-                    background-color: rgb(134, 31, 15);
-                }
-            }
-
-            &.btn-finish {
-                background-color: rgb(21, 175, 21);
-            }
-            
-            &.btn-clean {
-                background-color: rgb(175, 42, 21);
-            }
-        }
+.order-container-title {
+    text-align: center;
+    span {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: capitalize;
     }
 }
 
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+.product-info h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.product-info p {
+    margin: .3rem .3rem .3rem 0;
+    color: #888;
+    font-size: 0.8rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.product-quantity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.product-quantity button {
+    background-color: #ddd;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-quantity button:hover {
+    background-color: #aaa;
+}
+
+.product-quantity span {
+    font-weight: bold;
+}
+
+/*------------------*/
+.order-summary {
+    margin-top: 2rem;
+    text-align: right;
+}
+
+.order-summary p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.order-summary h3 {
+    font-size: 1.4rem;
+    color: rgb(22, 166, 20);
+    margin: 0.5rem 0;
+}
+.order-buttons {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .buy-button, .btn-clean {
+        background-color: black;
+        color: white;
+        width: 40%;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-clean {
+        background-color: rgb(218, 33, 33);
+
+        &:hover {
+            background-color: rgb(152, 15, 15);
+        }
+    }
+    .next-button:hover {
+        background-color: #333;
+    }
+}

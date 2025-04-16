@@ -9,15 +9,7 @@ export default function Footer() {
                     <section className="footer-social">
                         <h3>Redes sociales</h3>
                         <ul>
-                            <li>
-                                <a 
-                                    target="_blank" 
-                                    className="facebook"
-                                    aria-label="Facebook de AVIB"
-                                    href="https://www.facebook.com/profile.php?id=61569006397086"><i className="fab fa-facebook-f"></i>
-                                </a>
-                            </li>
-
+                            
                             <li>
                                 <a 
                                     target="_blank" 
@@ -25,6 +17,15 @@ export default function Footer() {
                                     aria-label="WhatsApp de AVIB"
                                     href="https://wa.me/c/5491127721921">
                                     <i className="fa-brands fa-whatsapp"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a 
+                                    target="_blank" 
+                                    className="facebook"
+                                    aria-label="Facebook de AVIB"
+                                    href="https://www.facebook.com/profile.php?id=61569006397086"><i className="fab fa-facebook-f"></i>
                                 </a>
                             </li>
                             

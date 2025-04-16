@@ -87,7 +87,10 @@ export default function Header() {
                         <img
                             loading='lazy'
                             src={imagenPerfil} alt="User avatar"
-                            className="user-picture" />
+                            className="user-picture" 
+                            id="user-picture" 
+                        />
+                        <label htmlFor="user-picture">Ingresar</label>
                     </div>
                 </div>
             </header>

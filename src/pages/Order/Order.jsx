@@ -1,4 +1,3 @@
-import OtroTitle from "../../components/Title/OtroTitle";
 import { useOrder } from "../../context/OrderContext";
 import './Order.css';
 import { faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -10,85 +9,140 @@ export default function Order() {
 
     return (
         <>
-            <div className="order-container">
+            {/* <div className="order-container">
+                <div className="order-container-title">
+                    <h2>Mi carrito</h2>
+                </div>
+                
                 <button 
                     className="button-close"
                     onClick={() => toggleCart()}
                     >
                     <FontAwesomeIcon icon={faXmark}/>
                 </button>
-                <table className="order-table">
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Nombre</th>
-                            <th>Valor</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </tr>
-                        
-                    </thead>
-                    <tbody>
-                        {
-                            cart.map(product => {
+                <div className="container-table">
+                    <table className="order-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Nombre</th>
+                                <th>Valor</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
                             
-                                return (
-                                    <tr key={product.id}>
-                    
-                                        <td>
-                                            <img src={product.image} alt={product.name} />
-                                        </td>
-                                        <td>{ product.name }</td>
-                                        <td>{ product.price.toFixed(2) }</td>
-                                        <td className="quantity-container">
-                                            
-                                            <div className="cantidades">
+                        </thead>
+                        <tbody>
+                            {
+                                cart.map(product => {
+                                
+                                    return (
+                                        <tr key={product.id}>
+                        
+                                            <td>
+                                                <img src={product.image} alt={product.name} />
+                                            </td>
+                                            <td>{ product.name }</td>
+                                            <td>{ product.price.toFixed(2) }</td>
+                                            <td className="quantity-container">
                                                 
-                                                <button onClick={() => 
-                                                    editQuantity(product.id, "+")} 
-                                                    className="quantity-btn">
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                </button>
+                                                <div className="cantidades">
+                                                    
+                                                    <button onClick={() => 
+                                                        editQuantity(product.id, "+")} 
+                                                        className="quantity-btn">
+                                                        <FontAwesomeIcon icon={faPlus} />
+                                                    </button>
 
-                                                <span className="quantity-value">{product.quantity}</span>
+                                                    <span className="quantity-value">{product.quantity}</span>
 
-                                                <button onClick={() => 
-                                                    editQuantity(product.id, "-")} 
-                                                    className="quantity-btn">
-                                                    <FontAwesomeIcon icon={faMinus} />
-                                                </button>
+                                                    <button onClick={() => 
+                                                        editQuantity(product.id, "-")} 
+                                                        className="quantity-btn">
+                                                        <FontAwesomeIcon icon={faMinus} />
+                                                    </button>
 
-                                            </div>
+                                                </div>
 
-                                        </td>
-                                        <td>{ product.quantity * product.price }</td>
-                                        
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colSpan={5}>Total: $ {total}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-        
-                <div className="order-buttons">
+                                            </td>
+                                            <td>{ product.quantity * product.price }</td>
+                                            
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colSpan={5}>Total: $ {total}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+            
+                    <div className="order-buttons">
 
-                    <button className="button btn-finish">
-                        Finalizar compra
-                    </button>
-                    <button 
-                        className="button btn-clean"
-                        onClick={() => cleanCart()}
-                    >
-                        Vaciar carrito
-                    </button>
+                        <button className="button btn-finish">
+                            Finalizar compra
+                        </button>
+                        <button 
+                            className="button btn-clean"
+                            onClick={() => cleanCart()}
+                        >
+                            Vaciar carrito
+                        </button>
+                    
+                    </div>
+                </div>
                 
+            </div> */}
+            <div className="order-items">
+                <div className="order-container-title">
+                    <span>Mis compras</span>
+                </div>
+                <button 
+                    className="button-close"
+                    onClick={() => toggleCart()}
+                    >
+                    <FontAwesomeIcon icon={faXmark}/>
+                </button>
+                {cart.map((product) => (
+                    <div className="order-item" key={product.id}>
+                        <div className="product-image" style={{ backgroundColor: "#e0f7ff" }}>
+                            <img src={product.image} alt={product.name} />
+                        </div>
+                        <div className="product-info">
+                            <h4>{product.name}</h4>
+                            <p>{product?.description || 'Descripción'}</p>
+                            <span className="price">$ {product.price}</span>
+                        </div>
+                        <div className="product-quantity">
+                            <button onClick={() => editQuantity(product.id, "+")}>
+                            <FontAwesomeIcon icon={faPlus} />
+                            </button>
+                            <span>{product.quantity}</span>
+                            <button onClick={() => editQuantity(product.id, "-")}>
+                            <FontAwesomeIcon icon={faMinus} />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+                <div className="order-summary">
+                    
+                    <p>Envíos<br /><small>Los pedidos superiores a USD 300 tienen envío GRATIS</small></p>
+                    <h3>Total: ${total}</h3>
+                    <div className="order-buttons">
+                        <button className="buy-button">Comprar</button>
+                        <button 
+                            className="button btn-clean"
+                            onClick={() => cleanCart()}
+                        >
+                            Vaciar
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
+
         </>
     );
     
