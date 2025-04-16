@@ -126,10 +126,10 @@ export default function Order() {
                                     product?.discount > 0 ? (
                                         <>
                                             <del style={{color:"#444"}}>${product.price}</del>{" "}
-                                            ${product.price - (product.price * product.discount)}
+                                            $ {product.price - (product.price * product.discount)}
                                         </>
                                     ) : (
-                                        <>{product.price}</>
+                                        <>$ {product.price}</>
                                     )
                                 }
                             </div>
