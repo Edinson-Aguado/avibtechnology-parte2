@@ -1,39 +1,35 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import Header from './Layout/Header/Header';
-import Home from './pages/Home/Home';
-import Register from './pages/Register/Register';
-import Contact from './pages/Contact/Contact';
-import AboutUs from './pages/About-us/AboutUs';
-import AdminProducts from './pages/Admin-products/AdminProducts';
-import AdminUsers from './pages/AdminUsers/AdminUsers';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import Header from './Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
 import WhatsApp from './components/WhatsApp/WhatsApp';
-import ProductDetail from './pages/ProductDetail/ProductDetail';
-import Order from './pages/Order/Order';
-import { env } from './config/env.config';
 import OrderModal from './Layout/OrderModal/OrderModal';
 
-export default function App() {
+import Home from './pages/home/Home';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+import Contact from './pages/contact/Contact';
+import AboutUs from './pages/about-us/AboutUs';
+import AdminProducts from './pages/admin-products/AdminProducts';
+import AdminUsers from './pages/adminUsers/AdminUsers';
+import ProductDetail from './pages/productDetail/ProductDetail';
+import Order from './pages/order/Order';
+import { env } from './config/env.config';
+import './App.css';
 
+export default function App() {
     const [products, setProducts] = useState([]);
 
-    //Funcion para obtener lso productos del servidor
+  // Función para obtener los productos del servidor
     async function getProducts() {
-        
-        // PETICION ASINCRONA
         try {
-
         const response = await axios.get(`${env.URL}/products`);
         setProducts(response.data);
-        
         } catch (error) {
-
         console.warn(error);
         alert("Ocurrió un error al obtener los productos.");
-        
         }
     }
 
@@ -42,50 +38,38 @@ export default function App() {
     }, []);
 
     return (
-    <>
         <div className="app-container">
-            <WhatsApp />
+            {/* Elementos que se muestran siempre */}
             <Header />
-            <OrderModal/>
+            <OrderModal />
+            <WhatsApp />
 
             <main className="main-container-routes">
                 <Routes>
                     
+                    {/* Rutas principales */}
+                    <Route path="/" element={<Home products={products} />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/Register" element={<Register />} />
+                    <Route path="/Contact" element={<Contact />} />
+                    <Route path="/AboutUs" element={<AboutUs />} />
+                    
+                    {/* RUTAS DE ADMINISTRACION */}
                     <Route 
-                        path="/" 
-                        element={
-                            <Home 
-                                products={products}
-                            />} 
+                        path="/AdminProducts" 
+                        element={<AdminProducts products={products} setProducts={setProducts} />} 
                     />
+                    <Route path="/AdminUsers" element={<AdminUsers />} />
                     
-                    <Route path='/ProductDetail/:id' element={<ProductDetail/>} />
+                    <Route path="/ProductDetail/:id" element={<ProductDetail />} />
+                    <Route path="/Order" element={<Order />} />
                     
-                    <Route path="/pages/Register/Register" element={<Register />} />
-                    
-                    <Route path="/pages/Contact/Contact" element={<Contact />} />
-                    
-                    <Route path="/pages/About-us/AboutUs" element={<AboutUs />} />
-                    
-                    <Route path="/pages/Admin-products" element={
-                    
-                    <AdminProducts 
-                        products={products}
-                        setProducts={setProducts}
-                    />}
-                    />
-                    
-                    <Route path="/pages/Order/Order" element={<Order />} />
-
-                    <Route path="/pages/AdminUsers/AdminUsers" element={<AdminUsers />} />
-
+                    {/* Ruta fallback: si no se encuentra la ruta, se puede redirigir a Home o mostrar un 404 */}
+                    <Route path="*" element={<Home products={products} />} />
                 </Routes>
             </main>
 
             <Footer />
         </div>
-        
-
-        </>
-    )
+    );
 }

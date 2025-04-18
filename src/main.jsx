@@ -4,20 +4,24 @@ import './index.css';
 import App from './App.jsx';
 import { BrowserRouter } from "react-router-dom";
 import OrderProvider from './context/OrderContext.jsx';
+import UserProvider from './context/UserContext.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 
 createRoot(document.getElementById('root')).render(
   
-  <OrderProvider>
+  <BrowserRouter>
+  {/* CONTEXTO */}
+    <UserProvider>
+      {/* OTRO CONTEXTO */}
+      <OrderProvider>
 
-    <BrowserRouter>
-      <ScrollToTop/>
-      <StrictMode>
-        <App />
-      </StrictMode>
-    </BrowserRouter>
-    
-  </OrderProvider>
-
+          <ScrollToTop/>
+          <StrictMode>
+            <App />
+          </StrictMode>
+        
+      </OrderProvider>
+    </UserProvider>
+  </BrowserRouter>
   
 )

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useOrder } from '../../context/OrderContext';
-import { color } from 'framer-motion';
 
 export default function Product({product}) {
 

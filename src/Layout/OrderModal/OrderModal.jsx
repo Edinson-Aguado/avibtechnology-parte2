@@ -1,6 +1,6 @@
 import {useOrder} from '../../context/OrderContext';
 import OtroTitle from '../../components/Title/OtroTitle';
-import Order from '../../pages/Order/Order';
+import Order from '../../pages/order/Order';
 import "./OrderModal.css";
 
 export default function OrderModal() {
