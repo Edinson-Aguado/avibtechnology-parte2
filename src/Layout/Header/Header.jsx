@@ -1,10 +1,10 @@
 import './Header.css';
 import logo from "../../assets/images/logo.png"
 import imagenPerfil from "../../assets/images/imagen-perfil.png";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useOrder } from '../../context/OrderContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faRightToBracket, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef } from "react";
 
 export default function Header() {
@@ -14,6 +14,7 @@ export default function Header() {
     const menuRef = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -109,6 +110,16 @@ export default function Header() {
                         </li>
 
                     </ul>
+
+                    <div className="container-btn-login">
+                        <button 
+                            className='btn-login'
+                            onClick={() => navigate('/Login')}
+                            >
+                            <FontAwesomeIcon icon={faRightToBracket} />
+                            Login
+                        </button>
+                    </div>
 
                 </nav>
 
