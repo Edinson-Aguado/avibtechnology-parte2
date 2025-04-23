@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { env } from "../../config/env.config";
 import Swal from "sweetalert2";
-import Loading from "../../components/Loading/Loading";
 import { useOrder } from "../../context/OrderContext";
 import { faArrowLeft, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,20 +12,21 @@ export default function ProductDetail() {
     
     const navigate = useNavigate();
     const {id} = useParams(); // Recibimos los datos del id.
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState();
 
     const {addProduct, cantidadOrder, setCantidad} = useOrder();
 
     useEffect(() => {
         getProductDetail();
-    }, []);
+    }, [id]);
 
     //Otro tipo de definicion de una funcion:
     const getProductDetail = async() => {
 
         try {
 
-            const response = await axios.get(`${env.URL}/products/${id}`);
+            const response = await axios.get(`${env.URL_LOCAL}/products/${id}`);
+            
             setProduct(response.data);
             
         } catch (error) {
@@ -34,10 +34,6 @@ export default function ProductDetail() {
             Swal.fire("Error", "Error al obtener los productos", "error");
         }
     };
-
-    if (!product) {
-        return <Loading/>
-    }
 
     return (
         <>
@@ -82,7 +78,7 @@ export default function ProductDetail() {
                                         min="1"
                                         max="36"
                                         step="1"
-                                        value={cantidadOrder}
+                                        value={cantidadOrder ?? 1}
                                         onChange={(e) => setCantidad(Number(e.target.value))}
                                     />
                                     <input 

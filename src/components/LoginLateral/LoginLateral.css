@@ -1,0 +1,94 @@
+.container-btn-login {
+    width: 100%;
+    background-color: rgba(11, 11, 11, 0.71);
+    padding: 10px 20px 10px 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+
+    .btn-login {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        outline: none;
+        border: none;
+        background-color: var(--secondary-color);
+        color: white;
+        font-size: 1rem;
+        border-radius: 4px;
+        padding: .5rem;
+        margin: 20px auto 0 auto;
+        max-width: 150px;
+        width: 70%;
+        box-shadow: .025px 0px 7px .025px rgba(255, 255, 255, 0.784);
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        cursor: pointer;
+        transition: background-color .4s ease-in-out;
+
+        &:hover {
+            background-color: rgb(30, 90, 220);
+        }
+    }
+}
+
+@media screen and (min-width: 820px) and (max-width:  1000px) {
+
+    .container-btn-login {
+        background-color: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .btn-login {
+            background-color: var(--secondary-color);
+            margin-top: 0;
+            width: 100%;
+            padding: .8rem auto;
+            max-width: 150px;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+
+    .container-btn-login {
+        background-color: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .btn-login {
+            background-color: var(--secondary-color);
+            margin-top: 0;
+            width: 100%;
+            padding: .8rem auto;
+            max-width: 150px;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1201px) {
+    
+    .container-btn-login {
+        background-color: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        padding: 0;
+
+        .btn-login {
+            background-color: var(--secondary-color);
+            margin-top: 0;
+            width: 100%;
+            padding: .8rem auto;
+            max-width: 150px;
+        }
+    }
+}

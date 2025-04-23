@@ -6,6 +6,9 @@ import Banner from '../../components/Banner/Banner';
 import Carousel from '../../components/Carousel/Carousel';
 
 export default function Home({products}) {
+
+    console.log("Products en Home:", products);
+
     return (
         <>
             <Banner />
@@ -13,14 +16,13 @@ export default function Home({products}) {
             <Title title="PRODUCTOS" />
             <main className="main-container-home">
 
-                {
+                {products && products.length > 0 ? (
                     products.map(product => (
-                        // DEVUELVE UN COMPONENTE CON LA INFORMACIÓN DE CADA PRODUCTO.
-                        <Product
-                            key={product.id}
-                            product={product} />
+                        <Product key={product._id} product={product} />
                     ))
-                }
+                ) : (
+                    <p>No hay productos para mostrar</p>
+                )}
                 
             </main>
 

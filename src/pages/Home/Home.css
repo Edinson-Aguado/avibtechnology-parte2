@@ -15,7 +15,9 @@
 
     .main-container-home {
         display: flex;
-        flex-direction: row !important;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
     }
 }
@@ -24,7 +26,9 @@
 
     .main-container-home {
         display: flex;
-        flex-direction: row !important;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
     }
 }
@@ -33,9 +37,9 @@
 
     .main-container-home {
         display: flex;
-        flex-direction: row !important;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
-
-        
     }
 }

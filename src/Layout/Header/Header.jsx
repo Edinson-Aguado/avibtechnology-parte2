@@ -1,20 +1,26 @@
 import './Header.css';
 import logo from "../../assets/images/logo.png"
 import imagenPerfil from "../../assets/images/imagen-perfil.png";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useOrder } from '../../context/OrderContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faRightToBracket, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef } from "react";
+import LoginLateral from '../../components/LoginLateral/LoginLateral';
+import OptionsProfile from '../../components/OptionsProfile/OptionsProfile';
 
-export default function Header() {
+export default function Header({useWindowWidth}) {
 
     const {count, toggleCart} = useOrder();
     const [openMenu, setOpenMenu] = useState(null);
     const menuRef = useRef(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuHamburguesaOpen, setIsMenuHamburguesaOpen] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
+    const width = useWindowWidth();
+    
+    const toggleMenuAdmin = () => {
+        setIsMenuHamburguesaOpen(!isMenuHamburguesaOpen);
+    };
 
     useEffect(() => {
 
@@ -30,12 +36,18 @@ export default function Header() {
         };
     }, []);
 
+    useEffect(() => {
+        setIsMenuHamburguesaOpen(false);
+        setOpenMenu(null);
+    }, []);
+
     // Cierra el menú cada vez que cambia la ruta
     useEffect(() => {
-        setIsMenuOpen(false);
+        setIsMenuHamburguesaOpen(false);
     }, [location]);
 
     const toggleMenu = (menuX) => {
+        console.log("toggleMenu clicked:", menuX);
         setOpenMenu(prev => (prev === menuX ? null : menuX));
     };
 
@@ -47,11 +59,11 @@ export default function Header() {
                     type="checkbox" 
                     id="burger" 
                     className="input-burger"
-                    checked={isMenuOpen}
-                    onChange={() => setIsMenuOpen(!isMenuOpen)}
+                    checked={isMenuHamburguesaOpen}
+                    onChange={() => setIsMenuHamburguesaOpen(!isMenuHamburguesaOpen)}
                 />
                 
-                {/* MENU  DE EHAMBURGUESA */}
+                {/* MENU  DE HAMBURGUESA */}
                 <label className="burger-container" htmlFor="burger">
                     <div className="burger"></div>
                 </label>
@@ -70,7 +82,7 @@ export default function Header() {
                 </div>
 
                 {/* MENÚ DE NAVEGACIÓN */}
-                <nav className="main-nav" ref={menuRef} style={{ left: isMenuOpen ? '0' : '-250px' }}>
+                <nav className="main-nav" ref={menuRef} style={{ left: isMenuHamburguesaOpen ? '0' : '-250px' }}>
                     
                     <ul className="nav-list">
 
@@ -82,6 +94,7 @@ export default function Header() {
                             <span className="nav-link dropdown-toggle" onClick={() => toggleMenu('paginas')}>
                             Páginas <FontAwesomeIcon icon={faChevronDown} size="sm" className='arrow-icon' />
                             </span>
+                            
                             {
                                 openMenu === 'paginas' && (
                                     <ul className="dropdown-menu">
@@ -94,32 +107,16 @@ export default function Header() {
                             
                         </li>
 
-                        <li className="nav-item dropdown">
-                            <span className="nav-link dropdown-toggle" onClick={() => toggleMenu('adminPages')}>
-                            Administración <FontAwesomeIcon icon={faChevronDown} size="sm" className='arrow-icon' />
-                            </span>
-                            {
-                                openMenu === 'adminPages' && (
-                                    <ul className="dropdown-menu">
-                                        <li><NavLink className="nav-link-dropdown" to="/AdminProducts">Administrar productos</NavLink></li>
-                                        <li><NavLink className="nav-link-dropdown" to="/AdminUsers">Administrar usuarios</NavLink></li>
-                                    </ul>
-                                )
-                            }
-                            
-                        </li>
+                        
 
                     </ul>
 
-                    <div className="container-btn-login">
-                        <button 
-                            className='btn-login'
-                            onClick={() => navigate('/Login')}
-                            >
-                            <FontAwesomeIcon icon={faRightToBracket} />
-                            Login
-                        </button>
-                    </div>
+                    {
+                        width <= 819 && (
+                            <LoginLateral/>
+                        )
+                    }
+                    
 
                 </nav>
 
@@ -144,23 +141,37 @@ export default function Header() {
                             </span>
 
                         </div>
-                        
+                    </div>
+                    
+                    <div 
+                        className="picture-container" 
+                    >
+                        <span>
+                            <img
+                                loading='lazy'
+                                src={imagenPerfil} 
+                                alt="User avatar"
+                                className="user-picture" 
+                                id="user-picture"
+                                onClick={toggleMenuAdmin} 
+                            />
+                            <OptionsProfile 
+                                isMenuHamburguesaOpen={isMenuHamburguesaOpen} 
+                                toggleMenu={toggleMenu} 
+                                toggleMenuAdmin={toggleMenuAdmin}
+                            />
+                        </span>
                         
                     </div>
-                    <div className="picture-container">
-                        <img
-                            loading='lazy'
-                            src={imagenPerfil} alt="User avatar"
-                            className="user-picture" 
-                            id="user-picture" 
-                        />
-                        
-                        {/* <NavLink to="/Login" id='user-picture' title='Iniciar sesión'>
-                            Iniciar sesión
-                        </NavLink> */}
-                        
-                    </div>
+
+                    {
+                        width >= 820 && (
+                            <LoginLateral/>
+                        )
+                    }
                 </div>
+                
+                
             </header>
         </>
     )

@@ -20,6 +20,10 @@ export default function ProductTable({product, deleteProduct, fnEditProduct}) {
                     className="price-cell">
                     <span>$</span> <strong>{product.price ? product.price : "N/A"}</strong>
                 </td>
+                <td 
+                    className="product-cell">
+                    <span>{product.stock ? product.stock : "N/A"}</span>
+                </td>
                 <td className="actions-cell">
                     <div className="icon-container">
                         <button 

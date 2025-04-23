@@ -1,6 +1,6 @@
 import axios from 'axios';
 import OtroTitle from '../../components/Title/OtroTitle';
-import './Register.css';
+import '../register/Register.css';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { env } from '../../config/env.config';
@@ -51,7 +51,7 @@ export default function Register() {
                 <form className="register-form" onSubmit={handleSubmit(addUser)}>
 
                     <div className="input-group">
-                        <label htmlFor="name">Nombre completo</label>
+                        <label htmlFor="name">Nombre completo <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="text"
                             id="name"
@@ -62,7 +62,7 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="correo">Correo electrónico</label>
+                        <label htmlFor="correo">Correo electrónico <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="email"
                             id="correo"
@@ -80,7 +80,7 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="pass">Contraseña</label>
+                        <label htmlFor="pass">Contraseña <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="password"
                             id="pass"
@@ -90,7 +90,7 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="rePass">Repetir contraseña</label>
+                        <label htmlFor="rePass">Repetir contraseña <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="password"
                             id="rePass"
@@ -100,7 +100,7 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="date">Fecha Nacimiento</label>
+                        <label htmlFor="date">Fecha Nacimiento <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="date"
                             id="date"
@@ -112,7 +112,7 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="selection">País</label>
+                        <label htmlFor="selection">País <span style={{"color": "red"}}>*</span></label>
                         <select id="selection" {...register("selection", { required: true })}>
                             <option value="arg">Argentina</option>
                             <option value="bra">Brasil</option>
@@ -139,7 +139,7 @@ export default function Register() {
                     </div>
 
                     <button className="btn" type="submit" disabled={!isValid}>
-                        {isValid ? "Registrar":"Faltan datos"}
+                        {isValid ? "Registrar":"Completar datos"}
                     </button>
                 </form>
             </main>

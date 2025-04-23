@@ -7,13 +7,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env.config';
 
-export default function AdminProducts({products, setProducts}) {
-
+export default function AdminProducts({products, setProducts, getProducts}) {
 
     // VARIABLES
     const [editProduct, setEditProduct] = useState(null);
     const { register, handleSubmit, setValue, setFocus, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
-    const [loading, setLoading] = useState(false);
 
     function getTime() {
         const date = new Date();
@@ -37,6 +35,7 @@ export default function AdminProducts({products, setProducts}) {
             setValue("image", editProduct?.image);
             setValue("name", editProduct?.name);
             setValue("price", editProduct?.price);
+            setValue("stock", editProduct?.stock);
             setValue("description", editProduct?.description);
             setValue("status", editProduct?.status);
             setValue("createAt", editProduct?.createAt);
@@ -50,32 +49,19 @@ export default function AdminProducts({products, setProducts}) {
         
     }, [editProduct, reset, setValue]);
 
-    //OBTENER LOS PRODUCTOS DESDE MOCKAPI
-    async function getProducts() {
-        try {
-            setLoading(true);  // Inicia la carga
-            const response = await axios.get(`${env.URL}/products`);
-            setProducts(response.data);
-        } catch (error) {
-            Swal.fire("¡Error!", `Hubo un problema al obtener los productos: ${error.message}`, "error");
-        } finally {
-            setLoading(false);  // Termina la carga, independientemente de si ocurrió un error o no
-        }
-    }
-
     //CREAR NUEVO PRODUCTO
     async function createProduct(data) {
         
         try {
-            setLoading(true);  // Inicia la carga
             if (editProduct) {
                 // Lógica para editar el post
         
-                const id = editProduct.id; 
+                const id = editProduct._id; 
         
                 const productToUpdate = {
                     name: data.name,
                     price: data.price,
+                    stock: data.stock,
                     description: data.description,
                     status: data.status,
                     image: data.image,
@@ -84,7 +70,7 @@ export default function AdminProducts({products, setProducts}) {
 
                 }
 
-                await axios.put(`${URL}/products/${id}`, productToUpdate);
+                await axios.put(`${env.URL_LOCAL}/products/${id}`, productToUpdate);
             
                 setEditProduct(null); //Seteamos nulo a estado del producto que estamos editando.
                 //Obtenemos los datos de los productos
@@ -100,6 +86,7 @@ export default function AdminProducts({products, setProducts}) {
                         // El "ID" Ya se hace desde el servidor de Mokapi
                         name: data.name,
                         price: data.price,
+                        stock: data.stock,
                         description: data.description,
                         category: data.category,
                         status: data.status,
@@ -107,7 +94,8 @@ export default function AdminProducts({products, setProducts}) {
                         createAt: new Date().toISOString()
                     }
     
-                    await axios.post(`${URL}/products`, newProduct);
+                    const response = await axios.post(`${env.URL_LOCAL}/products`, newProduct);
+                    setProducts(response.data.products);
                     await getProducts();
                     reset();
                     Swal.fire("Producto creado", "El producto fue creado correctamente", "success");
@@ -121,8 +109,6 @@ export default function AdminProducts({products, setProducts}) {
 
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
-        } finally {
-            setLoading(false);  // Termina la carga
         }
     }
 
@@ -147,7 +133,7 @@ export default function AdminProducts({products, setProducts}) {
 
                 if (resultado.isConfirmed) {
 
-                    await axios.delete(`${URL}/products/${id}`);
+                    await axios.delete(`${env.URL_LOCAL}/products/${id}`);
                     await getProducts();
                     Swal.fire("¡Producto borrado!", "El producto se ha borrado correctamente.", "success");
                 }
@@ -158,7 +144,6 @@ export default function AdminProducts({products, setProducts}) {
         }
     }
 
-    //Esto no entiendo su función...
     function fnEditProduct(product) {
         setEditProduct(product);
     }
@@ -167,12 +152,6 @@ export default function AdminProducts({products, setProducts}) {
     return (
         <>
             <OtroTitle title="Administrador de productos" />
-
-            {loading && (
-                <div className="spinner-overlay">
-                    <div className="spinner"></div> 
-                </div>
-            )}
 
             <div className="main-container-admin-products">
                 <form 
@@ -208,46 +187,55 @@ export default function AdminProducts({products, setProducts}) {
                         )}
                     </div>
 
-                    <div className="input-group">
-                        <label htmlFor="price">Precio</label>
-                        <input 
-                            type="number" 
-                            {...register("price", {
-                                required: "El precio es requerido",
-                                minLength: {
-                                    value: 1,
-                                    message: "El valor del precio debe ser mayor a 0",
-                                }
-                            })} 
-                            id="price" 
-                        />
-                        {errors.price && (
-                            <span 
-                                className='error-input'>
-                                {errors.price.message}
-                            </span>
-                        )}
+                    <div className="input-group  price-stock">
+                        <div className="input-group">
+                            <label htmlFor="price">Precio</label>
+                            <input 
+                                type="number" 
+                                {...register("price", {
+                                    required: "El precio es requerido",
+                                    minLength: {
+                                        value: 1,
+                                        message: "El valor del precio debe ser mayor a 0",
+                                    }
+                                })} 
+                                id="price" 
+                            />
+                            {errors.price && (
+                                <span 
+                                    className='error-input'>
+                                    {errors.price.message}
+                                </span>
+                            )}
+                        </div>
+                        
+                        <div className="input-group">
+                            <label htmlFor="stock">Stock</label>
+                            <input
+                                type="number"
+                                id="stock"
+                                placeholder="Cantidad"
+                                {...register("stock", {
+                                    required: "El stock es obligatorio",
+                                    min: { value: 0, message: "No puede ser negativo" }
+                                })}
+                            />
+                            {errors.stock && <span className="error-input">{errors.stock.message}</span>}
+                        </div>
                     </div>
                     
+
                     <div className="input-group">
-                        <label htmlFor="image">Imagen (URL)</label>
-                        <input 
-                            type="text"
+                        <label htmlFor="image">Imagen</label>
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
                             {...register("image", {
-                                required: "La URL es requerida",
-                                minLength: {
-                                    value: 0,
-                                    message: "Agrege una URL válida",
-                                }
+                                required: "La imagen es obligatoria"
                             })}
-                            id='image'
                         />
-                        {errors.image && (
-                            <span 
-                                className='error-input'>
-                                {errors.image.message}
-                            </span>
-                        )}
+                        {errors.image && <span className="error-input">{errors.image.message}</span>}
                     </div>
 
                     <div className="input-group">
@@ -329,11 +317,12 @@ export default function AdminProducts({products, setProducts}) {
                     <table className="main-table">
                         <thead>
                             <tr>
-                                <th>IMAGE</th>
-                                <th>PRODUCTO</th>
-                                <th>DESCRIPCIÓN</th>
-                                <th>PRECIO</th>
-                                <th>ACCIONES</th>
+                                <th>Imágen</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Valor</th>
+                                <th>Stock</th>
+                                <th>Herramientas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -342,7 +331,7 @@ export default function AdminProducts({products, setProducts}) {
                                 products && products.length > 0 ? (
                                     products.map((product) => (
                                         <ProductTable 
-                                            key={product.id} 
+                                            key={product._id} 
                                             product={product}
                                             deleteProduct={deleteProduct} 
                                             fnEditProduct={fnEditProduct}/>

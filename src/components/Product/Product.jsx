@@ -22,7 +22,7 @@ export default function Product({product}) {
 
     return (
         <>
-            <article className="card" key={product?.id}>
+            <article className="card">
                 <div className="card-content">
 
                     <div className="card-image">
@@ -46,12 +46,15 @@ export default function Product({product}) {
                     
                     <div className="btn-product ">
 
-                        <Link 
-                            className='btn card-buy'
-                            title='Comprar producto'
-                            to={`/ProductDetail/${product.id}`}>
-                            Comprar
-                        </Link>
+                        {product._id && (
+                            <Link 
+                                className='btn card-buy'
+                                title='Comprar producto'
+                                to={`/ProductDetail/${product._id}`}>
+                                Comprar
+                            </Link>
+                        )}
+
                         <button 
                             title='Ver más detalles' 
                             className='btn btn-ver-detalles'>
@@ -73,7 +76,7 @@ export default function Product({product}) {
                     <h3 className="card-title">
 
                         <Link 
-                            to={`/ProductDetail/${product.id}`}>
+                            to={`/ProductDetail/${product._id}`}>
                             {product.name}
                         </Link>
 

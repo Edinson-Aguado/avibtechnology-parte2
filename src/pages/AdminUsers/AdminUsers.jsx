@@ -7,13 +7,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env.config';
 
-export default function AdminProducts() {
+export default function AdminUsers() {
 
     // VARIABLES
     const [editUser, setEditUser] = useState(null);
     const { register, handleSubmit, setValue, setFocus, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
-    const [loading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState();
 
     function getTime() {
         const date = new Date();
@@ -22,12 +21,13 @@ export default function AdminProducts() {
         const day = String(date.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
     }
+
     function getDate(milisegundos) {
         const fecha = new Date(milisegundos);
         const dia = String(fecha.getDate()).padStart(2, '0');
         const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0
-        const año = fecha.getFullYear();
-        return `${año}-${mes}-${dia}`;
+        const year = fecha.getFullYear();
+        return `${year}-${mes}-${dia}`;
     }
     
     useEffect(() => {
@@ -40,31 +40,30 @@ export default function AdminProducts() {
 
         if (editUser) {
             setValue("name", editUser?.name);
-            setValue("correo", editUser?.correo);
+            setValue("email", editUser?.email);
             setValue("password", editUser?.password);
             setValue("rePassword", "");
             setValue("date", getDate(editUser?.date));
             setValue("country", editUser?.country);
-            setValue("obs", editUser?.observations);
+            setValue("observations", editUser?.observations);
 
             // Llevar el scroll hacia arriba al formulario
-            document.getElementById("form-create-product")?.scrollIntoView({behavior: "smooth"});
+            document.getElementById("formulario")?.scrollIntoView({behavior: "smooth"});
         } else {
             reset();
         }
         
     }, [editUser, reset, setValue]);
 
-    //OBTENER LOS PRODUCTOS DESDE MOCKAPI
+    //OBTENER LOS PRODUCTOS DESDE URL
     async function getUsers() {
+        
         try {
-            setLoading(true);  // Inicia la carga
-            const response = await axios.get(`${env.URL}/users`);
+            const response = await axios.get(`${env.URL_LOCAL}/users`);
+            console.log("Dentro del TRYCATCH. users: ", response.data);
             setUsers(response.data);
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema al obtener los usurios: ${error.message}`, "error");
-        } finally {
-            setLoading(false);  // Termina la carga, independientemente de si ocurrió un error o no
         }
     }
 
@@ -72,20 +71,19 @@ export default function AdminProducts() {
     async function createUser(data) {
         
         try {
-            setLoading(true);  // Inicia la carga (icono)
             if (editUser) {
 
                 // Lógica para editar el post 
                 const userToUpdate = {
                     name: data.name,
-                    correo: data.correo,
+                    email: data.email,
                     password: data.password,
                     date: data.date,
                     country: data.country,
-                    observations: data.obs
+                    observations: data.observations
                 }
 
-                await axios.put(`${env.URL}/users/${editUser.id}`, userToUpdate);
+                await axios.put(`${env.URL_LOCAL}/users/${editUser._id}`, userToUpdate);
             
                 setEditUser(null); //Seteamos nulo a estado del usuario que estamos editando.
                 //Obtenemos los datos de los usuarios
@@ -100,14 +98,13 @@ export default function AdminProducts() {
                     const newUser = {
                         // El "ID" Ya se hace desde el servidor de Mokapi
                         name: data.name,
-                        correo: data.correo,
+                        email: data.email,
                         password: data.password,
                         date: data.date,
                         country: data.country,
-                        observations: data.obs
+                        observations: data.observations
                     }
-                    setLoading(true);  // Inicia la carga (icono)
-                    await axios.post(`${env.URL}/users`, newUser);
+                    await axios.post(`${env.URL_LOCAL}/users`, newUser);
                     await getUsers();
                     reset();
                     Swal.fire("Usuario creado", "El usuario fue creado correctamente", "success");
@@ -121,8 +118,6 @@ export default function AdminProducts() {
 
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
-        } finally {
-            setLoading(false);  // Termina la carga
         }
     }
 
@@ -146,8 +141,7 @@ export default function AdminProducts() {
             }).then(async(resultado) => {
 
                 if (resultado.isConfirmed) {
-                    setLoading(true);
-                    await axios.delete(`${env.URL}/users/${id}`);
+                    await axios.delete(`${env.URL_LOCAL}/users/${id}`);
                     await getUsers();
                     Swal.fire("Usuario borrado!", "El usuario se ha borrado correctamente.", "success");
                 }
@@ -167,12 +161,6 @@ export default function AdminProducts() {
         <>
             <OtroTitle title="Administrador de usuarios" />
 
-            {loading && (
-                <div className="spinner-overlay">
-                    <div className="spinner"></div> 
-                </div>
-            )}
-
             <div className="main-container-admin-users">
                 <div className="formulario">
                     <h3 className='title-user'>Crear nuevo usuario</h3>
@@ -183,19 +171,19 @@ export default function AdminProducts() {
                             <input
                                 type="text"
                                 id="name"
-                                placeholder="Ethan Jask"
+                                placeholder="Ethan Craine"
                                 {...register("name", { required: true, minLength: 2, maxLength: 20 })}
                             />
                             {errors.name && <span className="error">Nombre requerido (2-20 caracteres)</span>}
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="correo">Correo electrónico</label>
+                            <label htmlFor="email">Correo electrónico</label>
                             <input
                                 type="email"
-                                id="correo"
+                                id="email"
                                 placeholder="info@dominio.com"
-                                {...register("correo", {
+                                {...register("email", {
                                     required: "Este campo es obligatorio",
                                     pattern: {
                                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -203,7 +191,7 @@ export default function AdminProducts() {
                                     }
                                 })}
                             />
-                            {errors.correo && <span className="error">{errors.correo.message}</span>}
+                            {errors.email && <span className="error">{errors.email.message}</span>}
 
                         </div>
 
@@ -214,7 +202,7 @@ export default function AdminProducts() {
                                 id="password"
                                 {...register("password", { required: true, minLength: 6 })}
                             />
-                            {errors.pass && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
+                            {errors.password && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
                         </div>
 
                         <div className="input-group">
@@ -222,7 +210,10 @@ export default function AdminProducts() {
                             <input
                                 type="password"
                                 id="rePass"
-                                {...register("rePass", { required: true })}
+                                {...register(
+                                    "rePass", 
+                                    { required: true}
+                                )}
                             />
                             {errors.rePass && <span className="error">Repite la contraseña</span>}
                         </div>
@@ -258,13 +249,13 @@ export default function AdminProducts() {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="obs">Observaciones</label>
+                            <label htmlFor="observations">Observaciones</label>
                             <textarea
-                                id="obs"
+                                id="observations"
                                 rows="5"
-                                {...register("obs", {required: true, maxLength: 20})}
+                                {...register("observations", {required: true, maxLength: 20})}
                             ></textarea>
-                            {errors.obs && <span className="error">Límite de caracteres: 20.</span>}
+                            {errors.observations && <span className="error">Límite de caracteres: 20.</span>}
                         </div>
 
                         <button className="btn" type="submit" disabled={!isValid}>
@@ -292,7 +283,7 @@ export default function AdminProducts() {
                                 users && users.length > 0 ? (
                                     users.map((user) => (
                                         <TableUsers
-                                            key={user.id} 
+                                            key={user._id} 
                                             user={user}
                                             deleteUser={deleteUser} 
                                             fnEditUser={fnEditUser}/>
@@ -300,7 +291,7 @@ export default function AdminProducts() {
                                 ) : (
                                         <tr>
                                             <td colSpan="5" className="no-products">
-                                                No hay productos disponibles.
+                                                No hay usuarios disponibles.
                                             </td>
                                         </tr>
                                     )

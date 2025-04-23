@@ -1,0 +1,100 @@
+.options-profile {
+    position: absolute;
+    top: 100%;
+    right: 61px;
+    background: #1f1f1f;
+    border-radius: 0.5rem;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+    z-index: 100;
+    min-width: 220px;
+    pointer-events: none;
+
+    &.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .container-options-profile {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+
+        .container-option {
+            list-style: none;
+            width: 100%;
+
+            .option-link {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 15px;
+                padding: 0.8rem 1.2rem;
+                color: #ffffff;
+                font-size: 0.9rem;
+                font-weight: 500;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color .3s ease, color .3s ease;
+
+                &:first-of-type {
+                    border-radius: .5rem .5rem 0 0;
+                }
+                &:last-of-type {
+                    border-radius: 0 0 .5rem .5rem;
+                }
+
+                &:hover {
+                    background-color: #2c2c2c;
+                    color: #0a84ff;
+                    
+                    
+
+                    .arrow-icon {
+                        transform: rotate(0deg);
+                    }
+                }
+                .arrow-icon {
+                    transition: transform .3s ease;
+                    transform: rotate(-90deg);
+                }
+            }
+
+            &.dropdown2 {
+                position: relative;
+
+                .submenu {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background-color: #2a2a2a;
+                    border-radius: 0 0 0.5rem 0.5rem;
+                    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+                    display: flex;
+                    flex-direction: column;
+
+                    li {
+                        .option-link {
+                            padding: 0.7rem 1.5rem;
+                            font-size: 0.85rem;
+                            font-weight: 500;
+                            color: #c7f6c4;
+
+                            &:hover {
+                                background-color: #3b3b3b;
+                                color: #23d160;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

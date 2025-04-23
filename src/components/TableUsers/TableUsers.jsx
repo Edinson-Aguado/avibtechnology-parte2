@@ -19,7 +19,7 @@ export default function TableUsers({user, deleteUser, fnEditUser}) {
                 </td>
                 <td className="correo-cell">
                     <div className="correo-table">
-                        {user.correo}
+                        {user.email}
                     </div>
                 </td>
                 <td className="normal-cell">
@@ -46,7 +46,7 @@ export default function TableUsers({user, deleteUser, fnEditUser}) {
                         <button 
                             className="btn btn-danger" 
                             title="Eliminar elemento"
-                            onClick={() => deleteUser(user.id)}>
+                            onClick={() => deleteUser(user._id)}>
                             <i className="fa-solid fa-trash"></i>
                         </button>
                     </div>

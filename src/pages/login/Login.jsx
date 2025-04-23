@@ -7,14 +7,10 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { login } = useUser();
 
-    const onSubmit = data => {
-        login(data);
-    };
-
     return (
         <div className="login-wrapper">
-            <form className="login-card" onSubmit={handleSubmit(onSubmit)}>
-                <h2 className="login-title">Iniciar Sesión</h2>
+            <form className="login-card" onSubmit={handleSubmit(login)}>
+                <h2 className="login-title">Iniciar sesión</h2>
 
                 <div className="form-group">
                     <label htmlFor="email">Correo electrónico</label>
@@ -38,19 +34,22 @@ const Login = () => {
                     <input
                         type="password"
                         id="password"
-                        placeholder="••••••••"
                         {...register('password', {
                         required: 'La contraseña es obligatoria',
                         minLength: {
-                            value: 6,
-                            message: 'Mínimo 6 caracteres'
+                            value: 4,
+                            message: 'Mínimo 4 caracteres'
                         }
                         })}
                     />
                     {errors.password && <span className="error-text">{errors.password.message}</span>}
                 </div>
 
-                <button type="submit" className="login-btn">Entrar</button>
+                <button 
+                    type="submit" 
+                    className="login-btn">
+                        Entrar
+                </button>
 
                 <p className="register-link">¿No tienes cuenta? <Link to="/Register">Regístrate</Link></p>
             </form>
