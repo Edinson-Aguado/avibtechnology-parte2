@@ -163,7 +163,6 @@ export default function AdminUsers() {
 
             <div className="main-container-admin-users">
                 <div className="formulario">
-                    <h3 className='title-user'>Crear nuevo usuario</h3>
                     <form className="create-users" onSubmit={handleSubmit(createUser)}>
 
                         <div className="input-group">

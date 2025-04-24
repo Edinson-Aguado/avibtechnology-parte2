@@ -52,8 +52,6 @@
                 &:hover {
                     background-color: #2c2c2c;
                     color: #0a84ff;
-                    
-                    
 
                     .arrow-icon {
                         transform: rotate(0deg);
@@ -84,11 +82,13 @@
                             padding: 0.7rem 1.5rem;
                             font-size: 0.85rem;
                             font-weight: 500;
-                            color: #c7f6c4;
+                            color: blueviolet;
+                            transition: all .4s ease-in-out;
 
                             &:hover {
                                 background-color: #3b3b3b;
-                                color: #23d160;
+                                color: rgb(125, 12, 232);
+                                font-weight: 700;
                             }
                         }
                     }

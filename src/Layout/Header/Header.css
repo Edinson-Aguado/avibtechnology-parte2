@@ -1,6 +1,6 @@
 .main-header {
     position: sticky;
-    top: 0;
+    top: -1px;
     width: 100dvw;
     height: 64px;
     background-color: #f1f1f1;
@@ -18,7 +18,7 @@
 
         &:checked {
             ~ .main-nav {
-                left: 0 !important;
+                left: 0;
             }
 
             ~ .burger-container {
@@ -125,16 +125,15 @@
                     align-items: center;
                     justify-content: center;
                     padding: 1rem 1rem 1rem 1rem;
-                    color: #1f2937;
+                    color: blueviolet;
                     text-decoration: none;
                     font-weight: 600;
                     width: 100%;
                     cursor: pointer;
-                    transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+                    transition: background-color .4s ease-in-out, color .4s ease-in-out;
 
                     &:hover {
-                        background-color: #e5e7eb;
-                        color: #0a84ff;
+                        color: rgb(96, 18, 169);
                     }
 
                     .arrow-icon {
@@ -150,6 +149,14 @@
                 &.dropdown {
                     display: flex;
 
+                    .dropdown-toggle {
+                        color: blueviolet;
+
+                        &:hover {
+                            color: rgb(96, 18, 169);
+                        }
+                    }
+
                     .dropdown-menu {
                         background-color: #f1f1f1;
                         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -157,7 +164,7 @@
                         flex-direction: column;
                         align-items: center;
                         justify-content: center;
-                        gap: 10px;
+                        color: blueviolet;
                         width: 100%;
                         padding: 0;
 
@@ -174,6 +181,7 @@
                                 cursor: pointer;
                                 text-align: center;
                                 font-size: 1rem;
+                                color: blueviolet;
                             }
                         }
                     }
@@ -221,18 +229,24 @@
         .picture-container {
             display: none;
             align-items: center;
-            padding: 0 0.5rem;
+            padding: 0 .5rem;
             height: 100%;
+
+            @media screen and (min-width: 820px) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
             span {
                 .user-picture {
-                cursor: pointer;
-                width: 55px;
-                height: 55px;
-                object-fit: cover;
-                background-color: white;
-                border-radius: 50%;
-                padding: 0.3rem;
+                    cursor: pointer;
+                    width: 55px;
+                    height: 55px;
+                    object-fit: cover;
+                    background-color: white;
+                    border-radius: 50%;
+                    padding: 0.3rem;
                 }
             }
         }
@@ -290,9 +304,9 @@
                     justify-content: center;
                     flex-grow: 1;
                     height: 100%;
+                    
                     &:hover {
-                        background-color: #e5e7eb;
-                        color: #0a84ff;
+                        color: blueviolet;
                     }
 
                     a.nav-link {
@@ -305,11 +319,6 @@
 
                     &.dropdown {
                         height: 100%;
-                        
-                        &:hover {
-                        background-color: #e5e7eb;
-                        color: #0a84ff;
-                        }
 
                         .dropdown-toggle {
                             height: 100%;
@@ -324,7 +333,7 @@
 
                             .nav-link-dropdown {
                                 background-color: #2c2c2c;
-                                color: #0a84ff;
+                                color: blueviolet;
                                 text-align: center;
                                 font-size: 14px !important;
                                 padding: 0;
@@ -335,7 +344,7 @@
             }
         }
     }
-    }
+}
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
     .main-header {
@@ -343,44 +352,44 @@
         height: 80px;
 
         .avib-technology {
-        display: block;
-        height: 30px;
-        background-color: black;
-        color: white;
-        padding: 0.7rem 0;
+            display: block;
+            height: 30px;
+            background-color: black;
+            color: white;
+            padding: 0.7rem 0;
 
-        h1 {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1rem;
-            text-align: center;
-            font-weight: bold;
-        }
-        }
-
-        .user-info {
-        margin-left: 0;
-
-        .cart-container {
-            i {
-            font-size: 2.5rem;
+            h1 {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1rem;
+                text-align: center;
+                font-weight: bold;
             }
         }
 
-        .picture-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .user-info {
+            margin-left: 0;
+
+            .cart-container {
+                i {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .picture-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         .burger-container {
-        display: none;
+            display: none;
         }
 
         .main-nav {
-        position: static;
-        width: auto;
-        height: 100%;
+            position: static;
+            width: auto;
+            height: 100%;
 
         .nav-list {
             display: flex;
@@ -390,49 +399,50 @@
             background-color: #f1f1f1;
 
             .nav-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-            height: 100%;
-            &:hover {
-                background-color: #e5e7eb;
-                color: #0a84ff;
-            }
-
-            a.nav-link {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                text-decoration: none;
-                height: 100%;
-            }
-
-            &.dropdown {
+                flex-grow: 1;
                 height: 100%;
                 &:hover {
-                background-color: #e5e7eb;
-                color: #0a84ff;
-                }
-                .dropdown-toggle {
-                height: 100%;
-                }
-                .dropdown-menu {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                text-align: center;
-                background-color: #2c2c2c;
-
-                .nav-link-dropdown {
-                    background-color: #2c2c2c;
+                    background-color: #e5e7eb;
                     color: #0a84ff;
-                    text-align: center;
-                    font-size: 14px !important;
-                    padding: 0;
                 }
+
+                a.nav-link {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    height: 100%;
                 }
-            }
+
+                &.dropdown {
+                    height: 100%;
+                    
+                    &:hover {
+                        background-color: #e5e7eb;
+                        color: #0a84ff;
+                    }
+                    .dropdown-toggle {
+                        height: 100%;
+                    }
+                    .dropdown-menu {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        text-align: center;
+                        background-color: #2c2c2c;
+
+                        .nav-link-dropdown {
+                            background-color: #2c2c2c;
+                            color: #0a84ff;
+                            text-align: center;
+                            font-size: 14px !important;
+                            padding: 0;
+                        }
+                    }
+                }
             }
         }
         }
@@ -472,7 +482,6 @@
                     height: 100%;
 
                     &:hover {
-                        background-color: #e5e7eb;
                         color: #0a84ff;
                     }
 
@@ -482,17 +491,19 @@
                         justify-content: center;
                         text-decoration: none;
                         height: 100%;
+                        color: blueviolet;
                     }
 
                     &.dropdown {
                         height: 100%;
 
                         &:hover {
-                            color: #0a84ff;
+                            color: rgb(100, 18, 177);
                         }
 
                         .dropdown-toggle {
                             height: 100%;
+                            color: blueviolet;
                         }
 
                         .dropdown-menu {
@@ -507,7 +518,7 @@
                                 align-items: flex-start;
                                 justify-content: center;
                                 background-color: #2c2c2c;
-                                color: #0a84ff;
+                                color: blueviolet;
                                 text-align: center;
                                 font-size: 14px !important;
                                 transition: background-color 0.4s ease-in-out;
@@ -523,7 +534,6 @@
 
             .user-info {
                 margin-left: 0;
-                margin-right: 10px;
 
                 .cart-container {
                     i {
@@ -532,9 +542,17 @@
                 }
 
                 .picture-container {
-                    display: flex;
+                    display: flex !important;
                     align-items: center;
                     justify-content: center;
+
+                    span {
+                        .user-picture {
+                            display: flex !important;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
                 }
             }
         }

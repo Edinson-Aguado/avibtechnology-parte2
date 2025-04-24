@@ -23,7 +23,7 @@ export default function TableUsers({user, deleteUser, fnEditUser}) {
                     </div>
                 </td>
                 <td className="normal-cell">
-                    {user.password}
+                    *********
                 </td>
                 <td className="normal-cell">
                     {getDate(user.date)}

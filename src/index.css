@@ -11,6 +11,13 @@
     --secondary-color: #1a56af;
     --background-color: #ffffff;
     --text-color: #ffffff;
+
+    --accent-color: #f2f4f8;
+    --danger-color: #e74c3c;
+    --text-dark: #333;
+    --text-muted: #777;
+    --bg-light: #fff;
+    --border-color: #e0e0e0;
 }
 
 #root {
