@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUser } from '../../context/UserContext';
 import { NavLink } from 'react-router-dom';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCircleQuestion, faCircleUser, faGear, faRightFromBracket, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import './OptionsProfile.css';
 
@@ -19,14 +19,17 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
             >
                 <ul className='container-options-profile'>
                     <li className="container-option">
-                        <NavLink className="option-link" to="/">Profile</NavLink>
+                        <NavLink className="option-link" to="/">
+                            <FontAwesomeIcon icon={faCircleUser}/>
+                            Profile
+                        </NavLink>
                     </li>
                     
                     {
                         user?.role === 'admin' && (
                             <li className="container-option dropdown2">
                                 <span className="option-link dropdown-toggle" onClick={() => setOpenMenu(prev => prev === 'adminPages' ? null : 'adminPages')}>
-
+                                    <FontAwesomeIcon icon={faShieldHalved}/>
                                     Admin <FontAwesomeIcon icon={faChevronDown} size="sm" className='arrow-icon' />
                                 </span>
 
@@ -68,18 +71,28 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
                     }
 
                     <li className="container-option">
-                        <NavLink className="option-link" to="">Ayuda</NavLink>
+                        <NavLink className="option-link" to="">
+                            <FontAwesomeIcon icon={faCircleQuestion}/>
+                            Ayuda
+                        </NavLink>
+                    </li> 
+                    <li className="container-option">
+                        <NavLink className="option-link" to="">
+                            <FontAwesomeIcon icon={faGear}/>
+                            Configuración
+                        </NavLink>
                     </li>
                     {
                         user ? (
                         <li className="container-option">
-                            <NavLink className="option-link" to="" onClick={() => logout()}>
+                            <NavLink className="option-link last" to="/" onClick={() => logout()}>
+                                <FontAwesomeIcon icon={faRightFromBracket}/>
                                 Logout
                             </NavLink>
                         </li>
                         ) : (
                             <li className="container-option">
-                                <NavLink className="option-link" to="/Login">
+                                <NavLink className="option-link last" to="/Login">
                                     Login
                                 </NavLink>
                             </li>

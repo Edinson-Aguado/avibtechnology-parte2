@@ -125,7 +125,7 @@
                     align-items: center;
                     justify-content: center;
                     padding: 1rem 1rem 1rem 1rem;
-                    color: blueviolet;
+                    color: #0a84ff;
                     text-decoration: none;
                     font-weight: 600;
                     width: 100%;
@@ -133,7 +133,7 @@
                     transition: background-color .4s ease-in-out, color .4s ease-in-out;
 
                     &:hover {
-                        color: rgb(96, 18, 169);
+                        color: #0d69c5;
                     }
 
                     .arrow-icon {
@@ -150,10 +150,10 @@
                     display: flex;
 
                     .dropdown-toggle {
-                        color: blueviolet;
+                        color: #0a84ff;
 
                         &:hover {
-                            color: rgb(96, 18, 169);
+                            color: #0d69c5;
                         }
                     }
 

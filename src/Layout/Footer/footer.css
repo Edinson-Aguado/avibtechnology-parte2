@@ -383,7 +383,7 @@
                 justify-content: start;
                 align-items: center;
                 gap: 70px;
-                border-right: 2px solid #414141;
+                border-right: 1px solid #414141;
                 border-bottom: none;
 
                 h3 {
@@ -413,6 +413,7 @@
                     flex-direction: row;
                     align-items: flex-start;
                     justify-content: center;
+                    flex-wrap: nowrap;
                 }
             }
         }

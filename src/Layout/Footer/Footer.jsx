@@ -65,7 +65,6 @@ export default function Footer() {
                                     <li><a href="#">Preguntas frecuentes</a></li>
                                     <li><a href="#">Compras</a></li>
                                     <li><a href="#">Envíos</a></li>
-                                    <li><a href="#">Estatus de orden</a></li>
                                     <li><a href="#">Pagos</a></li>
                                 </ul>
                             </div>
