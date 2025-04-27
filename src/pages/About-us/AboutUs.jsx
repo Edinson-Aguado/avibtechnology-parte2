@@ -12,22 +12,27 @@ export default function AboutUs() {
 
                 {/* Misión y Visión */}
                 <section className="mission-vision">
-                    <h2>Nuestra misión</h2>
-                    <p>Proporcionar soluciones de seguridad inteligentes y confiables que garanticen la seguridad y tranquilidad de nuestros clientes. Creemos en el uso de tecnología avanzada para crear un mundo más seguro, una solución a la vez.</p>
+                    <div className="mission">
+                        <h3>Nuestra misión</h3>
+                        <p>Proporcionar soluciones de seguridad inteligentes y confiables que garanticen la seguridad y tranquilidad de nuestros clientes. Creemos en el uso de tecnología avanzada para crear un mundo más seguro, una solución a la vez.</p>
+                    </div>
                     
-                    <h2>Nuestra visión</h2>
-                    <p>Ser un proveedor líder de soluciones de seguridad inteligente a nivel mundial, reconocido por nuestra innovación, integridad y compromiso con la satisfacción del cliente.</p>
+                    <div className="vision">
+                        <h3>Nuestra visión</h3>
+                        <p>Ser un proveedor líder de soluciones de seguridad inteligente a nivel mundial, reconocido por nuestra innovación, integridad y compromiso con la satisfacción del cliente.</p>
+                    </div>
+                    
                 </section>
             
                 {/* Historia de la Empresa */}
                 <section className="company-history">
-                    <h2>Nuestra historia</h2>
+                    <h3>Nuestra historia</h3>
                     <p>Fundada en 2024, Smart Security Solutions comenzó como una pequeña empresa enfocada en brindar productos de seguridad básicos. A lo largo de los años, nos hemos convertido en una marca global, pionera en sistemas de vigilancia inteligentes y soluciones de seguridad personalizadas para familias, empresas y organizaciones de todo el mundo.</p>
                 </section>
             
                 {/*Equipo */}
                 <section className="team">
-                    <h2>Conozca a nuestro equipo</h2>
+                    <h3>Conozca a nuestro equipo</h3>
                     <div className="team-members">
                         <div className="team-member">
                             <img src={perfilMasculino}/>
@@ -49,7 +54,7 @@ export default function AboutUs() {
             
                 {/* Valores de la Empresa */}
                 <section className="values">
-                    <h2>Nuestros valores</h2>
+                    <h3>Nuestros valores</h3>
                     <ul>
                         <li><strong>Integridad:</strong> Mantenemos los más altos estándares de integridad en todas nuestras acciones.</li>
                         <li><strong>Innovación:</strong> Buscamos constantemente soluciones innovadoras para mejorar la seguridad de nuestros clientes.</li>
@@ -60,7 +65,7 @@ export default function AboutUs() {
             
                 {/* Contacto o Información adicional */}
                 <section className="more-info">
-                    <h2>¿Quieres saber más?</h2>
+                    <h3>¿Quieres saber más?</h3>
                     <p>Si está interesado en saber más sobre nosotros, no dude en contactarnos en <a href="mailto:avibtechnology@gmail.com">avibtechnology@gmail.com</a> o llámanos al (11) 27721921 (Argentina - capital).</p>
                 </section>
                 
