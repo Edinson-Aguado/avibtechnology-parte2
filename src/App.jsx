@@ -17,6 +17,7 @@ import ProductDetail from './pages/productDetail/ProductDetail';
 import Order from './pages/order/Order';
 import { env } from './config/env.config';
 import AdminGuard from './services/guard/AdminGuard';
+import Header from './Layout/Header/Header';
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -49,6 +50,7 @@ export default function App() {
 
     return (
         <Routes>
+
             {/* Layout para páginas con header/footer */}
             <Route element={<MainLayout useWindowWidth={useWindowWidth} />}>
                 {/* Rutas principales */}

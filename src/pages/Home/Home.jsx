@@ -7,7 +7,6 @@ import Carousel from '../../components/Carousel/Carousel';
 
 export default function Home({products}) {
 
-    console.log("Products en Home:", products);
 
     return (
         <>
@@ -16,8 +15,8 @@ export default function Home({products}) {
             <Title title="PRODUCTOS" />
             <main className="main-container-home">
 
-                {products && products.length > 0 ? (
-                    products.map(product => (
+                {products && products?.length > 0 ? (
+                    products?.map(product => (
                         <Product key={product._id} product={product} />
                     ))
                 ) : (

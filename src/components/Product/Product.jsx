@@ -19,6 +19,7 @@ export default function Product({product}) {
             }
         }
     }
+    
 
     return (
         <>
@@ -27,16 +28,16 @@ export default function Product({product}) {
 
                     <div className="card-image">
                         {
-                            product.discount > 0 && 
+                            product?.discount > 0 && 
                             (
                                 <div className={`card-desc`}>
-                                    <span>{(product.discount*100).toFixed(0)}% OFF</span>
+                                    <span>{(product?.discount*100).toFixed(0)}% OFF</span>
                                 </div>
                             )
                         }
                         
                         <img 
-                            src={product.image} alt="Imágen Cámara H1C" 
+                            src={product?.image} alt="Imágen Cámara H1C" 
                         />
                     </div>
 
@@ -46,11 +47,11 @@ export default function Product({product}) {
                     
                     <div className="btn-product ">
 
-                        {product._id && (
+                        {product?._id && (
                             <Link 
                                 className='btn card-buy'
                                 title='Comprar producto'
-                                to={`/ProductDetail/${product._id}`}>
+                                to={`/ProductDetail/${product?._id}`}>
                                 Comprar
                             </Link>
                         )}
@@ -76,8 +77,8 @@ export default function Product({product}) {
                     <h3 className="card-title">
 
                         <Link 
-                            to={`/ProductDetail/${product._id}`}>
-                            {product.name}
+                            to={`/ProductDetail/${product?._id}`}>
+                            {product?.name}
                         </Link>
 
                     </h3>
@@ -86,11 +87,11 @@ export default function Product({product}) {
                         {
                             product?.discount > 0 ? (
                                 <>
-                                    <del style={{color:"#7a8a99"}}>$ {product.price}</del>{" "}
-                                    $ {product.price - (product.price * product.discount)}
+                                    <del style={{color:"#7a8a99"}}>$ {product?.price}</del>{" "}
+                                    $ {product?.price - (product?.price * product?.discount)}
                                 </>
                             ) : (
-                                <>$ {product.price}</>
+                                <>$ {product?.price}</>
                             )
                         }
                         

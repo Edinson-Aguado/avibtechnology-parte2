@@ -27,7 +27,7 @@ export default function ProductDetail() {
 
             const response = await axios.get(`${env.URL_LOCAL}/products/${id}`);
             
-            setProduct(response.data);
+            setProduct(response.data.product);
             
         } catch (error) {
             console.log(error);
