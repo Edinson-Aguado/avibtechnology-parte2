@@ -13,7 +13,7 @@ export const useUser = () => useContext(UserContext);
 export default function UserProvider({children}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
     const navigate = useNavigate();
 
 
@@ -26,11 +26,11 @@ export default function UserProvider({children}) {
         }
 
         if (token) {
-            localStorage.removeItem("token");
-            localStorage.setItem("token", JSON.stringify(token))
+            localStorage.setItem("token", token);
         } else {
             localStorage.removeItem("token");
         }
+
     }, [user, token])
 
     async function login(data) {

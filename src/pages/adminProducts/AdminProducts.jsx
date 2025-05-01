@@ -7,21 +7,17 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env.config';
 
-export default function AdminProducts({products, setProducts, getProducts}) {
+export default function AdminProducts({products, getProducts}) {
 
     // VARIABLES
     const [editProduct, setEditProduct] = useState(null);
-    const { register, handleSubmit, setValue, setFocus, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
+    const { register, handleSubmit, setValue, setFocus, watch, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
 
-    function getTime() {
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        const datedef = `${year}-${month}-${day}`;
+    // Valor crudo entre "0" y "1"
+    const discountRaw = parseFloat(watch("discount") ?? 0);
+    // Valor mostrado como entero de 0–100
+    const discountPct = Math.round(discountRaw * 100);
 
-        return datedef;
-    }
     
     useEffect(() => {
         
@@ -32,13 +28,13 @@ export default function AdminProducts({products, setProducts, getProducts}) {
     useEffect(() => {
 
         if (editProduct) {
-            setValue("image", editProduct?.image);
             setValue("name", editProduct?.name);
             setValue("price", editProduct?.price);
             setValue("stock", editProduct?.stock);
             setValue("description", editProduct?.description);
             setValue("status", editProduct?.status);
-            setValue("createAt", editProduct?.createAt);
+            setValue("discount", editProduct?.discount);
+            setValue("createdAt", editProduct?.createdAt);
             setValue("category", editProduct?.category);
 
             // Llevar el scroll hacia arriba al formulario
@@ -53,49 +49,46 @@ export default function AdminProducts({products, setProducts, getProducts}) {
     async function createProduct(data) {
         
         try {
+
+            const formData = new FormData();
+            formData.append("name", data.name);
+            formData.append("price", data.price);
+            formData.append("stock", data.stock);
+            formData.append("description", data.description);
+            formData.append("status", data.status);
+            formData.append("category", data.category);
+
+            if (data.image?.length && data.image[0] instanceof File) {
+                formData.append("image", data.image[0]);
+            }
+
             if (editProduct) {
+
                 // Lógica para editar el post
-        
-                const id = editProduct._id; 
-        
-                const productToUpdate = {
-                    name: data.name,
-                    price: data.price,
-                    stock: data.stock,
-                    description: data.description,
-                    status: data.status,
-                    image: data.image,
-                    createAt: data.createAt,
-                    category: data.category
+                formData.append("updatedAt", new Date().toISOString().slice(0, 10));
 
-                }
-
-                await axios.put(`${env.URL_LOCAL}/products/${id}`, productToUpdate);
+                await axios.put(`${env.URL_LOCAL}/products/${editProduct._id}`, formData);
             
-                setEditProduct(null); //Seteamos nulo a estado del producto que estamos editando.
                 //Obtenemos los datos de los productos
                 await getProducts();
+                setEditProduct(null); //Seteamos nulo a estado del producto que estamos editando.
                 //Limpiamos le formulario
                 reset()
                 Swal.fire("Producto editado", "EL producto fue editado correctamente", "success");
                 
             } else {
+                
                 //Creo el nuevo producto en base a los datos del formulario
                 if (isValid) {
-                    const newProduct = {
-                        // El "ID" Ya se hace desde el servidor de Mokapi
-                        name: data.name,
-                        price: data.price,
-                        stock: data.stock,
-                        description: data.description,
-                        category: data.category,
-                        status: data.status,
-                        image: data.image,
-                        createAt: new Date().toISOString()
-                    }
     
-                    const response = await axios.post(`${env.URL_LOCAL}/products`, newProduct);
-                    setProducts(response.data.products);
+                    formData.append("createdAt", new Date().toISOString().slice(0, 10));
+                    formData.append("updatedAt", new Date().toISOString().slice(0, 10));
+
+                    await axios.post(`${env.URL_LOCAL}/products`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
                     await getProducts();
                     reset();
                     Swal.fire("Producto creado", "El producto fue creado correctamente", "success");
@@ -108,7 +101,14 @@ export default function AdminProducts({products, setProducts, getProducts}) {
             setFocus("name");
 
         } catch (error) {
-            Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+            // Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+            if (error.response) {
+                console.log("Error del servidor:", error.response.data);
+                Swal.fire("¡Error!", `Servidor: ${error.response.data.message || error.response.data}`, "error");
+            } else {
+                console.log("Error:", error.message);
+                Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+            }
         }
     }
 
@@ -194,8 +194,8 @@ export default function AdminProducts({products, setProducts, getProducts}) {
                                 type="number" 
                                 {...register("price", {
                                     required: "El precio es requerido",
-                                    minLength: {
-                                        value: 1,
+                                    min: {
+                                        value: 0,
                                         message: "El valor del precio debe ser mayor a 0",
                                     }
                                 })} 
@@ -223,34 +223,46 @@ export default function AdminProducts({products, setProducts, getProducts}) {
                             {errors.stock && <span className="error-input">{errors.stock.message}</span>}
                         </div>
                     </div>
-                    
 
                     <div className="input-group">
-                        <label htmlFor="image">Imagen</label>
+                        <label htmlFor='status'>Estatus</label>
+                        <select 
+                            {...register("status", { required: "El estatus es obligatorio" })} 
+                            id="status">
+                            <option value=""></option>
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Prox">Prox</option>
+                        </select>
+                        {errors.category && (
+                            <span 
+                                className='error-input'>
+                                {errors.category.message}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="discount">
+                        Descuento: <strong>{discountPct}%</strong>
+                        </label>
                         <input
-                            type="file"
-                            id="image"
-                            accept="image/*"
-                            {...register("image", {
-                                required: "La imagen es obligatoria"
+                            type="range"
+                            id="discount"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            {...register("discount", {
+                                required: "El descuento es obligatorio",
+                                min: { value: 0, message: "No puede ser negativo" },
+                                max: { value: 1, message: "No puede exceder 1" }
                             })}
                         />
-                        {errors.image && <span className="error-input">{errors.image.message}</span>}
+                        {errors.discount && (
+                        <span className="error-input">{errors.discount.message}</span>
+                        )}
                     </div>
 
-                    <div className="input-group">
-                        <label htmlFor="fecha">Fecha de creación</label>
-                        <input 
-                            type="date"
-                            {...register("createAt")}
-                            id="createAt" 
-                            name="createAt" 
-                            min="1980-01-01" 
-                            max={getTime()} 
-                            required
-                        />
-                        
-                    </div>
 
                     <div className="input-group">
                         <label htmlFor='category'>Categoría</label>
@@ -284,8 +296,12 @@ export default function AdminProducts({products, setProducts, getProducts}) {
                             {...register("description", {
                                 required: "La descripción es requerida",
                                 minLength: {
-                                    value: 1,
-                                    message: "Agrege una una descripción válida y no vacía.",
+                                    value: 10,
+                                    message: "Caracteres mínimos: 10.",
+                                },
+                                maxLength: {
+                                    value: 1000,
+                                    message: "Caracteres máximos: 1000.",
                                 }
                             })}
                             id="description" 
@@ -299,16 +315,43 @@ export default function AdminProducts({products, setProducts, getProducts}) {
                         )}
                     </div>
 
-                    <button 
-                        className="btn" 
-                        type="submit" 
-                        disabled={!isValid}>
-                        
-                        {
-                            editProduct ? "Actualizar Producto" : "Crear Producto"
-                        }
-                        
-                    </button>
+                    <div className="input-group">
+                        <label htmlFor="image">Imagen</label>
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            // multiple
+                            {...register("image", {
+                                validate: (files) => files?.length > 0 || "La imagen es requerida"
+                            })}
+                        />
+                        {errors.image && <span className="error-input">{errors.image.message}</span>}
+                    </div>
+                    
+                    <div className="buttons">
+                        <button 
+                            className="btn" 
+                            type="submit" 
+                            disabled={!isValid}>
+                            
+                            {
+                                editProduct ? "Actualizar Producto" : "Crear Producto"
+                            }
+                            
+                        </button>
+                        <button 
+                            className="btn btn-clean" 
+                            type="button"
+                            onClick={() => {
+                                reset();
+                                setEditProduct(null);
+                            }}
+                        >
+                            Limpiar datos
+                        </button>
+                    </div>
+                    
 
                 </form>
 
@@ -317,7 +360,7 @@ export default function AdminProducts({products, setProducts, getProducts}) {
                     <table className="main-table">
                         <thead>
                             <tr>
-                                <th>Imágen</th>
+                                <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Valor</th>

@@ -56,20 +56,22 @@ export default function ProductDetail() {
                     <div className="detail-product">
                         <div className="about-product-buy">
                             
+                            <div className="info">
+                                {/* NAME */}
+                                <h3>{product?.name}</h3>
+                                {/* PRICE */}
+                                <div className="price">
+                                    <p>$ {product?.price}</p>
+                                </div>
+                                {/* DESCRIPTION */}
+                                <div className="about-product">
+                                    <p>{product?.description}</p>
+                                </div>
+                            </div>
                             
-                            {/* NAME */}
-                            <h3>{product?.name}</h3>
-                            {/* PRICE */}
-                            <div className="price">
-                                <p>$ {product?.price}</p>
-                            </div>
-                            {/* DESCRIPTION */}
-                            <div className="about-product">
-                                <p>{product?.description}</p>
-                            </div>
                             {/* ACTIONS */}
                             <div className="add-info">
-                                <form action="">
+                                <form>
                                     <label htmlFor="cantidadOrder">Cantidad</label>
                                     <input
                                         type="number"

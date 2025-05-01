@@ -1,12 +1,18 @@
+// import { env } from '../../config/env.config';
 import './ProductTable.css';
 
 export default function ProductTable({product, deleteProduct, fnEditProduct}) {
+
+    console.log("AQUIIIIII: ", product.image);
+    
+
     return (
         <>
             {/* CUERPO DE LA TABLA */}
             <tr> 
+                
                 <td className="image-cell">
-                    <img src={product.image} alt="Imagen de la camara H1C" className="table-image"/>
+                    <img src={`${product.image}`} alt={`Imagen de ${product.name}`} className="table-image"/>
                 </td>
                 <td className="product-cell">
                     {product.name}
@@ -36,7 +42,7 @@ export default function ProductTable({product, deleteProduct, fnEditProduct}) {
                         <button 
                             className="btn btn-danger" 
                             title="Eliminar elemento"
-                            onClick={() => deleteProduct(product.id)}>
+                            onClick={() => deleteProduct(product._id)}>
                             <i className="fa-solid fa-trash"></i>
                         </button>
                     </div>

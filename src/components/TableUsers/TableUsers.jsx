@@ -2,11 +2,14 @@ import './TableUsers.css';
 
 export default function TableUsers({user, deleteUser, fnEditUser}) {
 
-    function getDate(milisegundos) {
-        const fecha = new Date(milisegundos);
+    function getDate(input) {
+        const fecha = new Date(input);
+        
+        if (isNaN(fecha)) return "Fecha inválida";
         const dia = String(fecha.getDate()).padStart(2, '0');
-        const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
         const año = fecha.getFullYear();
+
         return `${año}-${mes}-${dia}`;
     }
 
@@ -39,7 +42,8 @@ export default function TableUsers({user, deleteUser, fnEditUser}) {
                         <button 
                             className="btn btn-edit" 
                             title="Editar elemento"
-                            onClick={() => fnEditUser(user)}>
+                            onClick={() => fnEditUser(user)}
+                        >
                             <i className="fa-solid fa-pencil"></i>
                         </button>
 

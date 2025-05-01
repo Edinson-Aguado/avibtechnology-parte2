@@ -11,8 +11,9 @@ export default function AdminUsers() {
 
     // VARIABLES
     const [editUser, setEditUser] = useState(null);
-    const { register, handleSubmit, setValue, setFocus, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
+    const { register, watch, handleSubmit, setValue, setFocus, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
     const [users, setUsers] = useState();
+    const passwordValue = watch("password");
 
     function getTime() {
         const date = new Date();
@@ -22,12 +23,14 @@ export default function AdminUsers() {
         return `${year}-${month}-${day}`;
     }
 
-    function getDate(milisegundos) {
-        const fecha = new Date(milisegundos);
-        const dia = String(fecha.getDate()).padStart(2, '0');
-        const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0
-        const year = fecha.getFullYear();
-        return `${year}-${mes}-${dia}`;
+    function formatDateToInputValue(dateInput) {
+        const fecha = new Date(dateInput);
+        if (isNaN(fecha)) return ""; // fallback si date es inválido
+    
+        const dia = String(fecha.getDate() + 1).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const año = fecha.getFullYear();
+        return `${año}-${mes}-${dia}`;
     }
     
     useEffect(() => {
@@ -41,9 +44,7 @@ export default function AdminUsers() {
         if (editUser) {
             setValue("name", editUser?.name);
             setValue("email", editUser?.email);
-            setValue("password", editUser?.password);
-            setValue("rePassword", "");
-            setValue("date", getDate(editUser?.date));
+            setValue("date", formatDateToInputValue(editUser?.date));
             setValue("country", editUser?.country);
             setValue("observations", editUser?.observations);
 
@@ -59,8 +60,9 @@ export default function AdminUsers() {
     async function getUsers() {
         
         try {
+            
             const response = await axios.get(`${env.URL_LOCAL}/users`);
-            console.log("Dentro del TRYCATCH. users: ", response.data);
+            console.log(response.data);
             setUsers(response.data);
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema al obtener los usurios: ${error.message}`, "error");
@@ -71,10 +73,11 @@ export default function AdminUsers() {
     async function createUser(data) {
         
         try {
+            
             if (editUser) {
 
                 // Lógica para editar el post 
-                const userToUpdate = {
+                const userUpdated = {
                     name: data.name,
                     email: data.email,
                     password: data.password,
@@ -82,21 +85,25 @@ export default function AdminUsers() {
                     country: data.country,
                     observations: data.observations
                 }
-
-                await axios.put(`${env.URL_LOCAL}/users/${editUser._id}`, userToUpdate);
+                
+                const bearer = localStorage.getItem('token');
+                await axios.put(`${env.URL_LOCAL}/users/${editUser._id}`, userUpdated, {
+                    headers: {
+                        Authorization: `Bearer ${bearer}`
+                    }
+                });
             
                 setEditUser(null); //Seteamos nulo a estado del usuario que estamos editando.
                 //Obtenemos los datos de los usuarios
                 await getUsers();
                 //Limpiamos le formulario
                 reset()
-                Swal.fire("Usuario editado", "EL usuario fue editado correctamente", "success");
+                Swal.fire("Usuario editado", "El usuario fue editado correctamente", "success");
                 
             } else {
                 //Creo el nuevo producto en base a los datos del formulario
                 if (isValid) {
                     const newUser = {
-                        // El "ID" Ya se hace desde el servidor de Mokapi
                         name: data.name,
                         email: data.email,
                         password: data.password,
@@ -105,6 +112,7 @@ export default function AdminUsers() {
                         observations: data.observations
                     }
                     await axios.post(`${env.URL_LOCAL}/users`, newUser);
+                    
                     await getUsers();
                     reset();
                     Swal.fire("Usuario creado", "El usuario fue creado correctamente", "success");
@@ -199,9 +207,9 @@ export default function AdminUsers() {
                             <input
                                 type="password"
                                 id="password"
-                                {...register("password", { required: true, minLength: 6 })}
+                                {...register("password", { required: true, minLength: 4 })}
                             />
-                            {errors.password && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
+                            {errors.password && <span className="error">Contraseña requerida (mín. 4 caracteres)</span>}
                         </div>
 
                         <div className="input-group">
@@ -209,12 +217,12 @@ export default function AdminUsers() {
                             <input
                                 type="password"
                                 id="rePass"
-                                {...register(
-                                    "rePass", 
-                                    { required: true}
-                                )}
+                                {...register("rePass", {
+                                    required: true,
+                                    validate: value => value === passwordValue || "Las contraseñas no coinciden"
+                                })}
                             />
-                            {errors.rePass && <span className="error">Repite la contraseña</span>}
+                            {errors.rePass && <span className="error">{errors.rePass.message}</span>}
                         </div>
 
                         <div className="input-group">
@@ -222,6 +230,7 @@ export default function AdminUsers() {
                             <input
                                 type="date"
                                 id="date"
+                                defaultValue=""
                                 max={getTime()}
                                 min="1920-01-20"
                                 {...register("date", { required: true })}
@@ -248,18 +257,24 @@ export default function AdminUsers() {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="observations">Observaciones</label>
+                            <label htmlFor="observations">Notas</label>
                             <textarea
                                 id="observations"
                                 rows="5"
-                                {...register("observations", {required: true, maxLength: 20})}
+                                {...register("observations", {required: true, minLength: 10, maxLength: 100})}
                             ></textarea>
-                            {errors.observations && <span className="error">Límite de caracteres: 20.</span>}
+                            {errors.observations && <span className="error">Min: 10. Max: 100.</span>}
                         </div>
-
-                        <button className="btn" type="submit" disabled={!isValid}>
-                            {isValid ? "Registrar":"Faltan datos"}
-                        </button>
+                        
+                        <div className="btn-form">
+                            <button className="btn" type="submit" disabled={!isValid}>
+                                {editUser ? "Actualizar" : "Crear usuario"}
+                            </button>
+                            <button className="btn btn-clean" type="button" onClick={() => reset()}>
+                                Limpiar datos
+                            </button>
+                        </div>
+                        
                     </form>
                 </div>
                 
@@ -267,13 +282,13 @@ export default function AdminUsers() {
                     <table className="main-table-users">
                         <thead>
                             <tr>
-                                <th>NAME</th>
-                                <th>CORREO</th>
-                                <th>CONTRASEÑA</th>
-                                <th>FECHA NACIMIENTO</th>
-                                <th>PAIS</th>
-                                <th>OBSERVACIONES</th>
-                                <th>ACCIONES</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Contraseña</th>
+                                <th>Nacimiento</th>
+                                <th>Pais</th>
+                                <th>Notas</th>
+                                <th>Herramientas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -289,7 +304,7 @@ export default function AdminUsers() {
                                     ))
                                 ) : (
                                         <tr>
-                                            <td colSpan="5" className="no-products">
+                                            <td colSpan="7" className="no-products">
                                                 No hay usuarios disponibles.
                                             </td>
                                         </tr>

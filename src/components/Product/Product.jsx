@@ -1,12 +1,32 @@
 import './Product.css';
 import { Link } from 'react-router-dom';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus, faCartShopping, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // Corazón vacío
 import { useOrder } from '../../context/OrderContext';
+import { useState } from "react";
+import ModalView from '../ModalView/ModalView';
 
 export default function Product({product}) {
 
     const {addProduct} = useOrder();
+    const [isFavorited, setIsFavorited] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleFavorite = () => {
+        setIsFavorited(!isFavorited);
+    };
+
+    const handleAddToCart = () => {
+        if (product) {
+            addProduct(product, 1);
+        }
+    };
+
+    const handleQuickView = () => {
+        setShowModal(true);
+    };
+
 
     function getStatus(status) {
         if (status.toLowerCase() === "nuevo") {
@@ -37,7 +57,7 @@ export default function Product({product}) {
                         }
                         
                         <img 
-                            src={product?.image} alt="Imágen Cámara H1C" 
+                            src={product?.image} alt={`Imágen de ${product?.name}`} 
                         />
                     </div>
 
@@ -70,6 +90,19 @@ export default function Product({product}) {
                         </button>
 
                     </div>
+
+                    <div className="actions-product">
+                        <button className="favorite-btn" onClick={handleFavorite}>
+                            <FontAwesomeIcon icon={isFavorited ? solidHeart : regularHeart} />
+                        </button>
+                        <button className="cart-btn" onClick={handleAddToCart}>
+                            <FontAwesomeIcon icon={faCartPlus} />
+                        </button>
+                        <button className="view-btn" onClick={handleQuickView}>
+                            <FontAwesomeIcon icon={faEye} />
+                        </button>
+                    </div>
+
 
                 </div>
                 <div className="card-info">
@@ -112,6 +145,10 @@ export default function Product({product}) {
                     </div>
                     
                 </div>
+                {showModal && (
+                    <ModalView onClose={() => setShowModal(false)} product={product}/>
+                )}
+
             </article>
         </>
     )

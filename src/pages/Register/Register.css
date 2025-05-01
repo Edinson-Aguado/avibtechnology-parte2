@@ -144,6 +144,9 @@
         select {
           padding: .5rem .3rem;
         }
+        textarea {
+          resize: none;
+        }
   
         .error {
           font-size: .8rem;
