@@ -1,7 +1,7 @@
 import './Product.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faCartShopping, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // Corazón vacío
 import { useOrder } from '../../context/OrderContext';
 import { useState } from "react";
@@ -15,12 +15,6 @@ export default function Product({product}) {
 
     const handleFavorite = () => {
         setIsFavorited(!isFavorited);
-    };
-
-    const handleAddToCart = () => {
-        if (product) {
-            addProduct(product, 1);
-        }
     };
 
     const handleQuickView = () => {
@@ -51,7 +45,7 @@ export default function Product({product}) {
                             product?.discount > 0 && 
                             (
                                 <div className={`card-desc`}>
-                                    <span>{(product?.discount*100).toFixed(0)}% OFF</span>
+                                    <span>{product?.discount.toFixed(0)}% OFF</span>
                                 </div>
                             )
                         }
@@ -95,9 +89,6 @@ export default function Product({product}) {
                         <button className="favorite-btn" onClick={handleFavorite}>
                             <FontAwesomeIcon icon={isFavorited ? solidHeart : regularHeart} />
                         </button>
-                        <button className="cart-btn" onClick={handleAddToCart}>
-                            <FontAwesomeIcon icon={faCartPlus} />
-                        </button>
                         <button className="view-btn" onClick={handleQuickView}>
                             <FontAwesomeIcon icon={faEye} />
                         </button>
@@ -117,16 +108,18 @@ export default function Product({product}) {
                     </h3>
                     <div className="card-price">
                         
-                        {
-                            product?.discount > 0 ? (
-                                <>
-                                    <del style={{color:"#7a8a99"}}>$ {product?.price}</del>{" "}
-                                    $ {product?.price - (product?.price * product?.discount)}
-                                </>
-                            ) : (
-                                <>$ {product?.price}</>
-                            )
-                        }
+                    {
+                        product?.discount > 0 ? (
+                            <>
+                                <del style={{color:"#7a8a99"}}>$ {product?.price}</del>{" "}
+                                $ {Math.round(product?.price * (1 - product?.discount / 100))}
+
+                            </>
+                        ) : (
+                            <>$ {product?.price}</>
+                        )
+                    }
+
                         
                     </div>
                     <div className="agregar-carrito">

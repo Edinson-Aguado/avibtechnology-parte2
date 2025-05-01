@@ -13,11 +13,7 @@ export default function AdminProducts({products, getProducts}) {
     const [editProduct, setEditProduct] = useState(null);
     const { register, handleSubmit, setValue, setFocus, watch, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
 
-    // Valor crudo entre "0" y "1"
-    const discountRaw = parseFloat(watch("discount") ?? 0);
-    // Valor mostrado como entero de 0–100
-    const discountPct = Math.round(discountRaw * 100);
-
+    const discountPct = parseInt(watch("discount") ?? 0);
     
     useEffect(() => {
         
@@ -250,12 +246,12 @@ export default function AdminProducts({products, getProducts}) {
                             type="range"
                             id="discount"
                             min="0"
-                            max="1"
-                            step="0.01"
+                            max="100"
+                            step="1"
                             {...register("discount", {
                                 required: "El descuento es obligatorio",
-                                min: { value: 0, message: "No puede ser negativo" },
-                                max: { value: 1, message: "No puede exceder 1" }
+                                min: { value: 0, message: "Debe ser al menos 0%" },
+                                max: { value: 100, message: "No puede exceder 100%" }
                             })}
                         />
                         {errors.discount && (
@@ -364,6 +360,7 @@ export default function AdminProducts({products, getProducts}) {
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Valor</th>
+                                <th>Descuento</th>
                                 <th>Stock</th>
                                 <th>Herramientas</th>
                             </tr>
@@ -381,7 +378,7 @@ export default function AdminProducts({products, getProducts}) {
                                     ))
                                 ) : (
                                         <tr>
-                                            <td colSpan="5" className="no-products">
+                                            <td colSpan="7" className="no-products">
                                                 No hay productos disponibles.
                                             </td>
                                         </tr>

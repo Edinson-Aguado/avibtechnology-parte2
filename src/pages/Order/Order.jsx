@@ -29,7 +29,7 @@ export default function Order() {
                 ) : (
                     cart.map((product) => (
                 
-                        <div className="order-item" key={product.id}>
+                        <div className="order-item" key={product._id}>
                             <div className="product-image" style={{ backgroundColor: "#e0f7ff" }}>
                                 <img src={product.image} alt={product.name} />
                             </div>
@@ -40,7 +40,7 @@ export default function Order() {
                                     product?.discount > 0 ? (
                                         <>
                                             <del style={{color:"#444"}}>${product.price}</del>{" "}
-                                            $ {product.price - (product.price * product.discount)}
+                                            $ {Math.round(product?.price * (1 - product?.discount / 100))}
                                         </>
                                     ) : (
                                         <>$ {product.price}</>
@@ -48,17 +48,20 @@ export default function Order() {
                                 }
                             </div>
                             <div className="product-quantity">
-                                <button onClick={() => editQuantity(product.id, "+")}>
-                                <FontAwesomeIcon icon={faPlus} />
+                                <button onClick={() => editQuantity(product._id, "+")}>
+                                    <FontAwesomeIcon icon={faPlus} />
                                 </button>
+
                                 <span>{product.quantity}</span>
-                                <button onClick={() => editQuantity(product.id, "-")}>
-                                <FontAwesomeIcon icon={faMinus} />
+
+                                <button onClick={() => editQuantity(product._id, "-")}>
+                                    <FontAwesomeIcon icon={faMinus} />
                                 </button>
                             </div>
                             <div className="subtotal">
                                 <h4>Subtotal</h4>
-                                <p>$ { (product.price - (product.price * product.discount)) * product.quantity }</p>
+                                <p>$ { Math.round((product.price * (1 - product.discount / 100)) * product.quantity) }</p>
+
                             </div>
                         </div>
                     ))

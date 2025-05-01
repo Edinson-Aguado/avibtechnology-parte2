@@ -1,7 +1,3 @@
-/* span {
-    color: green;
-    font-weight: bold;
-} */
 /* Contenedor de la tabla con scroll */
 tr {
     border-bottom: 1px solid #ddd;
@@ -31,7 +27,7 @@ tr {
 
 /* Celda del nombre del producto */
 .product-cell {
-    font-weight: bold;
+    font-weight: 500 !important;
     color: #333;
     padding: 10px;
     white-space: nowrap; /* Evita que se divida el nombre */
@@ -56,7 +52,7 @@ tr {
 
 /* Celda de precio */
 .price-cell {
-    font-size: 16px;
+    font-size: 12px !important;
     font-weight: bold;
     color: #0bbf35 !important;
     text-align: center;
@@ -80,7 +76,7 @@ tr {
     border: none;
     padding: 6px 10px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color .3s ease-in-out;
     border-radius: 4px;
 }
 

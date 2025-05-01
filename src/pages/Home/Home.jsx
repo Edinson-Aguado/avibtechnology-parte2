@@ -16,9 +16,10 @@ export default function Home({products}) {
             <main className="main-container-home">
 
                 {products && products?.length > 0 ? (
-                    products?.map(product => (
-                        <Product key={product._id} product={product} />
-                    ))
+                    products?.map(product => {
+                        console.log(product);
+                        return (<Product key={product._id} product={product} />)
+                    })
                 ) : (
                     <p>No hay productos para mostrar</p>
                 )}

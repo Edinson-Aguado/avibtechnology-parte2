@@ -135,7 +135,7 @@
                     td {
                         padding: 0.8rem;
                         border-bottom: 1px solid var(--border-color);
-                        vertical-align: top;
+                        vertical-align: middle;
                         font-size: 0.9rem;
                         color: var(--text-dark);
                     }

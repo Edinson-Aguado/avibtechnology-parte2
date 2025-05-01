@@ -28,6 +28,10 @@ export default function ProductTable({product, deleteProduct, fnEditProduct}) {
                 </td>
                 <td 
                     className="product-cell">
+                    {product.discount > 0 ? product.discount+"%" : "N/A"}
+                </td>
+                <td 
+                    className="product-cell">
                     <span>{product.stock ? product.stock : "N/A"}</span>
                 </td>
                 <td className="actions-cell">
