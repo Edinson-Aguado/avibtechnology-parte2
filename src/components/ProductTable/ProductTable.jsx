@@ -24,15 +24,15 @@ export default function ProductTable({product, deleteProduct, fnEditProduct}) {
                 </td>
                 <td 
                     className="price-cell">
-                    <span>$</span> <strong>{product.price ? product.price : "N/A"}</strong>
+                    <span>$</span> <strong>{product.price ? product.price : "-"}</strong>
                 </td>
                 <td 
                     className="product-cell">
-                    {product.discount > 0 ? product.discount+"%" : "N/A"}
+                    {product.discount > 0 ? product.discount+"%" : "-"}
                 </td>
                 <td 
                     className="product-cell">
-                    <span>{product.stock ? product.stock : "N/A"}</span>
+                    <span>{product.stock ? product.stock : "-"}</span>
                 </td>
                 <td className="actions-cell">
                     <div className="icon-container">

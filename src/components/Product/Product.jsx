@@ -1,7 +1,7 @@
 import './Product.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faWarehouse, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // Corazón vacío
 import { useOrder } from '../../context/OrderContext';
 import { useState } from "react";
@@ -21,7 +21,6 @@ export default function Product({product}) {
         setShowModal(true);
     };
 
-
     function getStatus(status) {
         if (status.toLowerCase() === "nuevo") {
             return "card-status"
@@ -38,7 +37,14 @@ export default function Product({product}) {
     return (
         <>
             <article className="card">
+                
+                
                 <div className="card-content">
+
+                    <div className="icon-container">
+                        <FontAwesomeIcon icon={faWarehouse} />
+                        <span className="badge-stock">{product.stock}</span>
+                    </div>
 
                     <div className="card-image">
                         {
