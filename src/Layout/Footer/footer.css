@@ -2,7 +2,6 @@
     background-color: #f9fafb;
     color: #1f2937;
     border-top: 1px solid #d1d5db;
-    margin-top: 4rem;
     font-size: 1rem;
     width: 100%;
     display: flex;
@@ -258,7 +257,7 @@
                     flex-direction: row;
                     align-items: flex-start;
                     justify-content: center;
-                    flex-wrap: wrap;
+                    flex-wrap: nowrap;
                 }
             }
         }

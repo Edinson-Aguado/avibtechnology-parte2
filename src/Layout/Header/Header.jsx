@@ -87,7 +87,7 @@ export default function Header({useWindowWidth}) {
                     <ul className="nav-list">
 
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/">Home</NavLink>
+                            <NavLink className="nav-link" to="/">AVIB</NavLink>
                         </li>
 
                         <li className="nav-item dropdown">
