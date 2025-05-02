@@ -284,7 +284,6 @@ export default function AdminUsers() {
                             <tr>
                                 <th>Nombre</th>
                                 <th>Correo</th>
-                                <th>Contraseña</th>
                                 <th>Nacimiento</th>
                                 <th>Pais</th>
                                 <th>Notas</th>

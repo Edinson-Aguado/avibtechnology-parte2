@@ -4,7 +4,7 @@ import imagenPerfil from "../../assets/images/imagen-perfil.png";
 import { NavLink, useLocation } from "react-router-dom";
 import { useOrder } from '../../context/OrderContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef } from "react";
 import LoginLateral from '../../components/LoginLateral/LoginLateral';
 import OptionsProfile from '../../components/OptionsProfile/OptionsProfile';
@@ -92,7 +92,7 @@ export default function Header({useWindowWidth}) {
 
                         <li className="nav-item dropdown">
                             <span className="nav-link dropdown-toggle" onClick={() => toggleMenu('paginas')}>
-                            Páginas <FontAwesomeIcon icon={faChevronDown} size="sm" className='arrow-icon' />
+                            Informacion <FontAwesomeIcon icon={faChevronDown} size="sm" className='arrow-icon' />
                             </span>
                             
                             {
@@ -107,7 +107,12 @@ export default function Header({useWindowWidth}) {
                             
                         </li>
 
-                        
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/ProductsPage">Productos</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/">Promociones</NavLink>
+                        </li>
 
                     </ul>
 
@@ -131,7 +136,7 @@ export default function Header({useWindowWidth}) {
 
                             <FontAwesomeIcon
                                 className='icon-carrito'
-                                icon={faShoppingCart}
+                                icon={faShoppingBag}
                                 size="2x"
                                 style={{ cursor: "pointer" }}
                             />

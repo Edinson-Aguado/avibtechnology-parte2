@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUser } from '../../context/UserContext';
 import { NavLink } from 'react-router-dom';
-import { faChevronDown, faCircleQuestion, faCircleUser, faGear, faRightFromBracket, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCircleQuestion, faCircleUser, faClipboardList, faGear, faRightFromBracket, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import './OptionsProfile.css';
 
@@ -21,7 +21,7 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
                     <li className="container-option">
                         <NavLink className="option-link" to="/">
                             <FontAwesomeIcon icon={faCircleUser}/>
-                            Profile
+                            Perfil
                         </NavLink>
                     </li>
                     
@@ -70,6 +70,12 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
                         )
                     }
 
+                    <li className="container-option">
+                        <NavLink className="option-link" to="">
+                            <FontAwesomeIcon icon={faClipboardList}/>
+                            Ordenes
+                        </NavLink>
+                    </li> 
                     <li className="container-option">
                         <NavLink className="option-link" to="">
                             <FontAwesomeIcon icon={faCircleQuestion}/>

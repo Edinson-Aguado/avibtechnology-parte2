@@ -26,9 +26,6 @@ export default function TableUsers({user, deleteUser, fnEditUser}) {
                     </div>
                 </td>
                 <td className="normal-cell">
-                    *********
-                </td>
-                <td className="normal-cell">
                     {getDate(user.date)}
                 </td>
                 <td className="country-cell">

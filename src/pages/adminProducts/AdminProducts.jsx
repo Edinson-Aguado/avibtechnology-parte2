@@ -50,6 +50,7 @@ export default function AdminProducts({products, getProducts}) {
             formData.append("name", data.name);
             formData.append("price", data.price);
             formData.append("stock", data.stock);
+            formData.append("discount", data.discount);
             formData.append("description", data.description);
             formData.append("status", data.status);
             formData.append("category", data.category);
@@ -63,7 +64,11 @@ export default function AdminProducts({products, getProducts}) {
                 // Lógica para editar el post
                 formData.append("updatedAt", new Date().toISOString().slice(0, 10));
 
-                await axios.put(`${env.URL_LOCAL}/products/${editProduct._id}`, formData);
+                await axios.put(`${env.URL_LOCAL}/products/${editProduct._id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
             
                 //Obtenemos los datos de los productos
                 await getProducts();
@@ -266,14 +271,14 @@ export default function AdminProducts({products, getProducts}) {
                             {...register("category", { required: "La categoría es obligatoria" })} 
                             id="category">
                             <option value=""></option>
-                            <option value="int">Interior</option>
-                            <option value="ext">Exterior</option>
-                            <option value="ippt">IP PT</option>
-                            <option value="bat">Batería</option>
-                            <option value="pansol">Panel solar</option>
-                            <option value="wifi">WIFI</option>
-                            <option value="4g">4G</option>
-                            <option value="poe">PoE</option>
+                            <option value="Interior">Interior</option>
+                            <option value="Exterior">Exterior</option>
+                            <option value="IP PT">IP PT</option>
+                            <option value="Bateria">Batería</option>
+                            <option value="Panel Solar">Panel solar</option>
+                            <option value="WIFI">WIFI</option>
+                            <option value="4G">4G</option>
+                            <option value="PoE">PoE</option>
                         </select>
                         {errors.category && (
                             <span 

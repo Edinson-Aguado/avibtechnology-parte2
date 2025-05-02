@@ -10,7 +10,8 @@
     --primary-color-2: #13678e;
     --secondary-color: #1a56af;
     --background-color: #ffffff;
-    --text-color: #ffffff;
+    --text-header: #216bb5;
+    ---backgrounColor--text-header: #216bb5;
 
     --accent-color: #f2f4f8;
     --danger-color: #e74c3c;

@@ -17,7 +17,7 @@ import ProductDetail from './pages/productDetail/ProductDetail';
 import Order from './pages/order/Order';
 import { env } from './config/env.config';
 import AdminGuard from './services/guard/AdminGuard';
-import Header from './Layout/Header/Header';
+import ProductsPage from './pages/ProductsPage/ProductsPage';
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -59,6 +59,7 @@ export default function App() {
                 <Route path="/Contact" element={<Contact />} />
                 <Route path="/AboutUs" element={<AboutUs />} />
                 <Route path="/ProductDetail/:id" element={<ProductDetail />} />
+                <Route path="/ProductsPage" element={<ProductsPage />} />
                 <Route path="/Order" element={<Order />} />
                 <Route path="*" element={<Home products={products} />} />
 
