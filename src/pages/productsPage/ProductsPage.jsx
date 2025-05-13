@@ -5,6 +5,7 @@ import { env } from '../../config/env.config'; // Asegúrate que exportas correc
 import { NavLink } from 'react-router-dom';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
@@ -17,16 +18,22 @@ export default function ProductsPage() {
         garantia: false,
         nuevo: false,
     });
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Productos por página para mostrar
+    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
+        
+        setIsLoading(true);
         axios.get(`${env.URL_LOCAL}/products`)
         .then(res => {
             setProducts(res.data.products || []);
         })
         .catch(err => {
             console.error('Error al obtener productos:', err);
+        }).finally(() => {
+            setIsLoading(false); // ocultamos la carga
         });
     }, []);
 
@@ -69,167 +76,211 @@ export default function ProductsPage() {
         return acc;
     }, {});
 
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+
     return (
-        <div className="products-page">
-            <h1>Catálogo de Productos</h1>
 
-            <div className="search-bar">
-                <i className="fas fa-search"></i>
-                <input
-                type="text"
-                placeholder="Buscar producto..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                />
-            </div>
+        <>
+            <LoadingOverlay isLoading={isLoading} />
+            <div className="products-page">
+                <h1>Catálogo de Productos</h1>
 
-            <div className="products-content">
-                <aside className="sidebar">
-                    <h3>Categorías</h3>
-                    <ul>
-                        <li
-                            onClick={() => setSelectedCategory(null)}
-                            style={{ fontWeight: selectedCategory === null ? 'bold' : 'normal' }}
-                        >
-                            Todas
-                        </li>
-                        {categories.map((category, index) => (
+                <div className="search-bar">
+                    <i className="fas fa-search"></i>
+                    <input
+                    type="text"
+                    placeholder="Buscar producto..."
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    />
+                </div>
+
+                <div className="products-content">
+
+                    <aside className="sidebar">
+                        <h3>Categorías</h3>
+                        <ul>
                             <li
-                                key={index}
-                                onClick={() => setSelectedCategory(category)}
-                                style={{ fontWeight: selectedCategory === category ? 'bold' : 'normal' }}
+                                onClick={() => setSelectedCategory(null)}
+                                style={{ fontWeight: selectedCategory === null ? 'bold' : 'normal' }}
                             >
-                                {category} ({categoryCounts[category]})
+                                Todas
                             </li>
-                        ))}
-                    </ul>
-                    <div className="price-filter">
-                        
-                        <span>Filtrar por precio</span>
+                            {categories.map((category, index) => (
+                                <li
+                                    key={index}
+                                    onClick={() => setSelectedCategory(category)}
+                                    style={{ fontWeight: selectedCategory === category ? 'bold' : 'normal' }}
+                                >
+                                    {category} ({categoryCounts[category]})
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="price-filter">
+                            
+                            <span>Filtrar por precio</span>
 
-                        <input
-                            type="number"
-                            min="0"
-                            step="5000"
-                            placeholder="Precio mínimo"
-                            value={priceFilter.min}
-                            onChange={e => setPriceFilter(prev => ({ ...prev, min: e.target.value }))}
-                            />
-                        <input
-                            type="number"
-                            min="0"
-                            step="5000"
-                            placeholder="Precio máximo"
-                            value={priceFilter.max}
-                            onChange={e => setPriceFilter(prev => ({ ...prev, max: e.target.value }))}
-                        />
-
-                    </div>
-
-                    <div className="extra-filters">
-                        <label className="filter-toggle">
-                            <span>Con Descuento</span>
                             <input
-                                type="checkbox"
-                                checked={extraFilters.descuento}
-                                onChange={e => setExtraFilters(prev => ({ ...prev, descuento: e.target.checked }))}
-                            />
-                        </label>
-
-                        <label className="filter-toggle">
-                            <span>Con Garantía</span>
+                                type="number"
+                                min="0"
+                                step="5000"
+                                placeholder="Precio mínimo"
+                                value={priceFilter.min}
+                                onChange={e => setPriceFilter(prev => ({ ...prev, min: e.target.value }))}
+                                />
                             <input
-                                type="checkbox"
-                                checked={extraFilters.garantia}
-                                onChange={e => setExtraFilters(prev => ({ ...prev, garantia: e.target.checked }))}
+                                type="number"
+                                min="0"
+                                step="5000"
+                                placeholder="Precio máximo"
+                                value={priceFilter.max}
+                                onChange={e => setPriceFilter(prev => ({ ...prev, max: e.target.value }))}
                             />
-                        </label>
 
-                        <label className="filter-toggle">
-                            <span>Nuevo</span>
-                            <input
-                                type="checkbox"
-                                checked={extraFilters.nuevo}
-                                onChange={e => setExtraFilters(prev => ({ ...prev, nuevo: e.target.checked }))}
-                            />
-                        </label>
-                    </div>
+                        </div>
+
+                        <div className="extra-filters">
+                            <label className="filter-toggle">
+                                <span>Con Descuento</span>
+                                <input
+                                    type="checkbox"
+                                    checked={extraFilters.descuento}
+                                    onChange={e => setExtraFilters(prev => ({ ...prev, descuento: e.target.checked }))}
+                                />
+                            </label>
+
+                            <label className="filter-toggle">
+                                <span>Con Garantía</span>
+                                <input
+                                    type="checkbox"
+                                    checked={extraFilters.garantia}
+                                    onChange={e => setExtraFilters(prev => ({ ...prev, garantia: e.target.checked }))}
+                                />
+                            </label>
+
+                            <label className="filter-toggle">
+                                <span>Nuevo</span>
+                                <input
+                                    type="checkbox"
+                                    checked={extraFilters.nuevo}
+                                    onChange={e => setExtraFilters(prev => ({ ...prev, nuevo: e.target.checked }))}
+                                />
+                            </label>
+                        </div>
 
 
-                    <div className="price-buttons">
-                        <button
-                            className="clear-btn"
-                            onClick={() => {
-                                setSelectedCategory(null);
-                                setSearch('');
-                                setPriceFilter({ min: '', max: '' });
-                                setExtraFilters({ descuento: false, garantia: false, nuevo: false });
+                        <div className="price-buttons">
+                            <button
+                                className="clear-btn"
+                                onClick={() => {
+                                    setSelectedCategory(null);
+                                    setSearch('');
+                                    setPriceFilter({ min: '', max: '' });
+                                    setExtraFilters({ descuento: false, garantia: false, nuevo: false });
 
-                            }}
+                                }}
+                                >
+                                Limpiar filtros
+                            </button>
+                        </div>
+
+
+
+                    </aside>
+
+                    <div className="products-content-list">
+                        <div className="product-list">
+                            {filteredProducts.length > 0 ? (
+                                currentProducts.map(product => (
+
+                                    <div className="product-card" key={product._id}>
+
+                                        {product.discount > 0 && (
+                                            <span className="etiqueta-oferta">
+                                                Oferta<FontAwesomeIcon icon={faTag} />
+                                            </span>
+                                        )}
+                                        <div className="image-wrapper">
+                                            <img src={product.image || '/default.png'} alt={product.name} />
+                                        </div>
+                                        <span className="category">{product.category}</span>
+                                        <h3>
+                                            <NavLink to={`/ProductDetail/${product._id}`} title='Ir a su página de detalle'>{product.name}</NavLink>
+                                        </h3>
+                                        <p className='price'> 
+                                            {
+                                                product?.discount > 0 ? (
+                                                    <>
+                                                        <span className='precio-original'>$ {product?.price}</span>{" "}
+                                                        <span className='precio-descuento'> $ {Math.round(product?.price * (1 - product?.discount / 100))}</span>
+
+                                                    </>
+                                                ) : (
+                                                    <span className='precio-descuento'>$ {product?.price}</span>
+                                                )
+                                            }
+                                        </p>
+                                        
+
+                                        <p className="description">{product.description}</p>
+                                        
+                                        <button className="view-more" onClick={() => openModal(product)}>
+                                            Ver más
+                                        </button>
+                                        
+                                        
+                                    </div>
+                                
+                                ))
+                            ) : (
+                                <p className="no-results">No se encontraron productos</p>
+                            )}
+
+                        </div>
+                        <div className="pagination">
+                            <button 
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(prev => prev - 1)}
                             >
-                            Limpiar filtros
-                        </button>
-                    </div>
-
-
-
-                </aside>
-
-                <div className="product-list">
-                    {filteredProducts.length > 0 ? (
-                        filteredProducts.map(product => (
-
-                            <div className="product-card" key={product._id}>
-
-                                {product.discount > 0 && (
-                                    <span className="etiqueta-oferta">
-                                        Oferta<FontAwesomeIcon icon={faTag} />
-                                    </span>
-                                )}
-                                <div className="image-wrapper">
-                                    <img src={product.image || '/default.png'} alt={product.name} />
-                                </div>
-                                <span className="category">{product.category}</span>
-                                <h3>
-                                    <NavLink to={`/ProductDetail/${product._id}`} title='Ir a su página de detalle'>{product.name}</NavLink>
-                                </h3>
-                                <p className="price">
-                                    {
-                                        product?.discount > 0 ? (
-                                            <>
-                                                <del style={{color:"#7a8a99"}}>$ {product?.price}</del>{" "}
-                                                $ {Math.round(product?.price * (1 - product?.discount / 100))}
-
-                                            </>
-                                        ) : (
-                                            <>$ {product?.price}</>
-                                        )
-                                    }
-                                </p>
-                                <p className="description">{product.description}</p>
-                                
-                                <button className="view-more" onClick={() => openModal(product)}>
-                                    Ver más
+                                Anterior
+                            </button>
+                        
+                            {[...Array(totalPages)].map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                    className={currentPage === index + 1 ? 'active' : ''}
+                                >
+                                    {index + 1}
                                 </button>
-                                
-                                
-                            </div>
-                        ))
-                    ) : (
-                        <p className="no-results">No se encontraron productos</p>
-                    )}
+                            ))}
+                        
+                            <button 
+                                disabled={currentPage === totalPages}
+                                onClick={() => setCurrentPage(prev => prev + 1)}
+                            >
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                    
                 </div>
-            </div>
 
-            {modalContent && (
-                <div className="modal-overlay" onClick={handleOverlayClick}>
-                <div className="modal-content">
-                    <button className="close-btn" onClick={closeModal}>×</button>
-                    <h2>{modalContent.name}</h2>
-                    <p>{modalContent.description}</p>
-                </div>
-                </div>
-            )}
-        </div>
+                {modalContent && (
+                    <div className="modal-overlay" onClick={handleOverlayClick}>
+                    <div className="modal-content">
+                        <button className="close-btn" onClick={closeModal}>×</button>
+                        <h2>{modalContent.name}</h2>
+                        <p>{modalContent.description}</p>
+                    </div>
+                    </div>
+                )}
+            </div>
+        </>
+        
     );
 }

@@ -13,17 +13,16 @@
     opacity: 0;
     transition: opacity .3s ease-in-out;
     animation: showIn .5s ease-in-out forwards;
+    padding: 0;
 
     .modal-content {
-        background-color: #fff; /* fondo blanco */
-        color: #000; /* texto negro */
-        border-radius: 20px;
+        background-color: #fff;
+        color: #000;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         width: 90%;
         max-width: 420px;
         max-height: 95svh;
         overflow-y: auto;
-        padding: 20px 15px 0 15px;
         position: relative;
         opacity: 0;
         transform: translateY(-100px);

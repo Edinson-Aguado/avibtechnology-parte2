@@ -1,7 +1,7 @@
 .main-header {
     position: sticky;
     top: 0;
-    width: 100dvw;
+    width: 100%;
     min-height: 64px;
     height: 64px;
     background-color: #f1f1f1;
@@ -222,6 +222,11 @@
             display: flex;
             align-items: center;
             position: relative;
+            padding-right: 10px;
+
+            @media screen and (min-width: 820px) {
+                padding-right: 0;
+            }
 
             .icon-carrito {
                 color: #4B4B4B ;
@@ -244,7 +249,7 @@
                 align-items: center;
                 justify-content: center;
                 line-height: 1;
-                transition: background-color 0.3s ease;
+                transition: background-color .3s ease;
             }
             
         }
@@ -263,14 +268,14 @@
 
             span {
                 padding: 0 10px;
+
                 .user-picture {
                     cursor: pointer;
                     width: 45px;
                     height: 45px;
                     object-fit: cover;
-                    background-color: white;
+                    background-color: rgb(255, 255, 255);
                     border-radius: 50%;
-                    padding: 0.3rem;
                 }
             }
         }

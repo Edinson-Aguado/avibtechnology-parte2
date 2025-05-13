@@ -6,18 +6,23 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env.config';
+import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 
 export default function AdminProducts({products, getProducts}) {
 
     // VARIABLES
     const [editProduct, setEditProduct] = useState(null);
     const { register, handleSubmit, setValue, setFocus, watch, reset, formState: { errors, isValid } } = useForm({mode:"onChange"});
+    const [isLoading, setIsLoading] = useState(false);
 
     const discountPct = parseInt(watch("discount") ?? 0);
+    const overlayText = editProduct ? "Guardando cambios..." : "Cargando...";
+
     
     useEffect(() => {
-        
-        getProducts();
+
+        setIsLoading(true);
+        getProducts().finally(() => setIsLoading(false));
 
     }, []); 
 
@@ -45,7 +50,9 @@ export default function AdminProducts({products, getProducts}) {
     async function createProduct(data) {
         
         try {
+            const bearer = localStorage.getItem('token');
 
+            setIsLoading(true); // comienza la carga
             const formData = new FormData();
             formData.append("name", data.name);
             formData.append("price", data.price);
@@ -66,7 +73,8 @@ export default function AdminProducts({products, getProducts}) {
 
                 await axios.put(`${env.URL_LOCAL}/products/${editProduct._id}`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${bearer}`
                     }
                 });
             
@@ -87,7 +95,8 @@ export default function AdminProducts({products, getProducts}) {
 
                     await axios.post(`${env.URL_LOCAL}/products`, formData, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${bearer}`
                         }
                     });
                     await getProducts();
@@ -102,22 +111,23 @@ export default function AdminProducts({products, getProducts}) {
             setFocus("name");
 
         } catch (error) {
-            // Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+            // En caso de error
             if (error.response) {
-                console.log("Error del servidor:", error.response.data);
                 Swal.fire("¡Error!", `Servidor: ${error.response.data.message || error.response.data}`, "error");
             } else {
-                console.log("Error:", error.message);
                 Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
             }
+        } finally {
+            setIsLoading(false); // Esto garantiza que el loading se desactive si hay un error
         }
+
     }
 
     //ELIMINAR PRODUCTO POR ID
     function deleteProduct(id) {
         
         try {
-
+            setIsLoading(true); // comienza la carga
             Swal.fire({
                 title: "¿Estás seguro?",
                 text: "¡No podrás recuperar este producto!",
@@ -142,6 +152,8 @@ export default function AdminProducts({products, getProducts}) {
             });
         } catch (error) {
             Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+        } finally {
+            setIsLoading(false); // finaliza la carga
         }
     }
 
@@ -175,8 +187,7 @@ export default function AdminProducts({products, getProducts}) {
                                     message: "El titulo debe tener menos de 20 caracteres",
                                 },
                             })}
-                            id="name"  
-                            pattern=".{3,20}" 
+                            id="name"
                             autoFocus 
                             placeholder="Cámara..."
                         />
@@ -322,9 +333,8 @@ export default function AdminProducts({products, getProducts}) {
                             type="file"
                             id="image"
                             accept="image/*"
-                            // multiple
                             {...register("image", {
-                                validate: (files) => files?.length > 0 || "La imagen es requerida"
+                                required: "La imagen es requerida"
                             })}
                         />
                         {errors.image && <span className="error-input">{errors.image.message}</span>}
@@ -395,7 +405,7 @@ export default function AdminProducts({products, getProducts}) {
                 </div>
             </div>
             
-            
+            <LoadingOverlay isLoading={isLoading} text={overlayText} />
         </>
     )
 

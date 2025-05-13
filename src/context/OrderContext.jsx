@@ -92,6 +92,9 @@ function OrderProvider({children}) {
         const updatedCart = cart.map((prod) => {
             if (prod._id === id) {
                 if (accion === "+") {
+                    if (prod.quantity === prod.stock) {
+                        return {...prod}
+                    }
                     return { ...prod, quantity: prod.quantity + 1 };
                 } else if (accion === "-") {
                     return { ...prod, quantity: prod.quantity - 1 };
@@ -121,7 +124,9 @@ function OrderProvider({children}) {
                 editQuantity,
                 cleanCart,
                 cantidadOrder,
-                setCantidad
+                setCantidad,
+                setCount,
+                setTotal
             }}
         >
             {children}

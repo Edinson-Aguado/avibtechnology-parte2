@@ -1,9 +1,14 @@
 import { Outlet } from "react-router-dom";
+import Header from "../Header/Header";
 
-export default function AuthLayout() {
+export default function AuthLayout({useWindowWidth}) {
     return (
-        <main className="auth-layout">
-            <Outlet/>
-        </main>
+        <>
+            <Header useWindowWidth={useWindowWidth} />
+            <main className="auth-layout">
+                <Outlet/>
+            </main>
+        </>
+        
     );
 }

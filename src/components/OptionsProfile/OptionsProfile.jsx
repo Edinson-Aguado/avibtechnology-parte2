@@ -71,7 +71,7 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
                     }
 
                     <li className="container-option">
-                        <NavLink className="option-link" to="">
+                        <NavLink className="option-link" to="/Orders">
                             <FontAwesomeIcon icon={faClipboardList}/>
                             Ordenes
                         </NavLink>

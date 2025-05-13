@@ -8,6 +8,8 @@ import { faChevronDown, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from "react";
 import LoginLateral from '../../components/LoginLateral/LoginLateral';
 import OptionsProfile from '../../components/OptionsProfile/OptionsProfile';
+import { useUser } from '../../context/UserContext';
+import { env } from '../../config/env.config';
 
 export default function Header({useWindowWidth}) {
 
@@ -17,13 +19,14 @@ export default function Header({useWindowWidth}) {
     const [isMenuHamburguesaOpen, setIsMenuHamburguesaOpen] = useState(false);
     const location = useLocation();
     const width = useWindowWidth();
+    const { user } = useUser();
     
     const toggleMenuAdmin = () => {
         setIsMenuHamburguesaOpen(!isMenuHamburguesaOpen);
     };
 
     useEffect(() => {
-
+        
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setOpenMenu(null);
@@ -111,7 +114,7 @@ export default function Header({useWindowWidth}) {
                             <NavLink className="nav-link" to="/ProductsPage">Productos</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/">Promociones</NavLink>
+                            <NavLink className="nav-link" to="/">Ofertas</NavLink>
                         </li>
 
                     </ul>
@@ -154,7 +157,7 @@ export default function Header({useWindowWidth}) {
                         <span>
                             <img
                                 loading='lazy'
-                                src={imagenPerfil} 
+                                src={user?.imageProfile ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user?.imageProfile}` : imagenPerfil}
                                 alt="User avatar"
                                 className="user-picture" 
                                 id="user-picture"

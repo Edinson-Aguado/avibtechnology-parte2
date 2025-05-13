@@ -22,8 +22,9 @@
     justify-content: space-between;
     background: white;
     border-radius: 15px;
-    padding: 1rem;
+    padding: .7rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    min-width: 250px;
 
     .subtotal {
         display: flex;
@@ -54,11 +55,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
 }
 
 .product-image img {
     width: 100%;
-    height: auto;
     object-fit: cover;
 }
 
@@ -80,6 +81,13 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+
+    @media screen and (max-width: 425px) {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
 }
 
 .product-quantity {

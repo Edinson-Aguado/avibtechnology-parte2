@@ -90,12 +90,11 @@
                             padding: .7rem 1.5rem;
                             font-size: .85rem;
                             font-weight: 500;
-                            color: blueviolet;
+                            color: #0a84ff;
                             transition: all .4s ease-in-out;
 
                             &:hover {
                                 background-color: #3b3b3b;
-                                color: rgb(125, 12, 232);
                             }
                         }
                     }

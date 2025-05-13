@@ -11,7 +11,7 @@
     --secondary-color: #1a56af;
     --background-color: #ffffff;
     --text-header: #216bb5;
-    ---backgrounColor--text-header: #216bb5;
+    --backgrounColor--text-header: #216bb5;
 
     --accent-color: #f2f4f8;
     --danger-color: #e74c3c;
@@ -22,7 +22,6 @@
 }
 
 #root {
-    min-height: 100dvh;
     display: flex;
     flex-direction: column;
 }
@@ -35,7 +34,7 @@ body {
     width: 100%;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    min-height: 100dvh;
+    min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 

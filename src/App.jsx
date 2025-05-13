@@ -18,6 +18,7 @@ import Order from './pages/order/Order';
 import { env } from './config/env.config';
 import AdminGuard from './services/guard/AdminGuard';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
+import Orders from './pages/orders/Orders';
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -44,7 +45,6 @@ export default function App() {
     }
 
     useEffect(() => {
-        console.log("useEffect: llamando a getProducts");
         getProducts();
     }, []);
 
@@ -75,10 +75,16 @@ export default function App() {
                         <AdminUsers />
                     </AdminGuard>
                 } />
+                <Route path="/Orders" element={
+                    <AdminGuard>
+                        <Orders />
+                    </AdminGuard>
+                } />
+
             </Route>
 
             {/* Layout exclusivo para login*/}
-            <Route element={<AuthLayout />}>
+            <Route element={<AuthLayout useWindowWidth={useWindowWidth}/>}>
                 <Route path="/Login" element={<Login />} />
             </Route>
         </Routes>

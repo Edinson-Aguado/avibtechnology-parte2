@@ -7,7 +7,7 @@ import { env } from '../../config/env.config';
 
 export default function Register() {
 
-    const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ mode: "onChange" });
+    const { register, handleSubmit, watch, reset, formState: { errors, isValid } } = useForm({ mode: "onChange" });
 
     function getTime() {
         const date = new Date();
@@ -17,35 +17,47 @@ export default function Register() {
         return `${year}-${month}-${day}`;
     }
 
+    // Contruir el FormData() para enviar los datos del formulario en él
+    function builtNewFormData(data) {
+        if (data.password !== data.rePassword) {
+            Swal.fire("Error", "¡Las contraseñas no coinciden!", "error");
+            return null;
+        }
+        
+    
+        const x = new FormData();
+        x.append('name', data.name);
+        x.append('email', data.email);
+        x.append('password', data.password);
+        x.append('date', data.date);
+        x.append('country', data.country);
+        if (data.imageProfile?.[0]) {
+            x.append('imageProfile', data.imageProfile[0]);
+        }
+        x.append('observations', data.observations);
+        return x;
+    }
+    
+
+    // Añadir un nuevo usuario
     async function addUser(datos) {
+        const formData = builtNewFormData(datos);
+        if (!formData) return;
         //Petición asíncrona
         try {
-            const newUser = {
-                name: datos.name,
-                correo: datos.correo,
-                password: datos.pass,
-                rePassword: datos.rePass,
-                date: datos.date,
-                country: datos.selection,
-                observations: datos.obs
-            };
 
-            if (newUser.password !== newUser.rePassword) {
-                alert("Las contraseñas no coinciden.");
-                return;
-            }
-
-            await axios.post(`${env.URL}/users`, newUser);
-            Swal.fire("¡Éxito!", "Usuario registrado con éxito", "success");
+            await axios.post(`${env.URL}/users`, formData);
+            Swal.fire("¡Éxito!", "Te has registrado con éxito", "success");
             reset();
         } catch (error) {
-            Swal.fire("Error", `Hubo un problema al registrar el usuario. Error: ${error} `, "error");
+            console.log(error);
+            Swal.fire("Error", error.response?.data?.message || "Hubo un problema al registrarse.", "error");
         }
     }
 
     return (
         <>
-            <OtroTitle title="REGISTRO" />
+            <OtroTitle title="REGISTRARSE" />
 
             <main className="main-container">
                 <form className="register-form" onSubmit={handleSubmit(addUser)}>
@@ -62,41 +74,44 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="correo">Correo electrónico <span style={{"color": "red"}}>*</span></label>
+                        <label htmlFor="email">Correo electrónico <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="email"
-                            id="correo"
+                            id="email"
                             placeholder="info@dominio.com"
-                            {...register("correo", {
+                            {...register("email", {
                                 required: "Este campo es obligatorio",
                                 pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                message: "Correo electrónico inválido."
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Correo electrónico inválido."
                                 }
                             })}
-                            />
-                            {errors.correo && <span className="error">{errors.correo.message}</span>}
+                        />
+                        {errors.email && <span className="error">{errors.email.message}</span>}
 
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="pass">Contraseña <span style={{"color": "red"}}>*</span></label>
+                        <label htmlFor="password">Contraseña <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="password"
-                            id="pass"
-                            {...register("pass", { required: true, minLength: 6 })}
+                            id="password"
+                            {...register("password", { required: true, minLength: 6 })}
                         />
-                        {errors.pass && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
+                        {errors.password && <span className="error">Contraseña requerida (mín. 6 caracteres)</span>}
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="rePass">Repetir contraseña <span style={{"color": "red"}}>*</span></label>
+                        <label htmlFor="rePassword">Repetir contraseña <span style={{"color": "red"}}>*</span></label>
                         <input
                             type="password"
-                            id="rePass"
-                            {...register("rePass", { required: true })}
+                            id="rePassword"
+                            {...register("rePassword", {
+                                required: true,
+                                validate: (value) => value === watch("password") || "Las contraseñas no coinciden"
+                            })}
                         />
-                        {errors.rePass && <span className="error">Repite la contraseña</span>}
+                        {errors.rePassword && <span className="error">Repite la contraseña</span>}
                     </div>
 
                     <div className="input-group">
@@ -112,34 +127,44 @@ export default function Register() {
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="selection">País <span style={{"color": "red"}}>*</span></label>
-                        <select id="selection" {...register("selection", { required: true })}>
-                            <option value="arg">Argentina</option>
-                            <option value="bra">Brasil</option>
-                            <option value="ven">Venezuela</option>
-                            <option value="chi">Chile</option>
-                            <option value="col">Colombia</option>
-                            <option value="ecu">Ecuador</option>
-                            <option value="bol">Bolivia</option>
-                            <option value="per">Perú</option>
-                            <option value="par">Paraguay</option>
-                            <option value="pan">Panamá</option>
-                            <option value="can">Canadá</option>
-                            <option value="eu">Estados Unidos</option>
+                        <label htmlFor="country">País <span style={{"color": "red"}}>*</span></label>
+                        <select defaultValue="" id="country" {...register("country", { required: true })}>
+                            <option value="" disabled>Seleccionar país</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Chile">Chile</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Perú">Perú</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Panamá">Panamá</option>
+                            <option value="Canadá">Canadá</option>
+                            <option value="Estados Unidos">Estados Unidos</option>
                         </select>
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="obs">Observaciones</label>
+                        <label htmlFor="imageProfile">Imagen de perfil</label>
+                        <input
+                            type="file"
+                            id="imageProfile"
+                            {...register("imageProfile")}
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="observations">Observaciones</label>
                         <textarea
-                            id="obs"
+                            id="observations"
                             rows="5"
-                            {...register("obs")}
+                            {...register("observations")}
                         ></textarea>
                     </div>
 
                     <button className="btn" type="submit" disabled={!isValid}>
-                        {isValid ? "Registrar":"Completar datos"}
+                        {isValid ? "Registrarse":"Completar datos"}
                     </button>
                 </form>
             </main>

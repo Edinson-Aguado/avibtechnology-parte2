@@ -223,27 +223,27 @@
             }
         
             .favorite-btn {
-            color: #e74c3c;
+                color: #e74c3c;
         
-            &:hover {
-                background-color: #fdecea;
-            }
+                &:hover {
+                    background-color: #fdecea;
+                }
             }
         
             .cart-btn {
-            color: #2ecc71;
+                color: #2ecc71;
         
-            &:hover {
-                background-color: #e9f7ef;
-            }
+                &:hover {
+                    background-color: #e9f7ef;
+                }
             }
         
             .view-btn {
-            color: #3498db;
+                color: #3498db;
         
-            &:hover {
-                background-color: #eaf3fc;
-            }
+                &:hover {
+                    background-color: #eaf3fc;
+                }
             }
         }
 
@@ -267,18 +267,18 @@
         color: white !important;
         height: 100%;
         border-radius: 0 0 17px 17px;
-        background-color: #1a56af;
+        background-color: #1E3A8A ;
         
         h3.card-title {
             a {
                 text-decoration: none;
-                color: antiquewhite;
+                color: rgb(227, 220, 211);
                 padding-bottom: 10px;
                 font-size: 1.1rem;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.388);
                 
                 &:hover {
-                    color: rgb(222, 195, 161);
+                    color: rgb(247, 224, 197);
                 }
             }
             
@@ -291,17 +291,7 @@
             color: white;
             margin-bottom: -20px;           
         }
-        .description {
-            border-left: 1px solid rgba(255, 255, 255, 0.388);
-            border-right: 1px solid rgba(255, 255, 255, 0.388);
-            width: 100%;
-            color: white !important;
-            display: -webkit-box;
-            overflow: hidden;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            padding: .5rem;
-        }
+        
         .agregar-carrito {
             margin: 10px 0 5px 0;
         
@@ -320,12 +310,12 @@
                 padding: 8px;
                 border-radius: 5px;
                 cursor: pointer;
-                background-color: rgb(175, 53, 53);
+                background-color: rgb(198, 24, 24);
                 color: rgb(255, 255, 255);
                 transition: opacity .4s ease-in-out, background-color .4s ease-in-out, transform 1s ease-in-out;
         
                 &:hover {
-                    background-color: rgb(157, 13, 13)
+                    background-color: rgb(216, 20, 20)
                 }
         
                 .icon-cart {

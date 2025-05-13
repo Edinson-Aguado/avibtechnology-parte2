@@ -15,6 +15,7 @@ export default function UserProvider({children}) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export default function UserProvider({children}) {
     }, [user, token])
 
     async function login(data) {
+        setIsLoading(true); // Empieza la carga
         try {
             const response = await axios.post(`${env.URL_LOCAL}/login`, data);
             
@@ -56,17 +58,20 @@ export default function UserProvider({children}) {
                 title: "Login failed",
                 text: error.response.message.data
             })
+        } finally {
+            setIsLoading(false); // Termina la carga
         }
     }
 
     function logout() {
-    
+        setIsLoading(true);
         setTimeout(() => {
             setUser(null);
             setToken(null);
+            setIsLoading(false);
+            navigate('/');
         }, 500);
     }
-    
 
     return (
         <UserContext.Provider 
@@ -75,6 +80,7 @@ export default function UserProvider({children}) {
                 user, 
                 token,
                 logout,
+                isLoading
             }}>
             {children}
         </UserContext.Provider>
