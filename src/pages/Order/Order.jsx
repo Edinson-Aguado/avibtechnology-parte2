@@ -6,11 +6,16 @@ import { faCartShopping, faMinus, faPlus, faXmark } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { env } from "../../config/env.config";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LoadingOverlay from "../../components/LoadingOverlay/LoadingOverlay";
 
 export default function Order() {
 
     const { cart, total, editQuantity, toggleCart, cleanCart} = useOrder();
     const { user } = useUser();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const formatPrice = (value) => {
         return new Intl.NumberFormat('es-AR', {
@@ -20,32 +25,54 @@ export default function Order() {
         }).format(value);
     };
 
-
     const handleCreateOrder = async () => {
+
+        if (!user || cart.length === 0) {
+            return Swal.fire({
+                icon: 'warning',
+                title: 'Datos faltantes',
+                text: 'Inicia sesión y agrega productos antes de confirmar tu orden.',
+                confirmButtonColor: '#f59e0b'
+            });
+        }
+
         try {
+            setIsLoading(true);
             const token = user?.token || localStorage.getItem("token");
 
-            const ordenData = {
-                productos: cart.map(prod => ({
-                    productId: prod._id,
-                    name: prod.name,
-                    price: prod.price,
-                    quantity: prod.quantity
-                })),
-                total
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             };
 
-            await axios.post(`${env.URL_LOCAL}/orders`, ordenData, {
-                Authorization: `Bearer ${token}`
-            });
+            const ordenData = {
+                userId: user?._id,
+                products: cart.map(prod => ({
+                    _id: prod._id,
+                    name: prod.name,
+                    price: prod.price,
+                    discount: prod.discount || 0,
+                    quantity: prod.quantity,
+                    image: prod.image || ""
+                })),
+                total,
+                statusOrder: "earring",
+                date: Date.now()
+            };
+
+            await axios.post(`${env.URL_LOCAL}/orders`, ordenData, config);
+
             cleanCart();
+            toggleCart();
             Swal.fire({
                 icon: 'success',
                 title: 'Orden confirmada',
                 text: '¡Tu orden fue creada con éxito!',
                 confirmButtonColor: '#2563eb'
+            }).then(() => {
+                navigate('/Orders'); // navegar después de cerrar modal
             });
-
         } catch (err) {
             console.error("Error al crear orden:", err);
             Swal.fire({
@@ -54,11 +81,14 @@ export default function Order() {
                 text: 'Hubo un error al confirmar la orden. Intenta nuevamente.',
                 confirmButtonColor: '#ef4444'
             });
-
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    return (
+    return (isLoading ? (
+        <LoadingOverlay isLoading={isLoading} />
+    ) : (
         <>
             <div className="order-items">
                 <div className="order-container-title">
@@ -125,7 +155,9 @@ export default function Order() {
                     <p>Envíos<br /><small>Los pedidos superiores a U$D 300 tienen envío GRATIS</small></p>
                     <h3>Total: {formatPrice(total)}</h3>
                     <div className="order-buttons">
-                        <button className="buy-button" onClick={handleCreateOrder}>Confirmar Orden</button>
+                        <button className="buy-button" onClick={handleCreateOrder}>
+                            Confirmar
+                        </button>
                         <button 
                             className="button btn-clean"
                             onClick={() => cleanCart()}
@@ -137,7 +169,7 @@ export default function Order() {
                 </div>
             </div>
 
-        </>
+        </>)
     );
     
 }

@@ -3,6 +3,7 @@ import { useUser } from '../../context/UserContext';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import logo from '../../assets/images/logo.png';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -12,6 +13,7 @@ const Login = () => {
         <>
             <div className="login-wrapper">
                 <form className="login-card" onSubmit={handleSubmit(login)}>
+                    <img src={logo} alt="Logo" className="login-logo" />
                     <h2 className="login-title">Iniciar sesión</h2>
 
                     <div className="form-group">

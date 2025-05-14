@@ -44,6 +44,11 @@ export default function Orders() {
             <div key={order._id} className='order-wrapper'>
                 
                 {renderProductos(order.products)}
+                <div className="btn-pay-order">
+                    <NavLink to={`/`} className='btn-pay'>
+                        Pagar orden
+                    </NavLink>
+                </div>
                 <p className="order-date">Fecha: {new Date(order.date).toLocaleString()}</p>
                 
             </div>
@@ -144,7 +149,7 @@ export default function Orders() {
                     <div className="order-card" key={String(item._id+generarIdUnico())}>
                         <div className="order-image">
                             <h2>
-                                <NavLink to={`/ProductDetail/${item._id}`}>
+                                <NavLink to={`/ProductDetail/${item._id}`} title={`Ir a la pagina de detalles del producto`}>
                                     {item.name}
                                 </NavLink>
                             </h2>
@@ -204,8 +209,11 @@ export default function Orders() {
 
                 {/* Órdenes pagadas */}
                 <h2>Órdenes Pagadas</h2>
-                {ordenesPagadas.length === 0 ? (
-                    <p className="empty-orders">No hay órdenes pagadas.</p>
+
+                {isLoading ? (
+                    <LoadingOverlay isLoading={isLoading} />
+                ) : ordenesPagadas.length === 0 ? (
+                    <p className="empty-orders">Aún no hay órdenes pagadas.</p>
                 ) : (
                     renderOrdenes(ordenesPagadas)
                 )}

@@ -62,17 +62,22 @@ export default function AdminUsers() {
 
     //OBTENER LOS PRODUCTOS DESDE EL SERVIDOR
     async function getUsers() {
-        
         try {
             setIsLoading(true); // comienza la carga
-            const response = await axios.get(`${env.URL_LOCAL}/users`);
+            const bearer = localStorage.getItem('token'); // Obtener el token
+            const response = await axios.get(`${env.URL_LOCAL}/users`, {
+                headers: {
+                    Authorization: `Bearer ${bearer}`
+                }
+            });
             setUsers(response.data);
         } catch (error) {
-            Swal.fire("¡Error!", `Hubo un problema al obtener los usurios: ${error.message}`, "error");
+            Swal.fire("¡Error!", `Hubo un problema al obtener los usuarios: ${error.message}`, "error");
         } finally {
             setIsLoading(false); // Desactivar loading
         }
     }
+
 
     // Contruir el FormData() para enviar los datos del formulario en él
     function builtNewFormData(data) {
@@ -88,8 +93,8 @@ export default function AdminUsers() {
         x.append('password', data.password);
         x.append('date', data.date);
         x.append('country', data.country);
-        if (data.imageProfile?.[0]) {
-            x.append('imageProfile', data.imageProfile[0]);
+        if (data.image?.[0]) {
+            x.append('image', data.image[0]);
         }        
         x.append('observations', data.observations);
         return x;
