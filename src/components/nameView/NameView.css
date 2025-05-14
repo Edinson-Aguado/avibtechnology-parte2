@@ -1,0 +1,67 @@
+.viewName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    background-color: #393939;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+
+    span.viewName-user {
+        font-size: 1.6rem;
+        font-family: 'Orbitron', sans-serif;
+        background: linear-gradient(
+            135deg,
+            /* #ffcc00, */
+            #ffffff,
+            #00c3ff,
+            #e08e1b,
+            #ffffff,
+            #28dcbb,
+            #ffffff
+        );
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: diamond-glow 4s ease-in-out infinite;
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        line-height: 1.2;
+        padding: 1rem;
+
+        .diamond-name::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.8) 50%,
+                transparent 100%
+            );
+            animation: shine 3s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+
+    .verified-icon {
+        color: #095eb9;
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes diamond-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
