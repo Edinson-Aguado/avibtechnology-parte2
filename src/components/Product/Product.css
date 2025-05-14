@@ -137,6 +137,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
+
             .btn {
                 text-transform: uppercase;
                 text-decoration: none;
@@ -271,24 +272,26 @@
         
         h3.card-title {
             a {
+                display: inline-block;
                 text-decoration: none;
                 color: rgb(227, 220, 211);
-                padding-bottom: 10px;
+                padding: 10px 0;
                 font-size: 1.1rem;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.388);
+                transition: color .4s ease-in-out;
                 
                 &:hover {
-                    color: rgb(247, 224, 197);
+                    color: rgb(255, 255, 255);
                 }
             }
             
         }
 
         .card-price {
-            font-weight: 700;
+            font-weight: 500;
             font-size: 1.2rem;
             padding: .5rem;
-            color: white;
+            color: rgb(255, 255, 255);
             margin-bottom: -20px;           
         }
         

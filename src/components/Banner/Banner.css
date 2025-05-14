@@ -20,6 +20,7 @@
     .banner {
         width: 100%;
         overflow: hidden;
+        
         .imagen {
             width: 100%;
             height: auto;

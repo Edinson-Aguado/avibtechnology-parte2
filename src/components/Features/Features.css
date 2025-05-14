@@ -7,7 +7,8 @@
         font-size: 2rem;
         margin-bottom: 2.5rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: var(--secondary-color);
+        text-transform: uppercase;
     }
 
     .featuresContainer {
@@ -27,7 +28,7 @@
         transition: transform 0.3s ease;
 
         &:hover {
-        transform: translateY(-6px);
+            transform: translateY(-6px);
         }
 
         .iconBox {
@@ -116,12 +117,22 @@
             border: none;
             font-size: 1.2rem;
             cursor: pointer;
+            background-color: #cecaca;
+            padding: 5px 8px;
+            border-radius: 50%;
+            color: rgb(69, 69, 69);
+            transition: background-color .4s ease-in-out;
+
+            &:hover {
+                background-color: #a3a2a2;
+            }
         }
 
         .modalTitle {
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .modalDescription {

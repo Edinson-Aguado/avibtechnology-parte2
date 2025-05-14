@@ -23,7 +23,7 @@ export default function LogoSlider() {
 
     return (
         <section className="logo-slider-section">
-            <h2 className="title">Marcas que trabajamos</h2>
+            <h2 className="title">En <strong title='AVIB Technology'>AVIB</strong> puedes conseguir</h2>
             <div className="slider">
                 <div className="slider-track">
                     {logos.concat(logos).map((logo, index) => (

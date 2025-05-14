@@ -8,9 +8,10 @@ export default function Banner() {
 
                 <h1 id='avib-title'>SOMOS AVIB</h1>
 
-                {/* Section de imagenes para el slider */}
+                {/* Section de imagen para el banner */}
                 <div className="banner">
                     <img loading="lazy" src={banner} alt="Imágen del banner" className="imagen" />
+                    <div className="bottom-glow-line" />
                 </div>
 
             </section>

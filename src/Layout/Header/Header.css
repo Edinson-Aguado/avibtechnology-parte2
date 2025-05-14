@@ -174,8 +174,8 @@
         position: fixed;
         left: -250px;
         width: 250px;
-        top: 124px;
-        bottom: 0;
+        top: 64px;
+        height: 100%;
         transition: left 0.3s ease-in-out;
         background-color: #2d3748;
         display: flex;
@@ -319,6 +319,30 @@
                     }
                 }
             }
+        }
+
+        .bottom-glow-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            overflow: hidden;
+            z-index: 2;
+            background: linear-gradient(
+                to right,
+                #ffffff,
+                #00c3ff,
+                #e08e1b,
+                #ffffff,
+                #28dcbb,
+                #ffffff
+            );
+            background-size: 200% auto;
+            animation: moveGlow 10s linear infinite;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+            opacity: 0.8;
+            pointer-events: none;
         }
     }
 
@@ -685,4 +709,13 @@
 @keyframes shine {
     0% { left: -100%; }
     100% { left: 100%; }
+}
+
+@keyframes moveGlow {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }

@@ -18,7 +18,7 @@ export default function Home({products}) {
             <Banner />
             <LogoSlider/>
 
-            <Title title="PRODUCTOS" />
+            <Title title="ALGUNOS PRODUCTOS" />
             <main className="main-container-home">
 
                 {products && products?.length > 0 ? (

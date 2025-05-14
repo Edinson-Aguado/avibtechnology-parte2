@@ -145,6 +145,8 @@ export default function Header({useWindowWidth}) {
                         )
                     }
 
+                    <div className="bottom-glow-line" />
+
                 </nav>
 
                 {/* CARRITO Y AVATAR */}

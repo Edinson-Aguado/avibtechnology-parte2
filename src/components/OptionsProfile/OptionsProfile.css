@@ -1,7 +1,7 @@
 .options-profile {
     position: absolute;
     top: 100%;
-    right: -20px;
+    right: 0;
     background: #1f1f1f;
     border-radius: 0 0 0 .5rem;
     padding: 0;
@@ -10,7 +10,7 @@
     transform: translateY(-10px);
     transition: opacity .3s ease-in-out, transform .3s ease-in-out;
     z-index: 100;
-    min-width: 220px;
+    min-width: 200px;
     pointer-events: none;
     overflow: hidden;
 
