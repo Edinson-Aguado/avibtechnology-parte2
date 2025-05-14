@@ -28,7 +28,7 @@ export default function LogoSlider() {
                 <div className="slider-track">
                     {logos.concat(logos).map((logo, index) => (
                         <div className="slide" key={index}>
-                        <img src={logo} alt={`logo-${index}`} />
+                        <img loading='lazy' src={logo} alt={`logo-${index}`} />
                         </div>
                     ))}
                 </div>

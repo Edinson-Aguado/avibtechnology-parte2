@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ProductsPage.css';
 import axios from 'axios';
 import { env } from '../../config/env.config'; // Asegúrate que exportas correctamente desde aquí
@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import Fuse from 'fuse.js';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
@@ -21,36 +22,49 @@ export default function ProductsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8; // Productos por página para mostrar
     const [isLoading, setIsLoading] = useState(false);
-
+    const [fuse, setFuse] = useState(null);
 
     useEffect(() => {
-        
         setIsLoading(true);
         axios.get(`${env.URL_LOCAL}/products`)
-        .then(res => {
-            setProducts(res.data.products || []);
-        })
-        .catch(err => {
-            console.error('Error al obtener productos:', err);
-        }).finally(() => {
-            setIsLoading(false); // ocultamos la carga
-        });
+            .then(res => {
+                const data = res.data.products || [];
+                setProducts(data);
+                const fuseInstance = new Fuse(data, {
+                    keys: ['name', 'description', 'category'],
+                    threshold: 0.3, // ajusta la precisión
+                });
+                setFuse(fuseInstance);
+            })
+            .catch(err => {
+                console.error('Error al obtener productos:', err);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, []);
 
-    const filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
+    let filteredProducts = products;
+
+    if (search.trim() !== '' && fuse) { //USO LA LIBRERIA fuse.js
+        const results = fuse.search(search);
+        filteredProducts = results.map(r => r.item);
+    }
+    
+    filteredProducts = filteredProducts.filter(product => {
         const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
         const price = product.price;
         const matchesMin = priceFilter.min === '' || price >= parseFloat(priceFilter.min);
         const matchesMax = priceFilter.max === '' || price <= parseFloat(priceFilter.max);
-    
+
         const matchesDescuento = !extraFilters.descuento || product.discount > 0;
         const matchesGarantia = !extraFilters.garantia || product.warranty === true;
         const matchesNuevo = !extraFilters.nuevo || product.condition === 'Nuevo';
-    
-        return matchesSearch && matchesCategory && matchesMin && matchesMax &&
+
+        return matchesCategory && matchesMin && matchesMax &&
             matchesDescuento && matchesGarantia && matchesNuevo;
     });
+
     
     
 
