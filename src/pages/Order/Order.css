@@ -24,16 +24,14 @@
     border-radius: 15px;
     padding: .7rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    min-width: 250px;
+    min-width: 300px;
 
     .subtotal {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        border-left: 1px solid #4444448a;
-        margin-left: 15px;
-        padding-left: 15px;
+        padding-left: 10px;
 
         h4 {
             margin-bottom: 20px;
@@ -50,6 +48,8 @@
 .product-image {
     width: 60px;
     height: 60px;
+    min-width: 50px;
+    min-height: 50px;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -65,7 +65,7 @@
 
 .product-info {
     flex: 1;
-    margin-left: 1rem;
+    max-width: 100px;
 }
 
 .product-info h4 {

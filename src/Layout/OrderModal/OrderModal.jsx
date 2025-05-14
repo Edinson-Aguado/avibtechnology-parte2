@@ -11,9 +11,9 @@ export default function OrderModal() {
 
     return (
 
-        <div className="modal-overlay" onClick={ () => toggleCart() }>
+        <div className="modal-overlay-order" onClick={ () => toggleCart() }>
             
-            <div className="modal-content" onClick={ (e) => e.stopPropagation() }>
+            <div className="modal-content-order" onClick={ (e) => e.stopPropagation() }>
                 
                 <Order/>
             </div>
