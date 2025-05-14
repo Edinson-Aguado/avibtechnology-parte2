@@ -5,6 +5,7 @@ import Features from '../../components/Features/Features';
 import Banner from '../../components/Banner/Banner';
 import Carousel from '../../components/Carousel/Carousel';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import LogoSlider from '../../components/LogoSlider/LogoSlider';
 
 export default function Home({products}) {
 
@@ -15,6 +16,7 @@ export default function Home({products}) {
             <LoadingOverlay isLoading={isLoading} />
 
             <Banner />
+            <LogoSlider/>
 
             <Title title="PRODUCTOS" />
             <main className="main-container-home">

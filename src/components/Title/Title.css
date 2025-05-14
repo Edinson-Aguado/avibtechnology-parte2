@@ -3,7 +3,7 @@ h1#mainTitle {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    color: rgb(19, 12, 118);
+    color: var(--secondary-color);
     text-transform: uppercase;
 }
 

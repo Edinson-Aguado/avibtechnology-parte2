@@ -187,9 +187,6 @@ export default function ProductsPage() {
                                 Limpiar filtros
                             </button>
                         </div>
-
-
-
                     </aside>
 
                     <div className="products-content-list">

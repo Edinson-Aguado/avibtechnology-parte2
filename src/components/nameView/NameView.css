@@ -6,52 +6,98 @@
     width: 100%;
     background-color: #393939;
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    position: relative;
 
-    span.viewName-user {
-        font-size: 1.6rem;
-        font-family: 'Orbitron', sans-serif;
-        background: linear-gradient(
-            135deg,
-            /* #ffcc00, */
-            #ffffff,
-            #00c3ff,
-            #e08e1b,
-            #ffffff,
-            #28dcbb,
-            #ffffff
-        );
-        background-size: 400% 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: diamond-glow 4s ease-in-out infinite;
-        position: relative;
-        display: inline-block;
-        overflow: hidden;
-        line-height: 1.2;
-        padding: 1rem;
+    div.view {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: baseline;
+        gap: 30px;
 
-        .diamond-name::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+        span.viewName-user {
+            font-size: 1.6rem;
+            font-family: 'Orbitron', sans-serif;
+            user-select: none;
             background: linear-gradient(
-                120deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.8) 50%,
-                transparent 100%
+                135deg,
+                /* #ffcc00, */
+                #ffffff,
+                #00c3ff,
+                #e08e1b,
+                #ffffff,
+                #28dcbb,
+                #ffffff
             );
-            animation: shine 3s linear infinite;
-            pointer-events: none;
-            z-index: 1;
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: diamond-glow 4s ease-in-out infinite;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            line-height: 1.2;
+            padding: 1rem;
+
+            .diamond-name::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    120deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.8) 50%,
+                    transparent 100%
+                );
+                animation: shine 3s linear infinite;
+                pointer-events: none;
+                z-index: 1;
+            }
+        }
+
+        .verified-icon {
+            color: #095eb9;
+            font-size: 1.5rem;
+            margin-left: 10px;
         }
     }
 
-    .verified-icon {
-        color: #095eb9;
-        font-size: 1.5rem;
+    .viewInfo {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: center;
+        gap: 10px;
+
+        span {
+            color: white;
+            font-weight: 500;
+            font-size: .8rem;
+            cursor: pointer;
+
+            &.linkTo {
+                a {
+                    text-decoration: none;
+                    color: #1389d8;
+
+                    &.infoLink {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                    }
+                }
+                
+            }
+        }
     }
 }
 

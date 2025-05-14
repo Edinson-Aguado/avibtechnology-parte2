@@ -9,125 +9,104 @@ import { faArrowLeft, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProductDetail() {
-    
     const navigate = useNavigate();
-    const {id} = useParams(); // Recibimos los datos del id.
+    const { id } = useParams();
     const [product, setProduct] = useState();
-
-    const {addProduct, cantidadOrder, setCantidad} = useOrder();
+    const { addProduct, cantidadOrder, setCantidad } = useOrder();
 
     useEffect(() => {
+        const getProductDetail = async () => {
+        try {
+            const { data } = await axios.get(`${env.URL_LOCAL}/products/${id}`);
+            setProduct(data.product);
+        } catch (error) {
+            console.error(error);
+            Swal.fire("Error", "Error al obtener los productos", "error");
+        }
+        };
         getProductDetail();
     }, [id]);
 
-    //Otro tipo de definicion de una funcion:
-    const getProductDetail = async() => {
-
-        try {
-
-            const response = await axios.get(`${env.URL_LOCAL}/products/${id}`);
-            
-            setProduct(response.data.product);
-            
-        } catch (error) {
-            console.log(error);
-            Swal.fire("Error", "Error al obtener los productos", "error");
-        }
+    const formatPrice = (value) => {
+        return new Intl.NumberFormat('es-AR', {
+            style: 'currency',
+            currency: 'ARS', // o USD, EUR, etc.
+            minimumFractionDigits: 2
+        }).format(value);
     };
 
     return (
-        <>
-            
-            <div className="main-container-detail-product">
-                <button className="btn-back" onClick={() => navigate(-1)}>
-                    <FontAwesomeIcon icon={faArrowLeft} className="icon-back"/>
-                    Volver
-                </button>
-                <div className="part-1">
-                    {/* IMAGE */}
-                    <div className="image-product">
-                        <img src={product?.image} alt={product?.name} />
+        <div className="product-detail-container">
+            <button className="btn-back" onClick={() => navigate(-1)}>
+                <FontAwesomeIcon icon={faArrowLeft} className="icon" />
+                Volver
+            </button>
 
-                        {/* CATEGORY */}
-                        <div className="category">
-                            <span>{product?.category ?? 'Categoria no disponible'}</span>
-                        </div>
-                    </div>
-                    <div className="detail-product">
-                        <div className="about-product-buy">
-                            
-                            <div className="info">
-                                {/* NAME */}
-                                <h3>{product?.name}</h3>
-                                {/* PRICE */}
-                                <div className="price">
-                                    <p>$ {product?.price}</p>
-                                </div>
-                                {/* DESCRIPTION */}
-                                <div className="about-product">
-                                    <p>{product?.description}</p>
-                                </div>
-                            </div>
-                            
-                            {/* ACTIONS */}
-                            <div className="add-info">
-                                <form>
-                                    <label htmlFor="cantidadOrder">Cantidad</label>
-                                    <input
-                                        type="number"
-                                        id="cantidadOrder"
-                                        name="cantidadOrder"
-                                        min="1"
-                                        max="36"
-                                        step="1"
-                                        value={cantidadOrder ?? 1}
-                                        onChange={(e) => setCantidad(Number(e.target.value))}
-                                    />
-                                    <input 
-                                        type="text"
-                                        id="code-promotional"
-                                        placeholder="Código promocional"
-                                    />
-                                    <div className="btns-buy">
-                                        <button 
-                                            className="add-btn" 
-                                            type="button"
-                                            onClick={() => addProduct(product, null)}>
-                                                <FontAwesomeIcon 
-                                                    icon={faCartShopping} 
-                                                    className='icon-cart'/>
-                                            Añadir al carrito
-                                        </button>
-
-                                        <button type="button"
-                                        >
-                                            Comprar ahora
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+            <div className="product-main">
+                <div className="product-image-section">
+                    <img src={product?.image} alt={product?.name} />
+                    <span className="category">{product?.category ?? 'Sin categoría'}</span>
                 </div>
-                {/* PRODUCT DETAILS */}
-                <div className="description-product">
-                    <h3>Detalles de {product?.name}</h3>
-                    <p>
-                        {product?.description ?? 'Descripción del producto no disponible.'}
-                    </p>
-                    <div className="datasheet">
 
-                        <h3>SITIO OFICIAL</h3>
-                        <a href={"https://www.ezviz.com"} target="_blank" rel="noopener noreferrer">
-                            Datasheet oficial
-                        </a>
-                        {/* NOOPENER: Evita que la nueva página tenga acceso a la propiedad window.opener, mejorando la seguridad y el rendimiento. */}
+                <div className="product-info-section">
+                    <h1>{product?.name}</h1>
+                    {
+                        product?.discount > 0 ? (
+                            <p className="price">{formatPrice(product?.price * (1 - product.discount / 100))}</p>
+                        ) : (
+                            <p className="price">{formatPrice(product?.price)}</p>
+                        )
+                    }
+                    
+                    <p className="description">{product?.description}</p>
 
-                        {/* NOOREFERRER: Evite que la nueva página reciba información sobre la página de origen. */}
+                    <form className="purchase-form">
+                        <div className="field-group">
+                            <label htmlFor="cantidadOrder">Cantidad</label>
+                            <input
+                                type="number"
+                                id="cantidadOrder"
+                                min="1"
+                                max="36"
+                                value={cantidadOrder ?? 1}
+                                onChange={(e) => setCantidad(Number(e.target.value))}
+                            />
+                        </div>
 
-                    </div>
+                        <div className="field-group">
+                            <label htmlFor="code">Código promocional</label>
+                            <input type="text" id="code" placeholder="Ej. AVIB10" />
+                        </div>
+
+                        <div className="action-buttons">
+                            <button
+                                type="button"
+                                className="add-to-cart"
+                                onClick={() => addProduct(product, null)}
+                            >
+                                <FontAwesomeIcon icon={faCartShopping} className="icon" />
+                                Añadir al carrito
+                            </button>
+                            <button type="button" className="buy-now">
+                                Comprar ahora
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-        </>
+
+            <div className="product-extra">
+                <h2>Detalles de {product?.name}</h2>
+                <p>{product?.description ?? "Descripción no disponible."}</p>
+
+                <div className="datasheet">
+                    <h3>Sitio oficial</h3>
+                    <a href="https://www.ezviz.com" target="_blank" rel="noopener noreferrer">
+                        Datasheet oficial
+                    </a>
+                </div>
+            </div>
+        </div>
     );
 }

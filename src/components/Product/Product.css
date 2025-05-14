@@ -3,10 +3,10 @@
     min-width: 200px;
     border: none;
     border-radius: 0 0 17px 17px;
-    box-shadow:  2px 2px 15px #00000080;
-    transition: opacity .4s ease, transform .4s ease, color .4s ease;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: opacity .4s ease-in-out, transform .4s ease-in-out, color .4s ease-in-out;
 
-    
 
     &:hover {
         .card-content {
