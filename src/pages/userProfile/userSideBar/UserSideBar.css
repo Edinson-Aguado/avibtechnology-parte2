@@ -1,121 +1,191 @@
 .user-sidebar {
-  width: 100%;
-  background-color: #2d3748;
-  color: white !important;
-  padding: 20px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    background-color: #1a202c;
+    color: #f7fafc;
+    padding-top: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* border-radius: 0 1rem 1rem 0; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+    .sidebar-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 32px;
+        text-align: center;
+
+        .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #3b82f6;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        .name-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            h3 {
+                font-size: 1.4rem;
+                font-weight: bold;
+                background: linear-gradient(
+                    135deg,
+                    #ffcc00,
+                    #ffffff,
+                    #00c3ff,
+                    #ff00cc,
+                    #ffffff,
+                    #ffd700,
+                    #ffffff
+                );
+                background-size: 400% 400%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: diamond-glow 4s ease-in-out infinite;
+                position: relative;
+                display: inline-block;
+                overflow: hidden;
+                line-height: 1;
+
+                .diamond-name::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(
+                        120deg,
+                        transparent 0%,
+                        rgba(255, 255, 255, 0.8) 50%,
+                        transparent 100%
+                    );
+                    animation: shine 3s linear infinite;
+                    pointer-events: none;
+                    z-index: 1;
+                }
+
+            }
+
+            .verified-icon {
+                color: #22c55e;
+                font-size: 1.2rem;
+            }
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #cbd5e0;
+            margin: 0;
+        }
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .menu-item {
+            width: 100%;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: .5rem;
+            transition: background-color .2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 1rem;
+                font-weight: 500;
+                color: #f1f5f9;
+
+                svg {
+                font-size: 1.2rem;
+                }
+            }
+
+            &:hover {
+                background-color: #2d3748;
+            }
+
+        .submenu {
+            margin-top: 8px;
+            padding-left: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            animation: fadeIn .3s ease-in-out;
+
+            li {
+                font-size: 0.95rem;
+                color: #cbd5e0;
+                padding: 6px 0;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+        }
+    }
 }
 
-.sidebar-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-  text-align: center;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-  .name-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: baseline;
-    gap: 10px;
+@keyframes diamond-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    h3 {
-        color: #3b82f6;
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@media screen and (min-width: 820px) {
+  .user-sidebar {
+
+    .sidebar-header {
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+
+      .avatar {
+        width: 70px;
+        height: 70px;
       }
-
-    .verified-icon {
-      border-radius: 50%;
-      color: #08ce3a;
-      width: 30px;
-      height: 30px;
-      font-size: 1.2rem;
     }
   }
-  
-}
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
+  @media screen and (min-width: 1200px) {
+    .sidebar-header .name-box h3 {
+      font-size: 1.5rem;
+    }
 
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  text-align: left;
-}
-
-.sidebar-menu li {
-    margin-bottom: 15px;
-    cursor: pointer;
-    padding: 10px 0;
-    border-bottom: 1px solid #4a5568;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: baseline;
-    justify-content: flex-start;
-}
-
-.sidebar-menu li:hover {
-  background-color: #4a5568;
-}
-
-.submenu {
-  list-style: none;
-  padding: 0;
-  margin-left: 20px;
-}
-
-.submenu li {
-  padding: 5px 0;
-}
-
-/* Mobile-First */
-@media screen and (min-width: 820px) and (max-width: 1000px) {
-  .user-sidebar {
-    width: 250px;
-  }
-
-  .sidebar-header {
-    flex-direction: row;
-    text-align: left;
-  }
-
-  .sidebar-menu li {
-    padding: 15px;
-  }
-
-  .verified-icon {
-    margin-left: 15px;
-  }
-}
-
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-  .sidebar-header h3 {
-    font-size: 1.5rem;
-  }
-
-  .sidebar-menu li {
-    padding: 20px;
-  }
-}
-
-@media screen and (min-width: 1201px) {
-  .sidebar-header h3 {
-    font-size: 1.75rem;
-  }
-
-  .sidebar-menu li {
-    padding: 25px;
+    .sidebar-menu .menu-item span {
+      font-size: 1.05rem;
+    }
   }
 }

@@ -29,28 +29,40 @@ const UserSidebar = () => {
                 
             </div>
             <ul className="sidebar-menu">
-                <li>
-                    <FaUser />
-                    Datos Personales
+                <li className='menu-item'>
+                    <span>
+                        <FaUser />
+                        Datos Personales
+                    </span>
+                    
                 </li>
-                <li onClick={() => handleMenuToggle('orders')}>
-                    <FaBoxOpen />
-                    Mis pedidos
+                <li className='menu-item' onClick={() => handleMenuToggle('orders')}>
+                    <span>
+                        <FaBoxOpen />
+                        Mis pedidos
+                    </span>
+                    
                     {activeMenu === 'orders' && (
                         <ul className="submenu">
-                        <li>Activos</li>
-                        <li>Finalizados</li>
-                        <li>Cancelados</li>
+                            <li>Activos</li>
+                            <li>Finalizados</li>
+                            <li>Cancelados</li>
                         </ul>
                     )}
                 </li>
-                <li>
-                    <FaHeart />
-                    Favoritos
+                <li className='menu-item'>
+                    <span>
+                        <FaHeart />
+                        Favoritos
+                    </span>
+                    
                 </li>
-                <li onClick={() => handleMenuToggle('settings')}>
-                <FaCog />
-                    Configuración
+                <li className='menu-item' onClick={() => handleMenuToggle('settings')}>
+                
+                    <span>
+                        <FaCog />
+                        Configuración
+                    </span>
                     {activeMenu === 'settings' && (
                         <ul className="submenu">
                             <li>Cambiar contraseña</li>
@@ -58,9 +70,12 @@ const UserSidebar = () => {
                         </ul>
                     )}
                 </li>
-                <li>
-                    <FaSignOutAlt />
-                    Cerrar sesión
+                <li className='menu-item'>
+                    <span>
+                        <FaSignOutAlt />
+                        Cerrar sesión
+                    </span>
+
                 </li>
             </ul>
         </aside>

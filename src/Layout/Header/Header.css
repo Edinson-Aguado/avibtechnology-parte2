@@ -119,40 +119,45 @@
             font-size: 1rem;
 
             span.super-premium-name {
-                position: relative;
-                display: inline-block;
-                border-radius: 10%;
+                font-size: 1.4rem;
                 font-weight: bold;
                 background: linear-gradient(
-                    120deg,
-                    #d4f1ff,
+                    135deg,
+                    #ffcc00,
                     #ffffff,
-                    #b8e2f2,
-                    #e0e0e0,
+                    #00c3ff,
+                    #ff00cc,
                     #ffffff,
-                    #d4f1ff
+                    #ffd700,
+                    #ffffff
                 );
-                background-size: 90% 90%;
+                background-size: 400% 400%;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                animation: premium-shimmer 5s ease-in-out infinite;
+                animation: diamond-glow 4s ease-in-out infinite;
+                position: relative;
+                display: inline-block;
                 overflow: hidden;
                 line-height: 1;
-                text-transform: uppercase;
-            }
 
-            /* Efecto de brillo extra */
-            .super-premium-name::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-                animation: shine 4s linear infinite;
-                pointer-events: none;
-                z-index: 2;
+                .diamond-name::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(
+                        120deg,
+                        transparent 0%,
+                        rgba(255, 255, 255, 0.8) 50%,
+                        transparent 100%
+                    );
+                    animation: shine 3s linear infinite;
+                    pointer-events: none;
+                    z-index: 1;
+                }
+
             }
             
             .verified-icon {
@@ -672,20 +677,13 @@
     }
 }
 
-@keyframes premium-shimmer {
+@keyframes diamond-glow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
 @keyframes shine {
-    0% {
-        left: -100%;
-    }
-    50% {
-        left: 100%;
-    }
-    100% {
-        left: 100%;
-    }
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
