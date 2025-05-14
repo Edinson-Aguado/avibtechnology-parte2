@@ -19,12 +19,13 @@ import { env } from './config/env.config';
 import AdminGuard from './services/guard/AdminGuard';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 import Orders from './pages/orders/Orders';
+import UserProfile from './pages/userProfile/UserProfile';
 
 export default function App() {
     const [products, setProducts] = useState([]);
 
     async function getProducts() {
-        console.log("getProducts: ejecutándose");
+        
         try {
             const response = await axios.get(`${env.URL_LOCAL}/products`);
             setProducts(response.data.products);
@@ -61,6 +62,7 @@ export default function App() {
                 <Route path="/ProductDetail/:id" element={<ProductDetail />} />
                 <Route path="/ProductsPage" element={<ProductsPage />} />
                 <Route path="/Order" element={<Order />} />
+                <Route path="/UserProfile" element={<UserProfile />} />
                 <Route path="*" element={<Home products={products} />} />
 
                 {/* Rutas de ADMINISTRACION */}

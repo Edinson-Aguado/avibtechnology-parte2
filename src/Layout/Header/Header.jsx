@@ -53,6 +53,7 @@ export default function Header({useWindowWidth}) {
         console.log("toggleMenu clicked:", menuX);
         setOpenMenu(prev => (prev === menuX ? null : menuX));
     };
+    
 
     return (
         <>
@@ -157,7 +158,7 @@ export default function Header({useWindowWidth}) {
                         <span>
                             <img
                                 loading='lazy'
-                                src={user?.imageProfile ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user?.imageProfile}` : imagenPerfil}
+                                src={user?.image ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user?.image}` : imagenPerfil}
                                 alt="User avatar"
                                 className="user-picture" 
                                 id="user-picture"

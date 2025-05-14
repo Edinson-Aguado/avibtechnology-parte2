@@ -19,7 +19,7 @@ export default function OptionsProfile({isMenuHamburguesaOpen}) {
             >
                 <ul className='container-options-profile'>
                     <li className="container-option">
-                        <NavLink className="option-link" to="/">
+                        <NavLink className="option-link" to="/UserProfile">
                             <FontAwesomeIcon icon={faCircleUser}/>
                             Perfil
                         </NavLink>

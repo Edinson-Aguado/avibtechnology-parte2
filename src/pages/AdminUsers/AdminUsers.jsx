@@ -85,7 +85,6 @@ export default function AdminUsers() {
             Swal.fire("Error", "¡Las contraseñas no coinciden!", "error");
             return null;
         }
-        
     
         const x = new FormData();
         x.append('name', data.name);
@@ -93,9 +92,11 @@ export default function AdminUsers() {
         x.append('password', data.password);
         x.append('date', data.date);
         x.append('country', data.country);
-        if (data.image?.[0]) {
-            x.append('image', data.image[0]);
-        }        
+
+        if (data.image?.length && data.image[0] instanceof File) {
+                x.append("image", data.image[0]);
+        }
+        
         x.append('observations', data.observations);
         return x;
     }
@@ -103,15 +104,13 @@ export default function AdminUsers() {
     //CREAR NUEVO USUARIO
     async function createUser(data) {
         
-        const formData = builtNewFormData(data);
-        console.log(formData);
-        if (!formData) return;
         
         try {
+            const formData = builtNewFormData(data);
+            if (!formData) return;
             setIsLoading(true);
             const bearer = localStorage.getItem('token');
             if (editUser) {
-                
                 
                 await axios.put(`${env.URL_LOCAL}/users/${editUser._id}`, formData, {
                     headers: {
@@ -159,36 +158,43 @@ export default function AdminUsers() {
         }
     }
 
-    //ELIMINAR PRODUCTO POR ID
-    function deleteUser(id) {
+    //ELIMINAR USUARIO POR ID
+    async function deleteUser(id) {
+    try {
+        const bearer = localStorage.getItem('token'); // Obtener el token desde el localStorage
         
-        try {
-
-            Swal.fire({
-                title: "¿Estás seguro?",
-                text: "¡No podrás recuperar este usuario!",
-                icon: "warning",
-                draggable: true,
-                showCancelButton: true,
-                cancelButtonText: "Cancelar",
-                confirmButtonText: "Eliminar",
-                confirmButtonColor: "#f00",
-                cancelButtonColor: "#6c757d",
-                reverseButtons: true,
-
-            }).then(async(resultado) => {
-
-                if (resultado.isConfirmed) {
-                    await axios.delete(`${env.URL_LOCAL}/users/${id}`);
-                    await getUsers();
-                    Swal.fire("Usuario borrado!", "El usuario se ha borrado correctamente.", "success");
-                }
-
-            });
-        } catch (error) {
-            Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
+        // Verificar si el token está presente
+        if (!bearer) {
+            return Swal.fire("¡Error!", "No estás autenticado. Por favor inicia sesión.", "error");
         }
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás recuperar este usuario!",
+            icon: "warning",
+            draggable: true,
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar",
+            confirmButtonColor: "#f00",
+            cancelButtonColor: "#6c757d",
+            reverseButtons: true,
+        }).then(async(resultado) => {
+            if (resultado.isConfirmed) {
+                await axios.delete(`${env.URL_LOCAL}/users/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${bearer}`, // Asegúrate de incluir el token aquí
+                    }
+                });
+                await getUsers();
+                Swal.fire("Usuario borrado!", "El usuario se ha borrado correctamente.", "success");
+            }
+        });
+    } catch (error) {
+        Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
     }
+}
+
 
     function fnEditUser(user) {
         setEditUser(user);

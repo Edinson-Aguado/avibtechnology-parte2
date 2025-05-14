@@ -2,8 +2,6 @@
 import './ProductTable.css';
 
 export default function ProductTable({product, deleteProduct, fnEditProduct}) {
-
-    console.log("AQUIIIIII: ", product.image);
     
 
     return (

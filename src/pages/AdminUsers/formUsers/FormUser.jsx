@@ -102,10 +102,10 @@ export default function FormUser({
                 <label htmlFor="image-perfil">Imagen de perfil</label>
                 <input
                     type="file"
-                    name="imageProfile"
-                    id="imageProfile"
+                    name="image"
+                    id="image"
                     accept="image/*"
-                    {...register("imageProfile", {
+                    {...register("image", {
                         required: "La imagen es requerida"
                     })}
                 />
