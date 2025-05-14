@@ -1,56 +1,100 @@
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #222;
+}
+
 .carousel {
     margin-top: 4rem;
     width: 100vw;
+    overflow: hidden;
     position: relative;
-}
+    padding: 1rem 0;
+    background-color: #f8f9fa;
 
-.carousel-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-}
+    .carousel-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
 
-.element {
-    width: 50vw;
-    flex: 0 0 auto;
-}
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .element {
+        flex: 0 0 auto;
+        width: 50vw;
+        padding: .5rem;
 
-/* Botones */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgb(16, 26, 78);
-    color: white;
-    border: none;
-    font-size: 1rem;
-    padding: 1rem;
-    cursor: pointer;
-    z-index: 1;
-    border-radius: 50%;
-    opacity: .4;
-    transition: opacity .4s ease-in-out;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    }
 
-    &:hover {
-        opacity: 1;
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgb(16, 26, 78);
+        color: white;
+        border: none;
+        font-size: 1rem;
+        padding: .5rem;
+        cursor: pointer;
+        z-index: 2;
+        border-radius: 50%;
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+            opacity: 1;
+            background-color: rgba(34, 34, 34, 0.85);
+        }
+
+        &.left {
+            left: 20px;
+        }
+
+        &.right {
+            right: 20px;
+        }
     }
 }
 
-.carousel-btn.left {
-    left: 20px; /* Lado izquierdo */
+@media screen and (min-width: 820px) and (max-width: 1024px) {
+
+    .carousel {
+        .carousel-btn {
+            font-size: 1.4rem;
+            padding: .8rem;
+        }
+    }
+    
 }
 
-.carousel-btn.right {
-    right: 20px; /* Lado derecho */
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .carousel {
+        .carousel-btn {
+            font-size: 1.6rem;
+            padding: 1rem;
+        }
+    }
+    
 }
 
-.carousel-btn:hover {
-    background-color: rgba(34, 34, 34, 0.8);
+@media screen and (min-width: 1201px) {
+    .carousel {
+        .carousel-btn {
+            font-size: 1.8rem;
+            padding: 1.2rem;
+        }
+    }
+    
 }
-

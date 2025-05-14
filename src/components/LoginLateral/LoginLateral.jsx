@@ -15,12 +15,14 @@ export default function LoginLateral() {
                 {
                     user ? (
                         <button 
-                            className='btn-login'
+                            className='btn-login btn-login-close'
                             onClick={() => logout()}
-                            style={{"backgroundColor":"#dc3545"}}
+                            style={{
+                                "backgroundColor":"#dc3545"
+                            }}
                             >
                             <FontAwesomeIcon icon={faRightToBracket} />
-                            Logout
+                            Cerrar sesión
                         </button>
                     ) : (
                         <button 

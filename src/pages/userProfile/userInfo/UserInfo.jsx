@@ -23,7 +23,7 @@ const UserInfo = () => {
         </div>
         <div className="info-box">
           <label>Teléfono</label>
-          <span>+54 11 1234-5678</span>
+          <span>+54 9 11 1234-5678</span>
         </div>
         <div className="info-box">
           <label>DNI</label>
@@ -40,7 +40,7 @@ const UserInfo = () => {
       </div>
 
       <h2 className="section-title">
-        <FontAwesomeIcon icon={faBox} />
+        <FontAwesomeIcon icon={faBox} className='faBox'/>
         Dirección de envío
       </h2>
       <div className="info-section">

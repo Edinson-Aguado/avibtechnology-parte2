@@ -162,7 +162,7 @@ export default function Order() {
                             className="button btn-clean"
                             onClick={() => cleanCart()}
                         >
-                            Vaciar Orden
+                            Vaciar
                         </button>
                     </div>
                     

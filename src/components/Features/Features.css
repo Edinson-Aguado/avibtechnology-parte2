@@ -1,149 +1,133 @@
-.section-feactures {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4rem;
-    gap: 4rem;
-    margin: 3rem 0;
+.features {
+    padding: 4rem 1.5rem;
+    background-color: #f9f9f9;
+    text-align: center;
 
-    .feacture {
+    .featuresTitle {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
 
-        position: relative; 
-        padding: 15px;
-        width: 100%;
-        min-height: 230px;
-        border-radius: 10px;
-        background-color: rgb(247, 247, 246);
-        box-shadow:  2px 2px 15px #00000080;
+    .featuresContainer {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .featureCard {
+        background-color: #fff;
+        border-radius: 1.5rem;
+        padding: 2rem 1rem;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
+        transition: transform 0.3s ease;
 
-        h3 {
-            text-align: center;
-            font-weight: bold;
-            font-size: 1rem;
-            margin: 0;
+        &:hover {
+        transform: translateY(-6px);
         }
 
-        .caja-icono {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(0, 85, 255, 0.145);
+        .iconBox {
+            background-color: #e9f0ff;
             border-radius: 50%;
-            padding: 20px;
-            .icono {
-                i {
-                    font-size: 50px;
-                }
-            }
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .description {
-            overflow: hidden;
-            max-height: 0px;    /* Altura máxima inicial (oculta) */
-            text-align: justify;
+        .featureIcon {
+            font-size: 1.8rem;
+            color: #1a73e8;
+        }
+
+        .featureTitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .viewMoreButton {
+            background-color: transparent;
+            color: #1a73e8;
+            border: 2px solid #1a73e8;
+            padding: 0.4rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
             font-weight: 500;
-        }
-
-        .mostrar-mas {
-            display: none;
-        }
-
-        .mostrar-mas:checked + .ver-mas + .caja-icono + .description {
-            max-height: max-content; /* Altura máxima (todo el texto) cuando está expandido */
-        }
-        .mostrar-mas:not(:checked) + .ver-mas + .caja-icono + .description {
-            max-height: 0px; /* Altura máxima cuando no está expandido */
-        }
-
-        .ver-mas {
-            display: inline-block;
-            cursor: pointer;
-            padding: 5px 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            position: absolute;
-            top: 50%;
-            right: -48px;
-            text-decoration: none;
-            background-color: #eb1414;
-            color: var(--text-color);
-            transition: scale .4s ease-in-out;
-            font-weight: 700;
+            transition: all 0.3s;
 
             &:hover {
-                scale: 1.1;
-            }
-        }
-        &.feacture-1 {
-            border-top: 20px solid #1a60c369;
-        }
-    
-        &.feacture-2 {
-            border-bottom: 20px solid #10b42669;
-        }
-    
-        &.feacture-3 {
-            border-top: 20px solid #8f055e69;
-        }
-    
-        &.feacture-4 {
-            border-bottom: 20px solid #b6da1469;
-        }
-    }
-
-    
-}
-
-@media screen and (min-width: 820px) and (max-width: 1000px) {
-    .section-feactures {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: stretch;
-        
-        .feacture {
-            width: 45% !important;
-            .ver-mas {
-                top: 85px;
-                right: -50px;
+                background-color: #1a73e8;
+                color: #fff;
             }
         }
     }
-}
 
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-    .section-feactures {
-        flex-direction: row;
-        
-        .feacture {
-            width: 45% !important;
-            min-height: 250px;
-            .ver-mas {
-                top: 85px;
-                right: -50px;
-            }
-        }
+    .borderTopBlue {
+        border-top: 4px solid #1a73e8;
     }
-}
 
-@media screen and (min-width: 1201px) {
-    .section-feactures {
-        flex-direction: row;
+    .borderBottomGreen {
+        border-bottom: 4px solid #28a745;
+    }
+
+    .borderTopPurple {
+        border-top: 4px solid #6f42c1;
+    }
+
+    .borderBottomYellow {
+        border-bottom: 4px solid #f1c40f;
+    }
+
+    .modalOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
         align-items: center;
-        gap: 3.5rem;
-        .feacture {
-            width: 70%;
-            font-size: 20px;
-            padding: 20px;
-            .ver-mas {
-                top: 85px;
-                right: -50px;
-            }
+        justify-content: center;
+        z-index: 50;
+    }
+
+    .modalContent {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        text-align: left;
+
+        .modalClose {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modalTitle {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .modalDescription {
+            font-size: 1rem;
+            color: #444;
+            line-height: 1.5;
         }
     }
 }

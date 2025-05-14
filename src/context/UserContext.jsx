@@ -1,50 +1,74 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { createContext, useContext } from "react";
+import { useEffect, useState, createContext, useContext } from "react";
 import Swal from "sweetalert2";
-import {env} from '../config/env.config';
+import { env } from '../config/env.config';
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const UserContext = createContext();
-
 export const useUser = () => useContext(UserContext);
 
-
-export default function UserProvider({children}) {
-
+export default function UserProvider({ children }) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [token, setToken] = useState(localStorage.getItem('token') || null);
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-
+    // Axios con interceptor
     useEffect(() => {
+        const axiosInstance = axios.create();
 
-        if (user) { 
-            localStorage.setItem("user", JSON.stringify(user)) 
-        } else { 
-            localStorage.removeItem("user");
-        }
+        axiosInstance.interceptors.response.use(
+            response => response,
+            error => {
+                if (error.response?.status === 401) {
+                    logout(true); // Expiración
+                }
+                return Promise.reject(error);
+            }
+        );
 
+        // Si querés usar este axiosInstance en todo el proyecto,
+        // podés exportarlo desde un archivo como "api.js"
+
+    }, []);
+
+    // Guardar user/token en localStorage
+    useEffect(() => {
+        if (user) localStorage.setItem("user", JSON.stringify(user));
+        else localStorage.removeItem("user");
+
+        if (token) localStorage.setItem("token", token);
+        else localStorage.removeItem("token");
+    }, [user, token]);
+
+    // Detectar token expirado al cargar la app
+    useEffect(() => {
         if (token) {
-            localStorage.setItem("token", token);
-        } else {
-            localStorage.removeItem("token");
+            try {
+                const decoded = jwtDecode(token);
+                if (decoded.exp * 1000 < Date.now()) {
+                    logout(true); // Token expirado
+                } else {
+                    setUser(JSON.parse(localStorage.getItem("user"))); // opcional
+                }
+            } catch (err) {
+                console.error("Token inválido", err);
+                logout(true);
+            }
         }
-
-    }, [user, token])
+    }, []);
 
     async function login(data) {
-        setIsLoading(true); // Empieza la carga
+        setIsLoading(true);
         try {
             const response = await axios.post(`${env.URL_LOCAL}/login`, data);
-            
-            const {user, token} = response.data;
+            const { user, token } = response.data;
             setUser(user);
             setToken(token);
             Swal.fire({
                 icon: 'success',
-                title: 'Login successful',
+                title: 'Login exitoso',
                 text: `Bienvenido, ${user.name}`,
                 timer: 2000,
                 showConfirmButton: false
@@ -55,34 +79,40 @@ export default function UserProvider({children}) {
             console.log("Error during login: ", error);
             Swal.fire({
                 icon: "error",
-                title: "Login failed",
-                text: error.response.message.data
-            })
+                title: "Login fallido",
+                text: error.response?.data?.message || "Error desconocido"
+            });
         } finally {
-            setIsLoading(false); // Termina la carga
+            setIsLoading(false);
         }
     }
 
-    function logout() {
-        setIsLoading(true);
-        setTimeout(() => {
-            setUser(null);
-            setToken(null);
-            setIsLoading(false);
-            navigate('/');
-        }, 500);
+    function logout(fromExpiration = false) {
+        setUser(null);
+        setToken(null);
+        if (fromExpiration) {
+            Swal.fire({
+                icon: "info",
+                title: "Sesión expirada",
+                text: "Tu sesión ha caducado. Por favor, inicia sesión nuevamente.",
+            }).then(() => {
+                navigate('/login');
+            });
+        } else {
+            navigate('/login');
+        }
     }
 
     return (
-        <UserContext.Provider 
+        <UserContext.Provider
             value={{
                 login,
-                user, 
-                token,
                 logout,
+                user,
+                token,
                 isLoading
             }}>
             {children}
         </UserContext.Provider>
-    )
+    );
 }

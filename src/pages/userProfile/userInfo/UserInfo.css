@@ -1,75 +1,93 @@
 .user-info-main {
-  background-color: #f7fafc;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
 
-  .section-title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        gap: 10px;
+
+        svg {
+            color: #3b82f6;
+        }
+    }
+
+    .info-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .info-box {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: #f1f5f9;
+        border-radius: 8px;
+
+        label {
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+        span {
+            color: #4a5568;
+        }
+    }
 }
 
-.info-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-box {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.info-box label {
-  font-weight: bold;
-  color: #4a5568;
-}
-
-.info-box span {
-  color: #2d3748;
-}
-
-/* Mobile-First */
+/* Media Queries */
 @media screen and (min-width: 820px) and (max-width: 1000px) {
-  .user-info-main {
-    padding: 15px;
-  }
+    .user-info-main {
+        .section-title {
+            font-size: 1.75rem;
+        }
 
-  .info-section {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+        .info-section {
+            grid-template-columns: 1fr 1fr;
+        }
 
-  .info-box {
-    width: 48%;
-  }
+        .info-box {
+            padding: 12px;
+        }
+    }
 }
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
-  .section-title {
-    font-size: 1.75rem;
-  }
+    .user-info-main {
+        .section-title {
+            font-size: 1.9rem;
+        }
 
-  .info-section {
-    gap: 20px;
-  }
+        .info-section {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-box {
+            padding: 14px;
+        }
+    }
 }
 
 @media screen and (min-width: 1201px) {
-  .section-title {
-    font-size: 2rem;
-  }
+    .user-info-main {
+        .section-title {
+            font-size: 2rem;
+        }
 
-  .info-section {
-    gap: 25px;
-  }
+        .info-section {
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
 
-  .info-box {
-    width: 48%;
-  }
+        .info-box {
+            padding: 16px;
+        }
+    }
 }
