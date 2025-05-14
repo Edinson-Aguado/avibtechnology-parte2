@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaUser, FaBoxOpen, FaHeart, FaCog, FaSignOutAlt, FaCheckCircle } from 'react-icons/fa';
 import './UserSidebar.css';
 import { useUser } from '../../../context/UserContext';

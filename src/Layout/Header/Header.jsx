@@ -10,6 +10,7 @@ import LoginLateral from '../../components/LoginLateral/LoginLateral';
 import OptionsProfile from '../../components/OptionsProfile/OptionsProfile';
 import { useUser } from '../../context/UserContext';
 import { env } from '../../config/env.config';
+import { FaCheckCircle } from 'react-icons/fa';
 
 export default function Header({useWindowWidth}) {
 
@@ -87,6 +88,24 @@ export default function Header({useWindowWidth}) {
 
                 {/* MENÚ DE NAVEGACIÓN */}
                 <nav className="main-nav" ref={menuRef} style={{ left: isMenuHamburguesaOpen ? '0' : '-250px' }}>
+
+                    {
+                        width <= 819 && user && (
+                            <div className="user-profile-sidebar">
+                                <img
+                                    loading="lazy"
+                                    src={user.image ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user.image}` : imagenPerfil}
+                                    alt="User avatar"
+                                    className="avatar-sidebar"
+                                />
+                                <div className="user-name-verified">
+                                    <span className={user?.role === 'admin' ? 'super-premium-name' : ''}>{user.name}</span>
+                                    <FaCheckCircle className="verified-icon" />
+                                </div>
+                            </div>
+                        )
+                    }
+
                     
                     <ul className="nav-list">
 
