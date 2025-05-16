@@ -102,7 +102,7 @@ export default function ProductDetail() {
 
                 <div className="datasheet">
                     <h3>Sitio oficial</h3>
-                    <a href="https://www.ezviz.com" target="_blank" rel="noopener noreferrer">
+                    <a title="Pagina oficial de la MARCA EZVIZ" href="https://www.ezviz.com" target="_blank" rel="noopener noreferrer">
                         Datasheet oficial
                     </a>
                 </div>

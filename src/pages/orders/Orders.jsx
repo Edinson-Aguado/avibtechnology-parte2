@@ -45,6 +45,7 @@ export default function Orders() {
                 
                 {renderProductos(order.products)}
                 <div className="btn-pay-order">
+                    <h3>Total a pagar: <span>{formatPrice(order?.total)}</span></h3>
                     <NavLink to={`/`} className='btn-pay'>
                         Pagar orden
                     </NavLink>

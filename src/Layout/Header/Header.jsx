@@ -16,7 +16,11 @@ export default function Header({useWindowWidth}) {
 
     const {count, toggleCart} = useOrder();
     const [openMenu, setOpenMenu] = useState(null);
-    const menuRef = useRef(null);
+
+    const menuRef = useRef(null); // para el main-nav
+    const profileMenuRef = useRef(null); // para OptionsProfile
+    const burgerRef = useRef(null); 
+
     const [isMenuHamburguesaOpen, setIsMenuHamburguesaOpen] = useState(false);
     const location = useLocation();
     const width = useWindowWidth();
@@ -27,23 +31,26 @@ export default function Header({useWindowWidth}) {
     };
 
     useEffect(() => {
-        
         function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+            const clickedOutsideMenu = menuRef.current && !menuRef.current.contains(event.target);
+            const clickedOutsideProfile = profileMenuRef.current && !profileMenuRef.current.contains(event.target);
+            const clickedOutsideBurger = burgerRef.current && !burgerRef.current.contains(event.target);
+
+            if (clickedOutsideMenu && clickedOutsideProfile && clickedOutsideBurger) {
                 setOpenMenu(null);
+                setIsMenuHamburguesaOpen(false);
             }
         }
-        
+
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
 
-    useEffect(() => {
-        setIsMenuHamburguesaOpen(false);
-        setOpenMenu(null);
-    }, []);
+
+
 
     // Cierra el menú cada vez que cambia la ruta
     useEffect(() => {
@@ -51,27 +58,30 @@ export default function Header({useWindowWidth}) {
     }, [location]);
 
     const toggleMenu = (menuX) => {
-        console.log("toggleMenu clicked:", menuX);
         setOpenMenu(prev => (prev === menuX ? null : menuX));
     };
     
+    const userImage = user?.image 
+    ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user.image}` 
+    : imagenPerfil;
 
     return (
         <>
             <header className="main-header">
-
-                <input 
-                    type="checkbox" 
-                    id="burger" 
-                    className="input-burger"
-                    checked={isMenuHamburguesaOpen}
-                    onChange={() => setIsMenuHamburguesaOpen(!isMenuHamburguesaOpen)}
-                />
                 
-                {/* MENU  DE HAMBURGUESA */}
-                <label className="burger-container" htmlFor="burger">
-                    <div className="burger"></div>
+                {/* MENÚ DE HAMBURGUESA */}
+                <label
+                    ref={burgerRef} 
+                    className={`burger-container ${isMenuHamburguesaOpen ? 'open' : ''}`} 
+                    onClick={() => {
+                        setIsMenuHamburguesaOpen(prev => !prev)}}
+                    >
+                    <div className="burger-line line-short"></div>
+                    <div className="burger-line line-long"></div>
                 </label>
+
+
+
 
                 {/* LOGO DE LA EMPRESA */}
                 <div className="logo">
@@ -87,14 +97,14 @@ export default function Header({useWindowWidth}) {
                 </div>
 
                 {/* MENÚ DE NAVEGACIÓN */}
-                <nav className="main-nav" ref={menuRef} style={{ left: isMenuHamburguesaOpen ? '0' : '-250px' }}>
+                <nav className={`main-nav ${isMenuHamburguesaOpen ? 'open' : ''}`} ref={menuRef}>
 
                     {
                         width <= 819 && user && (
                             <div className="user-profile-sidebar">
                                 <img
                                     loading="lazy"
-                                    src={user.image ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user.image}` : imagenPerfil}
+                                    src={userImage}
                                     alt="User avatar"
                                     className="avatar-sidebar"
                                 />
@@ -173,12 +183,13 @@ export default function Header({useWindowWidth}) {
                     </div>
                     
                     <div 
-                        className="picture-container" 
+                        className="picture-container"
+                        ref={profileMenuRef}
                     >
                         <span>
                             <img
                                 loading='lazy'
-                                src={user?.image ? `${env.URL_LOCAL_SIN_API}/uploads/users/${user?.image}` : imagenPerfil}
+                                src={userImage}
                                 alt="User avatar"
                                 className="user-picture" 
                                 id="user-picture"
@@ -186,8 +197,6 @@ export default function Header({useWindowWidth}) {
                             />
                             <OptionsProfile 
                                 isMenuHamburguesaOpen={isMenuHamburguesaOpen} 
-                                toggleMenu={toggleMenu} 
-                                toggleMenuAdmin={toggleMenuAdmin}
                             />
                         </span>
                         

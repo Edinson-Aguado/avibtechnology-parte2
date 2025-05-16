@@ -22,7 +22,7 @@ export default function Home({products}) {
             <main className="main-container-home">
 
                 {products && products?.length > 0 ? (
-                    products?.map(product => {
+                    products?.slice(0, 8).map(product => {
                         return (<Product key={product._id} product={product} />)
                     })
                 ) : (
