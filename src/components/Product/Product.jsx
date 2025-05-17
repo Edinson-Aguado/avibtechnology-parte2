@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faWarehouse, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // Corazón vacío
 import { useOrder } from '../../context/OrderContext';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ModalView from '../ModalView/ModalView';
 
 export default function Product({product}) {
@@ -12,6 +12,8 @@ export default function Product({product}) {
     const {addProduct} = useOrder();
     const [isFavorited, setIsFavorited] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const imageRef = useRef(null);
+
 
     const handleFavorite = () => {
         setIsFavorited(!isFavorited);
@@ -32,6 +34,41 @@ export default function Product({product}) {
             }
         }
     }
+
+    const animateFlyToCart = (productImageRef) => {
+        const cartIcon = document.querySelector('.icon-carrito');
+        const productImage = productImageRef.current;
+
+        if (!cartIcon || !productImage) return;
+
+        const imageRect = productImage.getBoundingClientRect();
+        const cartRect = cartIcon.getBoundingClientRect();
+
+        const clone = productImage.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.top = `${imageRect.top}px`;
+        clone.style.left = `${imageRect.left}px`;
+        clone.style.width = `${imageRect.width}px`;
+        clone.style.height = `${imageRect.height}px`;
+        clone.style.zIndex = 9999;
+        clone.style.transition = 'all 0.7s ease-in-out';
+        clone.style.pointerEvents = 'none';
+
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(() => {
+            clone.style.top = `${cartRect.top}px`;
+            clone.style.left = `${cartRect.left}px`;
+            clone.style.width = '20px';
+            clone.style.height = '20px';
+            clone.style.opacity = 0.2;
+        });
+
+        setTimeout(() => {
+            document.body.removeChild(clone);
+        }, 700);
+    };
+
     
 
     return (
@@ -57,7 +94,7 @@ export default function Product({product}) {
                         }
                         
                         <img 
-                            src={product?.image} alt={`Imágen de ${product?.name}`} 
+                            src={product?.image} alt={`Imágen de ${product?.name}`} ref={imageRef} 
                         />
                     </div>
 
@@ -134,6 +171,7 @@ export default function Product({product}) {
                             className='btn-agregar-carrito'
                             onClick={() => {
                                 addProduct(product, 1);
+                                animateFlyToCart(imageRef);
                             }}
                         >
                             <FontAwesomeIcon 

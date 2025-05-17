@@ -16,6 +16,8 @@ export default function Header({useWindowWidth}) {
 
     const {count, toggleCart} = useOrder();
     const [openMenu, setOpenMenu] = useState(null);
+    const [cartAnim, setCartAnim] = useState(false);
+
 
     const menuRef = useRef(null); // para el main-nav
     const profileMenuRef = useRef(null); // para OptionsProfile
@@ -56,6 +58,15 @@ export default function Header({useWindowWidth}) {
     useEffect(() => {
         setIsMenuHamburguesaOpen(false);
     }, [location]);
+
+    useEffect(() => {
+        if (count > 0) {
+            setCartAnim(true);
+            const timer = setTimeout(() => setCartAnim(false), 500); // 500ms de animación
+            return () => clearTimeout(timer);
+        }
+    }, [count]);
+
 
     const toggleMenu = (menuX) => {
         setOpenMenu(prev => (prev === menuX ? null : menuX));
@@ -164,7 +175,7 @@ export default function Header({useWindowWidth}) {
                     <div className="cart-container">
                         
                         <div 
-                            className='user-cart' 
+                            className={`user-cart ${cartAnim ? 'cart-bounce' : ''}`}
                             onClick={() => toggleCart()
                             }>
 

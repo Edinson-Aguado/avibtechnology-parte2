@@ -23,6 +23,7 @@
         align-items: center;
         justify-content: center;
         margin-left: 10px;
+        z-index: 100;
 
         .burger-line {
             position: absolute;
@@ -42,7 +43,7 @@
         
         .line-long {
             width: 80%;
-            bottom: 30%;
+            bottom: 20%;
             left: 0;
         }
 
@@ -53,7 +54,6 @@
                 left: 0;
                 transform: translateY(-50%) rotate(45deg);
                 background-color: #007bff;
-                box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
             }
             .line-long {
                 width: 100%;
@@ -61,7 +61,6 @@
                 left: 0;
                 transform: translateY(50%) rotate(-45deg);
                 background-color: #007bff;
-                box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
             }
         }
 
@@ -416,6 +415,21 @@
         }
     }
 }
+
+/* Animación para el carrito al agregar un producto */
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.cart-bounce {
+    animation: bounce 0.5s ease;
+}
+
 
 /* Media queries */
 @media screen and (min-width: 820px) and (max-width: 1000px) {

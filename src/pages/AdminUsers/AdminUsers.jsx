@@ -193,12 +193,14 @@ export default function AdminUsers() {
     } catch (error) {
         Swal.fire("¡Error!", `Hubo un problema: ${error.message}`, "error");
     }
-}
+    }
 
-
+    //EDITAR USUARIO POR ID
     function fnEditUser(user) {
         setEditUser(user);
     }
+
+    
     
     //--------------------------------
 

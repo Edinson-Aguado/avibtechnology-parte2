@@ -55,8 +55,9 @@
 
 @media screen and (min-width: 600px) and (max-width:  819px) {
 
-    .modal-overlay {
-        .modal-content {
+    .modal-overlay-order {
+        max-width: 100%;
+        .modal-content-order {
             width: 75%;
             max-width: 75%;
         }
@@ -65,10 +66,11 @@
 }
 @media screen and (min-width: 820px) and (max-width:  1000px) {
 
-    .modal-overlay {
-        .modal-content {
-            width: 70%;
-            max-width: 70%;
+    .modal-overlay-order {
+        max-width: 100%;
+        .modal-content-order {
+            width: 60%;
+            max-width: 60%;
         }
     }
 
@@ -76,10 +78,11 @@
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
 
-    .modal-overlay {
-        .modal-content {
-            width: 75%;
-            max-width: 75%;
+    .modal-overlay-order {
+        max-width: 100%;
+        .modal-content-order {
+            width: 55%;
+            max-width: 55%;
         }
     }
 
@@ -87,10 +90,11 @@
 
 @media screen and (min-width: 1201px) {
 
-    .modal-overlay {
-        .modal-content {
-            width: 80%;
-            max-width: 80%;
+    .modal-overlay-order {
+        max-width: 100%;
+        .modal-content-order {
+            width: 50%;
+            max-width: 50%;
         }
     }
 

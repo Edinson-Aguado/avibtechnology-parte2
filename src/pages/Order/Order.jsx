@@ -27,10 +27,19 @@ export default function Order() {
 
     const handleCreateOrder = async () => {
 
-        if (!user || cart.length === 0) {
+        if (!user) {
             return Swal.fire({
                 icon: 'warning',
                 title: 'Datos faltantes',
+                text: 'Inicia sesión y agrega productos antes de confirmar tu orden.',
+                confirmButtonColor: '#f59e0b'
+            });
+        }
+
+        if (cart.length === 0) {
+            return Swal.fire({
+                icon: 'warning',
+                title: 'El carrito está vacío',
                 text: 'Inicia sesión y agrega productos antes de confirmar tu orden.',
                 confirmButtonColor: '#f59e0b'
             });
