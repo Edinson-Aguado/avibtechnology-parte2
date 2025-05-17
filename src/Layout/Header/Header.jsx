@@ -99,7 +99,8 @@ export default function Header({useWindowWidth}) {
                     <NavLink 
                         className="nav-link" 
                         to="/">
-                        <img 
+                        <img
+                            aria-label="Logo de la empresa AVIB" 
                             loading='lazy' 
                             src={logo} 
                             alt="Imágen del Logo de la empresa" className="nav-logo"
@@ -108,7 +109,7 @@ export default function Header({useWindowWidth}) {
                 </div>
 
                 {/* MENÚ DE NAVEGACIÓN */}
-                <nav className={`main-nav ${isMenuHamburguesaOpen ? 'open' : ''}`} ref={menuRef}>
+                <nav role="navigation" aria-label="Main navigation" className={`main-nav ${isMenuHamburguesaOpen ? 'open' : ''}`} ref={menuRef}>
 
                     {
                         width <= 819 && user && (
@@ -178,17 +179,22 @@ export default function Header({useWindowWidth}) {
                             className={`user-cart ${cartAnim ? 'cart-bounce' : ''}`}
                             onClick={() => toggleCart()
                             }>
-
-                            <FontAwesomeIcon
-                                className='icon-carrito'
-                                icon={faShoppingBag}
-                                size="2x"
-                                style={{ cursor: "pointer" }}
-                            />
-                            <span 
-                                className="cart-count">
-                                {count}
-                            </span>
+                            <div className="icon-container">
+                                <FontAwesomeIcon
+                                    className='icon-carrito'
+                                    icon={faShoppingBag}
+                                    size="2x"
+                                    style={{ cursor: "pointer" }}
+                                />
+                                
+                                <span 
+                                    className="cart-count">
+                                        
+                                    {`${count}`}
+                                </span>
+                            </div>
+                            
+                            
 
                         </div>
                     </div>
@@ -199,6 +205,7 @@ export default function Header({useWindowWidth}) {
                     >
                         <span>
                             <img
+                                aria-label="Abrir menú de perfil"
                                 loading='lazy'
                                 src={userImage}
                                 alt="User avatar"

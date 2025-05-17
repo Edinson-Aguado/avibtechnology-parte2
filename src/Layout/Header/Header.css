@@ -355,38 +355,61 @@
         .cart-container {
             display: flex;
             align-items: center;
+            justify-content: center;
+            background-color: #1f2937; 
+            padding: 20px;
+            height: 100%;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
-            padding-right: 10px;
+            transition: background-color .3s ease-in-out;
 
-            @media screen and (min-width: 820px) {
-                padding-right: 0;
+            @media screen and (max-width: 820px) {
+                background-color: #f1f1f1;
+
+                .icon-container {
+                    .icon-carrito {
+                        color: #007bff !important;
+                    }
+                }
             }
 
-            .icon-carrito {
-                color: #4B4B4B ;
-            }
-
-            .cart-count {
-                position: absolute;
-                top: -8px;
-                left: -8px;
-                background-color: #FF4C4C;
-                color: #fff;
-                font-size: 0.7rem;
-                font-weight: 600;
-                padding: 2px 6px;
-                border-radius: 999px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-                min-width: 18px;
-                height: 18px;
+            .icon-container {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                line-height: 1;
-                transition: background-color .3s ease;
+                gap: 8px;
+                position: relative;
+
+                .icon-carrito {
+                    font-size: 1.8rem;
+                    color: #f9fafb;
+                    transition: transform .2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        color: #60a5fa;
+                    }
+                }
+
+                .cart-count {
+                    position: absolute;
+                    top: -6px;
+                    right: -10px;
+                    background-color: #ef4444;
+                    color: white;
+                    font-size: 0.65rem;
+                    font-weight: 700;
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+                    animation: bounce 0.5s ease;
+                }
             }
-            
         }
+
 
         .picture-container {
             display: none;
