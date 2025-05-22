@@ -55,7 +55,7 @@ export default function Home({ products }) {
                     slidesPerView={1.3} // default para móviles
                     className="coverflow-swiper"
                 >
-                    {products.map((product) => (
+                    {products?.slice(0, 8).map((product) => (
                         <SwiperSlide key={product._id} className="coverflow-slide">
                             <Product product={product} />
                         </SwiperSlide>
