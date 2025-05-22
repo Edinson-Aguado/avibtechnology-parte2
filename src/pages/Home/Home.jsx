@@ -1,39 +1,71 @@
-import Product from '../../components/Product/Product';
-import Title from '../../components/Title/Title';
-import './Home.css';
-import Features from '../../components/Features/Features';
 import Banner from '../../components/Banner/Banner';
+import LogoSlider from '../../components/LogoSlider/LogoSlider';
+import Title from '../../components/Title/Title';
+import Product from '../../components/Product/Product';
+import Features from '../../components/Features/Features';
 import Carousel from '../../components/Carousel/Carousel';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
-import LogoSlider from '../../components/LogoSlider/LogoSlider';
 
-export default function Home({products}) {
+import './Home.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/navigation';
 
-    const isLoading = !products || products.length === 0;
-
+export default function Home({ products }) {
     return (
         <>
-            <LoadingOverlay isLoading={isLoading} />
-
+            <LoadingOverlay isLoading={!products || products.length === 0} />
             <Banner />
-            <LogoSlider/>
-
+            <LogoSlider />
             <Title title="ALGUNOS PRODUCTOS" />
-            <main className="main-container-home">
 
-                {products && products?.length > 0 ? (
-                    products?.slice(0, 8).map(product => {
-                        return (<Product key={product._id} product={product} />)
-                    })
-                ) : (
-                    <p>No hay productos para mostrar</p>
-                )}
-                
-            </main>
+            <div className="coverflow-container">
+                <Swiper
+                    modules={[EffectCoverflow, Navigation, Autoplay]}
+                    effect="coverflow"
+                    grabCursor={true}
+                    centeredSlides={true}
+                    loop={true}
+                    autoplay={{
+                        delay: 1,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: false,
+                    }}
+                    speed={5000}
+                    coverflowEffect={{
+                        rotate: 30,
+                        stretch: 0,
+                        depth: 120,
+                        modifier: 2,
+                        slideShadows: false,
+                    }}
+                    breakpoints={{
+                        820: {
+                            slidesPerView: 2.5,
+                        },
+                        1001: {
+                            slidesPerView: 3.5,
+                        },
+                        1201: {
+                            slidesPerView: 4.5,
+                        },
+                    }}
+                    slidesPerView={1.3} // default para móviles
+                    className="coverflow-swiper"
+                >
+                    {products.map((product) => (
+                        <SwiperSlide key={product._id} className="coverflow-slide">
+                            <Product product={product} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
 
-            <Features/>
+            </div>
 
-            <Carousel/>
+            <Features />
+            <Carousel />
         </>
-    )
+    );
 }

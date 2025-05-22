@@ -1,6 +1,7 @@
 .card {
-    width: 250px;
-    min-width: 200px;
+    width: 100%;
+    max-width: 250px;
+    margin: auto;
     border: none;
     border-radius: 0 0 17px 17px;
     background-color: #ffffff;
@@ -33,7 +34,8 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        overflow: hidden;        
+        overflow: hidden;
+        max-height: 250px;    
 
         .icon-container {
             position: absolute;
@@ -96,8 +98,7 @@
         }
 
         .card-image {
-            max-height: 250px;
-            max-width: 270px;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -107,28 +108,26 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: #e53935;
+                background-color: #d21f1bc0;
                 color: white;
                 padding: 1rem;
                 font-weight: 700;
                 position: absolute;
                 top: 15px;
                 right: -65px;
-                transform: rotateY('45');
                 font-weight: 700;
                 transform: rotate(45deg);
                 width: 200px;
                 height: 40px;
                 text-align: center;
                 z-index: 5;
+                text-overflow: ellipsis
             }
 
             img {
-                max-height: 250px;
                 width: 100%;
-                max-width: 250px;
+                height: 100%;
                 object-fit: cover;
-                object-position: center;
             }
         }
 
@@ -208,7 +207,7 @@
                 padding: 0.6rem;
                 border-radius: 50%;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
                 font-size: 1rem;
                 color: #333;
         

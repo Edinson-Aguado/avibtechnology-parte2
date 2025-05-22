@@ -2,18 +2,17 @@ import './Product.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faWarehouse, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // Corazón vacío
+import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { useOrder } from '../../context/OrderContext';
 import { useRef, useState } from "react";
 import ModalView from '../ModalView/ModalView';
 
-export default function Product({product}) {
+export default function Product({ product }) {
 
-    const {addProduct} = useOrder();
+    const { addProduct } = useOrder();
     const [isFavorited, setIsFavorited] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const imageRef = useRef(null);
-
 
     const handleFavorite = () => {
         setIsFavorited(!isFavorited);
@@ -25,13 +24,11 @@ export default function Product({product}) {
 
     function getStatus(status) {
         if (status.toLowerCase() === "nuevo") {
-            return "card-status"
+            return "card-status";
+        } else if (status.toLowerCase() === "regular") {
+            return "card-regular";
         } else {
-            if (status.toLowerCase() === "regular") {
-                return "card-regular"
-            } else {
-                return "card-prox"
-            }
+            return "card-prox";
         }
     }
 
@@ -69,43 +66,36 @@ export default function Product({product}) {
         }, 700);
     };
 
-    
-
     return (
         <>
-            <article className="card">
-                
-                
+            <article className={`card`}>
                 <div className="card-content">
-
                     <div className="icon-container">
                         <FontAwesomeIcon icon={faWarehouse} />
                         <span className="badge-stock">{product.stock}</span>
                     </div>
 
                     <div className="card-image">
-                        {
-                            product?.discount > 0 && 
-                            (
-                                <div className={`card-desc`}>
-                                    <span>{product?.discount.toFixed(0)}% OFF</span>
-                                </div>
-                            )
-                        }
-                        
-                        <img 
-                            src={product?.image} alt={`Imágen de ${product?.name}`} ref={imageRef} 
+                        {product?.discount > 0 && (
+                            <div className="card-desc">
+                                <span>{product?.discount.toFixed(0)}% OFF</span>
+                            </div>
+                        )}
+
+                        <img
+                            src={product?.image}
+                            alt={`Imagen de ${product?.name}`}
+                            ref={imageRef}
                         />
                     </div>
 
                     <div className={`card-status ${getStatus(product?.status)}`}>
                         {product?.status}
                     </div>
-                    
-                    <div className="btn-product ">
 
+                    <div className="btn-product">
                         {product?._id && (
-                            <Link 
+                            <Link
                                 className='btn card-buy'
                                 title='Comprar producto'
                                 to={`/ProductDetail/${product?._id}`}>
@@ -113,19 +103,15 @@ export default function Product({product}) {
                             </Link>
                         )}
 
-                        <button 
-                            title='Ver más detalles' 
-                            className='btn btn-ver-detalles'>
-                            
-                            <a 
-                                target='_blank'
-                                title='Ir a la página oficial de la marca' 
-                                href="https://www.ezviz.com/">
-                                Página oficial
-                            </a>
-
-                        </button>
-
+                        <a
+                            target='_blank'
+                            rel="noopener noreferrer"
+                            title='Ir a la página oficial de la marca'
+                            href="https://www.ezviz.com/"
+                            className='btn btn-ver-detalles'
+                        >
+                            Página oficial
+                        </a>
                     </div>
 
                     <div className="actions-product">
@@ -136,57 +122,45 @@ export default function Product({product}) {
                             <FontAwesomeIcon icon={faEye} />
                         </button>
                     </div>
-
-
                 </div>
-                <div className="card-info">
-                    
-                    <h3 className="card-title">
 
-                        <Link 
-                            to={`/ProductDetail/${product?._id}`}>
+                <div className="card-info">
+                    <h3 className="card-title">
+                        <Link to={`/ProductDetail/${product?._id}`}>
                             {product?.name}
                         </Link>
-
                     </h3>
-                    <div className="card-price">
-                        
-                    {
-                        product?.discount > 0 ? (
-                            <>
-                                <del style={{color:"#7a8a99"}}>$ {product?.price}</del>{" "}
-                                $ {Math.round(product?.price * (1 - product?.discount / 100))}
 
+                    <div className="card-price">
+                        {product?.discount > 0 ? (
+                            <>
+                                <del style={{ color: "#7a8a99" }}>$ {product?.price}</del>{" "}
+                                $ {Math.round(product?.price * (1 - product?.discount / 100))}
                             </>
                         ) : (
                             <>$ {product?.price}</>
-                        )
-                    }
-
-                        
+                        )}
                     </div>
+
                     <div className="agregar-carrito">
-                        <button 
-                            title='Añadir al carrito' 
+                        <button
+                            title='Añadir al carrito'
                             className='btn-agregar-carrito'
                             onClick={() => {
                                 addProduct(product, 1);
                                 animateFlyToCart(imageRef);
                             }}
                         >
-                            <FontAwesomeIcon 
-                                icon={faCartShopping} 
-                                className='icon-cart'/>
+                            <FontAwesomeIcon icon={faCartShopping} className='icon-cart' />
                             <p>Añadir al carrito</p>
                         </button>
                     </div>
-                    
                 </div>
-                {showModal && (
-                    <ModalView onClose={() => setShowModal(false)} product={product}/>
-                )}
 
+                {showModal && (
+                    <ModalView onClose={() => setShowModal(false)} product={product} />
+                )}
             </article>
         </>
-    )
+    );
 }

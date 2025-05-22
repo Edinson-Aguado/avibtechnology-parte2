@@ -1,43 +1,20 @@
-.main-container-home {
-    background-color: #ffffff91;
+.coverflow-container {
+    background: linear-gradient(to right, #dab9f7, #9090e8);
+    padding: 40px 0;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 5rem;
     justify-content: center;
     align-items: center;
-    margin: 4rem 0;
 }
 
-@media screen and (min-width: 820px) and (max-width: 1000px) {
-
-    .main-container-home {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+.coverflow-swiper {
+    width: 100%;
+    max-width: 1200px;
 }
 
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-
-    .main-container-home {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-}
-
-@media screen and (min-width: 1201px) {
-
-    .main-container-home {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+.coverflow-slide {
+    width: 280px; 
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

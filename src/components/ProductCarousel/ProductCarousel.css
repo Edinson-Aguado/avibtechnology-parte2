@@ -1,0 +1,56 @@
+.product-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px;
+    padding: 2rem 0;
+
+    .keen-slider {
+        display: flex;
+        transform-style: preserve-3d;
+        overflow: visible;
+
+        .keen-slider__slide {
+        transition: transform 0.5s ease, filter 0.5s ease;
+        transform-style: preserve-3d;
+        will-change: transform;
+        z-index: 1;
+        }
+
+        .slide-product {
+        &.active-center {
+            transform: scale(1) rotateY(0deg);
+            filter: brightness(1);
+            z-index: 4;
+        }
+
+        &.prev {
+            transform: scale(0.9) rotateY(-30deg) translateX(-40px);
+            filter: brightness(0.85);
+            z-index: 3;
+        }
+
+        &.next {
+            transform: scale(0.9) rotateY(30deg) translateX(40px);
+            filter: brightness(0.85);
+            z-index: 3;
+        }
+
+        &.prev-second {
+            transform: scale(0.8) rotateY(-60deg) translateX(-60px);
+            filter: brightness(0.6);
+            z-index: 2;
+        }
+
+        &.next-second {
+            transform: scale(0.8) rotateY(60deg) translateX(60px);
+            filter: brightness(0.6);
+            z-index: 2;
+        }
+
+        &.hidden {
+            display: none; /* Para ocultar los que estén fuera de los 4 visibles */
+        }
+        }
+    }
+}
