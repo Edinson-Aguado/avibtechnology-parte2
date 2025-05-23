@@ -8,12 +8,23 @@ import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 
 import './Home.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Home({ products }) {
+
+    const [ready, setReady] = useState(false);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => setReady(true), 100);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    if (!ready) return null;
+
     return (
         <>
             <LoadingOverlay isLoading={!products || products.length === 0} />
@@ -23,40 +34,53 @@ export default function Home({ products }) {
 
             <div className="coverflow-container">
                 <Swiper
-                    modules={[EffectCoverflow, Navigation, Autoplay]}
-                    effect="coverflow"
+                    modules={[Navigation, Autoplay]}
                     grabCursor={true}
                     centeredSlides={true}
                     loop={true}
                     autoplay={{
-                        delay: 1,
+                        delay: 2500, 
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: false,
                     }}
-                    speed={5000}
-                    coverflowEffect={{
-                        rotate: 30,
-                        stretch: 0,
-                        depth: 120,
-                        modifier: 2,
-                        slideShadows: false,
-                    }}
+                    speed={2000} // transición lenta
+                    slidesPerView={3.5}
                     breakpoints={{
-                        820: {
-                            slidesPerView: 2.5,
+                        0: {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
                         },
-                        1001: {
-                            slidesPerView: 3.5,
+                        480: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 10,
                         },
-                        1201: {
-                            slidesPerView: 4.5,
+                        768: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                        },
+                        1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                        },
+                        1280: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
                         },
                     }}
-                    slidesPerView={1.3} // default para móviles
+                    onSlideChange={(swiper) => {
+                        document
+                            .querySelectorAll('.coverflow-slide')
+                            .forEach((el, index) => {
+                                if (index === swiper.realIndex + 1 || (index === 0 && swiper.realIndex === swiper.slides.length - 3)) {
+                                    el.classList.add('active-slide');
+                                } else {
+                                    el.classList.remove('active-slide');
+                                }
+                            });
+                    }}
                     className="coverflow-swiper"
                 >
                     {products?.slice(0, 8).map((product) => (
-                        <SwiperSlide key={product._id} className="coverflow-slide">
+                        <SwiperSlide key={product._id} className={`coverflow-slide`}>
                             <Product product={product} />
                         </SwiperSlide>
                     ))}
