@@ -7,6 +7,7 @@ import axios from 'axios';
 import { env } from '../../config/env.config';
 import Swal from 'sweetalert2';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
+import { generateProformaPdf } from '../../../utils/proforma';
 
 export default function Orders() {
     const { cart, total, count, setTotal, setCount, cleanCart } = useOrder();
@@ -46,9 +47,19 @@ export default function Orders() {
                 {renderProductos(order.products)}
                 <div className="btn-pay-order">
                     <h3>Total a pagar: <span>{formatPrice(order?.total)}</span></h3>
-                    <NavLink to={`/`} className='btn-pay'>
-                        Pagar orden
-                    </NavLink>
+                    <div className="buttons-order">
+                        <NavLink to={`/`} className='btn-pay'>
+                            Pagar orden
+                        </NavLink>
+
+                        <button
+                            className="btn-download"
+                            onClick={() => generateProformaPdf(order, user)}
+                        >
+                            Generar PDF
+                        </button>
+                    </div>
+                    
                 </div>
                 <p className="order-date">Fecha: {new Date(order.date).toLocaleString()}</p>
                 
@@ -164,6 +175,7 @@ export default function Orders() {
                             <p className="value">
                                 <strong>Subtotal:</strong> {formatPrice(finalPrice * item.quantity)}
                             </p>
+                            
                         </div>
                     </div>
                 );
@@ -183,13 +195,24 @@ export default function Orders() {
                     <div className="order-summary">
                         <h3>Cantidad de productos: {count}</h3>
                         <h3>Total a pagar: <span>{formatPrice(total)}</span></h3>
-                        <button
-                            className="create-order-button"
-                            onClick={handleCreateOrder}
-                            disabled={isLoading}
-                        >
-                            {isLoading ? 'Procesando...' : 'Confirmar orden'}
-                        </button>
+                        <div className="buttons-order">
+                            <button
+                                className="create-order-button"
+                                onClick={handleCreateOrder}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Procesando...' : 'Confirmar orden'}
+                            </button>
+
+                            <button
+                                className="create-order-button createPDF-order-button"
+                                onClick={generateProformaPdf}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Procesando...' : 'Generar PDF'}
+                            </button>
+                        </div>
+                        
 
                     </div>
                 </div>

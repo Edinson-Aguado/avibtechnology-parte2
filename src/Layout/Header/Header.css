@@ -356,7 +356,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #858687; 
             padding: 20px;
             height: 100%;
             border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -381,7 +380,7 @@
 
                 .icon-carrito {
                     font-size: 1.8rem;
-                    color: #f9fafb;
+                    color: #1e80e8;
                     transition: transform .2s ease-in-out;
 
                     &:hover {
