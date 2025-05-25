@@ -7,9 +7,11 @@ import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import Fuse from 'fuse.js';
+import { formatPrice, priceFinalEnPesos } from '../../../utils/priceUtils';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
+    const [dolarValue, setDolarValue] = useState(null);
     const [search, setSearch] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [modalContent, setModalContent] = useState(null);
@@ -26,6 +28,7 @@ export default function ProductsPage() {
 
     useEffect(() => {
         setIsLoading(true);
+        getDolar();
         axios.get(`${env.URL_LOCAL}/products`)
             .then(res => {
                 const data = res.data.productsWithVAT || [];
@@ -43,6 +46,16 @@ export default function ProductsPage() {
                 setIsLoading(false);
             });
     }, []);
+
+    const getDolar = async () => {
+        try {
+            const response = await axios.get(`${env.URL_LOCAL}/dolar`);
+            const dolarParsed = parseFloat(response?.data?.data?.venta);
+            setDolarValue(dolarParsed);
+        } catch (error) {
+            console.error("Error al obtener el valor del dólar:", error);
+        }
+    };
 
     let filteredProducts = products;
 
@@ -226,12 +239,12 @@ export default function ProductsPage() {
                                             {
                                                 product?.discount > 0 ? (
                                                     <>
-                                                        <span className='precio-original'>$ {product?.price}</span>{" "}
-                                                        <span className='precio-descuento'> $ {Math.round(product?.price * (1 - product?.discount / 100))}</span>
+                                                        <span className='precio-original'>{formatPrice(product.price * dolarValue)}</span>{" "}
+                                                        <span className='precio-descuento'>{formatPrice(priceFinalEnPesos(product, dolarValue))}</span>
 
                                                     </>
                                                 ) : (
-                                                    <span className='precio-descuento'>$ {product?.price}</span>
+                                                    <span className='precio-descuento'>{formatPrice(product.price * dolarValue)}</span>
                                                 )
                                             }
                                         </p>
