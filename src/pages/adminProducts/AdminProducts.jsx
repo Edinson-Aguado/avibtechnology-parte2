@@ -37,6 +37,7 @@ export default function AdminProducts({products, getProducts}) {
             setValue("discount", editProduct?.discount);
             setValue("createdAt", editProduct?.createdAt);
             setValue("category", editProduct?.category);
+            setValue("image", editProduct?.image);
 
             // Llevar el scroll hacia arriba al formulario
             document?.getElementById("form-create-product").scrollIntoView({behavior: "smooth"});
@@ -164,7 +165,7 @@ export default function AdminProducts({products, getProducts}) {
 
     return (
         <>
-            <OtroTitle title="Administrador de productos" />
+            <OtroTitle title="Administrador de productos" id={`mainTitle`}/>
 
             <div className="main-container-admin-products">
                 <form 
@@ -203,7 +204,8 @@ export default function AdminProducts({products, getProducts}) {
                         <div className="input-group">
                             <label htmlFor="price">Precio</label>
                             <input 
-                                type="number" 
+                                type="number"
+                                step="0.01"
                                 {...register("price", {
                                     required: "El precio es requerido",
                                     min: {
@@ -333,8 +335,14 @@ export default function AdminProducts({products, getProducts}) {
                             type="file"
                             id="image"
                             accept="image/*"
-                            {...register("image", {
-                                required: "La imagen es requerida"
+                            {...register("image", editProduct ? {} : {
+                                required: "La imagen es requerida",
+                                validate: {
+                                    type: (files) =>
+                                    files?.[0]?.type.startsWith("image/") || "Debe ser una imagen",
+                                    size: (files) =>
+                                    (files?.[0]?.size ?? 0) < 2 * 1024 * 1024 || "Máx 2MB"
+                                }
                             })}
                         />
                         {errors.image && <span className="error-input">{errors.image.message}</span>}

@@ -28,7 +28,7 @@ export default function App() {
         
         try {
             const response = await axios.get(`${env.URL_LOCAL}/products`);
-            setProducts(response.data.products);
+            setProducts(response.data.productsWithVAT);
         } catch (error) {
             console.warn(error);
             alert("Ocurrió un error al obtener los productos.");

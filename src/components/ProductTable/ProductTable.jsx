@@ -22,7 +22,7 @@ export default function ProductTable({product, deleteProduct, fnEditProduct}) {
                 </td>
                 <td 
                     className="price-cell">
-                    <span>$</span> <strong>{product.price ? product.price : "-"}</strong>
+                    <span>USD</span> <strong>{product.price ? product.price : "-"}</strong>
                 </td>
                 <td 
                     className="product-cell">

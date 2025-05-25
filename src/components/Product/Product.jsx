@@ -4,14 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faWarehouse, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { useOrder } from '../../context/OrderContext';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ModalView from '../ModalView/ModalView';
+import { env } from '../../config/env.config';
+import axios from 'axios';
+import { formatPrice, priceFinalEnPesos } from '../../../utils/priceUtils';
 
 export default function Product({ product }) {
-
     const { addProduct } = useOrder();
     const [isFavorited, setIsFavorited] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [dolarValue, setDolarValue] = useState(null);
     const imageRef = useRef(null);
 
     const handleFavorite = () => {
@@ -23,13 +26,9 @@ export default function Product({ product }) {
     };
 
     function getStatus(status) {
-        if (status.toLowerCase() === "nuevo") {
-            return "card-status";
-        } else if (status.toLowerCase() === "regular") {
-            return "card-regular";
-        } else {
-            return "card-prox";
-        }
+        if (status?.toLowerCase() === "nuevo") return "card-status";
+        if (status?.toLowerCase() === "regular") return "card-regular";
+        return "card-prox";
     }
 
     const animateFlyToCart = (productImageRef) => {
@@ -66,9 +65,28 @@ export default function Product({ product }) {
         }, 700);
     };
 
+    async function getDolar() {
+        try {
+            const response = await axios.get(`${env.URL_LOCAL}/dolar`);
+            setDolarValue(parseFloat(response.data.data.venta));
+        } catch (error) {
+            console.error("Error al obtener el valor del dólar:", error);
+        }
+    }
+
+    useEffect(() => {
+        getDolar();
+    }, []);
+
+    if (!dolarValue) return null;
+
+    const precioEnPesos = product?.price * dolarValue;
+    const tieneDescuento = product?.discount > 0;
+    const precioConDescuento = priceFinalEnPesos(product, dolarValue);
+
     return (
         <>
-            <article className={`card`}>
+            <article className="card">
                 <div className="card-content">
                     <div className="icon-container">
                         <FontAwesomeIcon icon={faWarehouse} />
@@ -76,7 +94,7 @@ export default function Product({ product }) {
                     </div>
 
                     <div className="card-image">
-                        {product?.discount > 0 && (
+                        {tieneDescuento && (
                             <div className="card-desc">
                                 <span>{product?.discount.toFixed(0)}% OFF</span>
                             </div>
@@ -96,19 +114,19 @@ export default function Product({ product }) {
                     <div className="btn-product">
                         {product?._id && (
                             <Link
-                                className='btn card-buy'
-                                title='Comprar producto'
-                                to={`/ProductDetail/${product?._id}`}>
+                                className="btn card-buy"
+                                title="Comprar producto"
+                                to={`/ProductDetail/${product._id}`}
+                            >
                                 Comprar
                             </Link>
                         )}
-
                         <a
-                            target='_blank'
+                            target="_blank"
                             rel="noopener noreferrer"
-                            title='Ir a la página oficial de la marca'
+                            title="Ir a la página oficial de la marca"
                             href="https://www.ezviz.com/"
-                            className='btn btn-ver-detalles'
+                            className="btn btn-ver-detalles"
                         >
                             Página oficial
                         </a>
@@ -126,32 +144,34 @@ export default function Product({ product }) {
 
                 <div className="card-info">
                     <h3 className="card-title">
-                        <Link to={`/ProductDetail/${product?._id}`}>
+                        <Link to={`/ProductDetail/${product._id}`}>
                             {product?.name}
                         </Link>
                     </h3>
 
                     <div className="card-price">
-                        {product?.discount > 0 ? (
+                        {tieneDescuento ? (
                             <>
-                                <del style={{ color: "#7a8a99" }}>$ {product?.price}</del>{" "}
-                                $ {Math.round(product?.price * (1 - product?.discount / 100))}
+                                <del style={{ color: "#7a8a99", marginRight: 5 }}>
+                                    {formatPrice(precioEnPesos)}
+                                </del>
+                                <span>{formatPrice(precioConDescuento)}</span>
                             </>
                         ) : (
-                            <>$ {product?.price}</>
+                            <>{formatPrice(precioEnPesos)}</>
                         )}
                     </div>
 
                     <div className="agregar-carrito">
                         <button
-                            title='Añadir al carrito'
-                            className='btn-agregar-carrito'
+                            title="Añadir al carrito"
+                            className="btn-agregar-carrito"
                             onClick={() => {
                                 addProduct(product, 1);
                                 animateFlyToCart(imageRef);
                             }}
                         >
-                            <FontAwesomeIcon icon={faCartShopping} className='icon-cart' />
+                            <FontAwesomeIcon icon={faCartShopping} className="icon-cart" />
                             <p>Añadir al carrito</p>
                         </button>
                     </div>

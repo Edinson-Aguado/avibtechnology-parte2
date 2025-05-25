@@ -28,7 +28,7 @@ export default function ProductsPage() {
         setIsLoading(true);
         axios.get(`${env.URL_LOCAL}/products`)
             .then(res => {
-                const data = res.data.products || [];
+                const data = res.data.productsWithVAT || [];
                 setProducts(data);
                 const fuseInstance = new Fuse(data, {
                     keys: ['name', 'description', 'category'],
@@ -106,10 +106,10 @@ export default function ProductsPage() {
                 <div className="search-bar">
                     <i className="fas fa-search"></i>
                     <input
-                    type="text"
-                    placeholder="Buscar producto..."
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
+                        type="text"
+                        placeholder="Buscar producto..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
                     />
                 </div>
 
@@ -145,7 +145,7 @@ export default function ProductsPage() {
                                 placeholder="Precio mínimo"
                                 value={priceFilter.min}
                                 onChange={e => setPriceFilter(prev => ({ ...prev, min: e.target.value }))}
-                                />
+                            />
                             <input
                                 type="number"
                                 min="0"
