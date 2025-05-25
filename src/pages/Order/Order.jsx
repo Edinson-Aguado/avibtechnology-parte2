@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../../components/LoadingOverlay/LoadingOverlay";
-import { formatPrice, priceFinalEnPesos, priceWithDiscount } from "../../../utils/priceUtils";
+import { formatPrice, priceFinalEnPesos } from "../../../utils/priceUtils";
 
 export default function Order() {
     const { cart, total, editQuantity, toggleCart, cleanCart } = useOrder();
