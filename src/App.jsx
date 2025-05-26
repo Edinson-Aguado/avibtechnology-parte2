@@ -20,6 +20,9 @@ import AdminGuard from './services/guard/AdminGuard';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 import Orders from './pages/orders/Orders';
 import UserProfile from './pages/userProfile/UserProfile';
+import Success from './pages/mercadoPago/statusPaid/Success';
+import Failure from './pages/mercadoPago/statusPaid/Failure';
+import Pending from './pages/mercadoPago/statusPaid/Pending';
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -63,6 +66,9 @@ export default function App() {
                 <Route path="/ProductsPage" element={<ProductsPage />} />
                 <Route path="/Order" element={<Order />} />
                 <Route path="/UserProfile" element={<UserProfile />} />
+                <Route path="/Success" element={<Success/>}/>
+                <Route path="/Failure" element={<Failure/>}/>
+                <Route path="/Pending" element={<Pending/>}/>
                 <Route path="*" element={<Home products={products} />} />
 
                 {/* Rutas de ADMINISTRACION */}

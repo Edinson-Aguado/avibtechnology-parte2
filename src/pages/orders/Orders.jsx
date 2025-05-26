@@ -120,6 +120,37 @@ export default function Orders() {
         }
     };
 
+    const handlePagarOrden = async (order) => {
+        try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+
+            const response = await axios.post(`${env.URL_LOCAL}/createPaid`, {
+                orderId: order._id,
+                items: order.products
+            }, config);
+
+            // Redirige al checkout de Mercado Pago
+            const { id } = response.data;
+            
+            if (id) {
+                window.location.href = `https://www.mercadopago.com/checkout/v1/redirect?pref_id=${id}`;
+            } else {
+                console.error('No se recibió un ID de preferencia.');
+            }
+            // window.location.href = response.data.init_point;
+        } catch (error) {
+            console.error("Error al generar link de pago:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo iniciar el pago',
+                text: 'Ocurrió un error. Intenta más tarde.',
+                confirmButtonColor: '#ef4444'
+            });
+        }
+    };
+
+
     const renderProductos = (products) => (
         <div className="orders-list">
             {products.map((item) => {
@@ -165,9 +196,13 @@ export default function Orders() {
                     <div className="btn-pay-order">
                         <h3>Total a pagar: <span>{formatPrice(totalPesos)}</span></h3>
                         <div className="buttons-order">
-                            <NavLink to={`/`} className='btn-pay'>
+                            <button
+                                className="btn-pay"
+                                onClick={() => handlePagarOrden(order)}
+                                >
                                 Pagar orden
-                            </NavLink>
+                            </button>
+
                             <button
                                 className="btn-download"
                                 onClick={() => generateProformaPdf(order, user)}
