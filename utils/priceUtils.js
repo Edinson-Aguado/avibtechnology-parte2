@@ -10,18 +10,22 @@ export function formatPrice(value) {
 }
 
 // Calcula el precio con descuento en USD
-export function priceWithDiscount(product) {
-    const price = product?.price || 0;
-    const discount = product?.discount || 0;
+export function priceWithDiscountUSD(product) {
+    const price = Number(product?.price) || 0;
+    const discount = Number(product?.discount) || 0;
 
     if (!discount || discount <= 0) return price;
 
-    return price * (1 - discount / 100).toFixed(2);
+    return +(price * (1 - discount / 100)).toFixed(2); // asegurar 2 decimales
 }
 
 // Convierte el precio final (con o sin descuento) a pesos
 export function priceFinalEnPesos(product, dolarValue) {
     if (!dolarValue || !product?.price) return 0;
-    const finalPriceUSD = priceWithDiscount(product);
-    return finalPriceUSD * dolarValue;
+
+    const finalPriceUsd = priceWithDiscountUSD(product);
+    return +(finalPriceUsd * dolarValue).toFixed(2); // asegurar 2 decimales
 }
+
+
+

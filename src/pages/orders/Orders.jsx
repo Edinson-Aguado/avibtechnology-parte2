@@ -8,6 +8,7 @@ import { env } from '../../config/env.config';
 import Swal from 'sweetalert2';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import { generateProformaPdf } from '../../../utils/proforma';
+import { formatPrice, priceFinalEnPesos, priceWithDiscountUSD } from '../../../utils/priceUtils';
 
 export default function Orders() {
     const { cart, total, count, setTotal, setCount, cleanCart } = useOrder();
@@ -16,56 +17,31 @@ export default function Orders() {
     const [ordenesPendientes, setPendientes] = useState([]);
     const [ordenesPagadas, setPagadas] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [dolarValue, setDolarValue] = useState(null);
 
-    // Recalcula total y cantidad
     useEffect(() => {
         if (!cart.length) return;
         const totalProductos = cart.reduce((acc, item) => acc + item.quantity, 0);
-        const totalPrecio = cart.reduce((acc, item) => acc + item.quantity * item.price, 0);
+        const totalPrecio = cart.reduce((acc, item) => acc + item.quantity * priceWithDiscountUSD(item), 0);
+        setTotal(+totalPrecio.toFixed(2));
         setCount(totalProductos);
-        setTotal(totalPrecio);
         localStorage.setItem("productsInCart", JSON.stringify(cart));
     }, [cart]);
 
-
     useEffect(() => {
         fetchOrders();
+        getDolar();
     }, []);
 
-    const formatPrice = (value) => {
-        return new Intl.NumberFormat('es-AR', {
-            style: 'currency',
-            currency: 'ARS', // o USD, EUR, etc.
-            minimumFractionDigits: 2
-        }).format(value);
+    const getDolar = async () => {
+        try {
+            const response = await axios.get(`${env.URL_LOCAL}/dolar`);
+            const dolarParsed = parseFloat(response?.data?.data?.venta);
+            setDolarValue(dolarParsed);
+        } catch (error) {
+            console.error("Error al obtener el valor del dólar:", error);
+        }
     };
-
-    const renderOrdenes = (ordenes) => (
-        ordenes.map((order) => (
-            <div key={order._id} className='order-wrapper'>
-                
-                {renderProductos(order.products)}
-                <div className="btn-pay-order">
-                    <h3>Total a pagar: <span>{formatPrice(order?.total)}</span></h3>
-                    <div className="buttons-order">
-                        <NavLink to={`/`} className='btn-pay'>
-                            Pagar orden
-                        </NavLink>
-
-                        <button
-                            className="btn-download"
-                            onClick={() => generateProformaPdf(order, user)}
-                        >
-                            Generar PDF
-                        </button>
-                    </div>
-                    
-                </div>
-                <p className="order-date">Fecha: {new Date(order.date).toLocaleString()}</p>
-                
-            </div>
-        ))
-    );
 
     const fetchOrders = async () => {
         try {
@@ -73,13 +49,13 @@ export default function Orders() {
             const bearer = localStorage.getItem('token');
             const config = {
                 headers: {
-                        Authorization: `Bearer ${bearer}`
-                    }
+                    Authorization: `Bearer ${bearer}`
+                }
             };
 
             const res = await axios.get(`${env.URL_LOCAL}/orders`, config);
             const todas = res.data.orders;
-            
+
             setPendientes(todas.filter(order => order.statusOrder === 'earring'));
             setPagadas(todas.filter(order => order.statusOrder === 'paid'));
         } catch (err) {
@@ -89,7 +65,7 @@ export default function Orders() {
         }
     };
 
-    function generarIdUnico(longitud = 16) {
+    const generarIdUnico = (longitud = 16) => {
         const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let resultado = '';
         for (let i = 0; i < longitud; i++) {
@@ -97,8 +73,7 @@ export default function Orders() {
             resultado += caracteres[indice];
         }
         return resultado + '-' + Date.now().toString(36);
-    }
-
+    };
 
     const handleCreateOrder = async () => {
         try {
@@ -111,19 +86,18 @@ export default function Orders() {
 
             const ordenData = {
                 userId: user?._id,
-                products: cart.map(prod => (
-                    {
-                        _id: prod._id,                // ID real del producto
-                        name: prod.name,              // Nombre en ese momento
-                        price: prod.price,            // Precio original sin descuento
-                        discount: prod.discount || 0, // Descuento vigente al momento de la orden
-                        quantity: prod.quantity,      // Cantidad comprada
-                        image: prod.image || ""       // Imagen del producto
-                    }
-                )),
-                total,
+                products: cart.map(prod => ({
+                    _id: prod._id,
+                    name: prod.name,
+                    price: Number(prod.price), // mejor que parseFloat
+                    discount: Number(prod.discount) || 0,
+                    quantity: prod.quantity,
+                    image: prod.image || ""
+                })),
+                total, // USD total
                 statusOrder: "earring",
-                date: Date.now()
+                date: Date.now(),
+                dolarAtPurchase: dolarValue
             };
 
             await axios.post(`${env.URL_LOCAL}/orders`, ordenData, config);
@@ -133,7 +107,7 @@ export default function Orders() {
                 text: '¡Tu orden fue creada con éxito!',
                 confirmButtonColor: '#2563eb'
             });
-            fetchOrders(); // Refresca las órdenes
+            fetchOrders();
             cleanCart();
         } catch (err) {
             console.error("Error al crear orden:", err);
@@ -149,33 +123,27 @@ export default function Orders() {
     const renderProductos = (products) => (
         <div className="orders-list">
             {products.map((item) => {
-                if (!item) return null; // Previene errores si hay algún item inválido
+                if (!item) return null;
+                const precioUnitarioPesos = priceFinalEnPesos(item, dolarValue);
+                const subtotalPesos = +(precioUnitarioPesos * item.quantity).toFixed(2);
 
-                const finalPrice = (item.discount > 0 ? 
-                    item.price * (1 - item.discount / 100)
-                    : 
-                    item.price
-                )
 
                 return (
-                    <div className="order-card" key={String(item._id+generarIdUnico())}>
+                    <div className="order-card" key={String(item._id + generarIdUnico())}>
                         <div className="order-image">
                             <h2>
-                                <NavLink to={`/ProductDetail/${item._id}`} title={`Ir a la pagina de detalles del producto`}>
+                                <NavLink to={`/ProductDetail/${item._id}`} title="Ir a la página de detalles del producto">
                                     {item.name}
                                 </NavLink>
                             </h2>
-                            {item.image && (
-                                <img src={item.image} alt={item.name} />
-                            )}
+                            {item.image && <img src={item.image} alt={item.name} />}
                         </div>
                         <div className="order-details">
-                            <p><strong>Precio:</strong> {formatPrice(finalPrice)}</p>
+                            <p><strong>Precio:</strong> {dolarValue ? formatPrice(precioUnitarioPesos) : "Cargando..."}</p>
                             <p><strong>Cantidad:</strong> {item.quantity}</p>
                             <p className="value">
-                                <strong>Subtotal:</strong> {formatPrice(finalPrice * item.quantity)}
+                                <strong>Subtotal:</strong> {dolarValue ? formatPrice(subtotalPesos) : "--"}
                             </p>
-                            
                         </div>
                     </div>
                 );
@@ -183,18 +151,51 @@ export default function Orders() {
         </div>
     );
 
+    const renderOrdenes = (ordenes) => (
+        ordenes.map((order) => {
+            
+            const totalPesos = order.products.reduce((acc, item) => {
+                const precioUnitario = priceFinalEnPesos(item, dolarValue);
+                return acc + precioUnitario * item.quantity;
+            }, 0);
+
+            return (
+                <div key={order._id} className='order-wrapper'>
+                    {renderProductos(order.products)}
+                    <div className="btn-pay-order">
+                        <h3>Total a pagar: <span>{formatPrice(totalPesos)}</span></h3>
+                        <div className="buttons-order">
+                            <NavLink to={`/`} className='btn-pay'>
+                                Pagar orden
+                            </NavLink>
+                            <button
+                                className="btn-download"
+                                onClick={() => generateProformaPdf(order, user)}
+                            >
+                                Generar PDF
+                            </button>
+                        </div>
+                    </div>
+                    <p className="order-date">Fecha: {new Date(order.date).toLocaleString()}</p>
+                </div>
+            );
+        })
+    );
+
     return (
         <div className="orders-page">
             <h1>Mis Órdenes</h1>
 
-            {/* Carrito actual */}
             {cart.length > 0 && (
                 <div className="current-cart">
                     <h2>Carrito actual (sin confirmar)</h2>
                     {renderProductos(cart)}
                     <div className="order-summary">
                         <h3>Cantidad de productos: {count}</h3>
-                        <h3>Total a pagar: <span>{formatPrice(total)}</span></h3>
+                        <h3>Total a pagar: <span>{dolarValue ? formatPrice(cart.reduce((acc, product) => {
+                            return acc + priceFinalEnPesos(product, dolarValue) * product.quantity;
+                        }, 0)) : 'Cargando...'}</span>
+                        </h3>
                         <div className="buttons-order">
                             <button
                                 className="create-order-button"
@@ -203,26 +204,13 @@ export default function Orders() {
                             >
                                 {isLoading ? 'Procesando...' : 'Confirmar orden'}
                             </button>
-
-                            <button
-                                className="create-order-button createPDF-order-button"
-                                onClick={generateProformaPdf}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? 'Procesando...' : 'Generar PDF'}
-                            </button>
                         </div>
-                        
-
                     </div>
                 </div>
             )}
-            
+
             <div className="my-orders">
-
-                {/* Órdenes pendientes */}
-                <h2>Órdenes Pendientes</h2>                
-
+                <h2>Órdenes Pendientes</h2>
                 {isLoading ? (
                     <LoadingOverlay isLoading={isLoading} />
                 ) : ordenesPendientes.length === 0 ? (
@@ -231,9 +219,7 @@ export default function Orders() {
                     renderOrdenes(ordenesPendientes)
                 )}
 
-                {/* Órdenes pagadas */}
                 <h2>Órdenes Pagadas</h2>
-
                 {isLoading ? (
                     <LoadingOverlay isLoading={isLoading} />
                 ) : ordenesPagadas.length === 0 ? (

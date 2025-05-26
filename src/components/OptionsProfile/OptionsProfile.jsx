@@ -7,6 +7,8 @@ import './OptionsProfile.css';
 
 export default function OptionsProfile({isMenuHamburguesaOpen}) {
 
+    console.log("OptionsProfile renderizado");
+
     const { user, logout } = useUser();
     const [openMenu, setOpenMenu] = useState(null);
 

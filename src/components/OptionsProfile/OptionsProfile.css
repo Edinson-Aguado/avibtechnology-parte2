@@ -104,3 +104,24 @@
     }
 }
 
+@media (max-width: 819px) {
+    .options-profile {
+        position: static;
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+        box-shadow: none;
+        background: transparent;
+        margin-top: 20px;
+
+        .container-options-profile {
+            .container-option {
+                .last {
+                    display: none;
+                }   
+            }
+            
+        }
+    }
+}
+

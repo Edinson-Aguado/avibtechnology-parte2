@@ -51,9 +51,6 @@ export default function Header({useWindowWidth}) {
         };
     }, []);
 
-
-
-
     // Cierra el menú cada vez que cambia la ruta
     useEffect(() => {
         setIsMenuHamburguesaOpen(false);
@@ -113,17 +110,25 @@ export default function Header({useWindowWidth}) {
 
                     {
                         width <= 819 && user && (
-                            <div className="user-profile-sidebar">
+                            <div className="user-profile-sidebar" ref={profileMenuRef}>
                                 <img
                                     loading="lazy"
                                     src={userImage}
                                     alt="User avatar"
                                     className="avatar-sidebar"
+                                    onClick={() => {
+                                        console.log("Click imagen perfil");
+                                        toggleMenu('profile')}}
                                 />
                                 <div className="user-name-verified">
                                     <span className={user?.role === 'admin' ? 'super-premium-name' : ''}>{user.name}</span>
                                     <FaCheckCircle className="verified-icon" />
                                 </div>
+                                {
+                                    openMenu === 'profile' && (
+                                        <OptionsProfile isMenuHamburguesaOpen={isMenuHamburguesaOpen} />
+                                    )
+                                }
                             </div>
                         )
                     }
@@ -158,6 +163,7 @@ export default function Header({useWindowWidth}) {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Ofertas</NavLink>
                         </li>
+
 
                     </ul>
 

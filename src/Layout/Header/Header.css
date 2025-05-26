@@ -313,6 +313,18 @@
                             transform: rotate(0);
                         }
                     }
+
+                    .nav-item.dropdown {
+                        .dropdown-menu {
+                            padding-left: 1rem;
+
+                            li {
+                                .nav-link-dropdown {
+                                    padding-left: 2.5rem;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
